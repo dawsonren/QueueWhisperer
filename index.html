@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Queue Whisperer | Interactive G/G/1 Queue</title>
+  <meta name="description" content="Learn queueing theory through an interactive story featuring Randomizer, Chain Master, and the Queue Whisperer.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== SECTION 1: HERO ===== -->
+  <header id="hero" class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">The Queue Whisperer Academy</h1>
+        <p class="hero-subtitle">An interactive journey through the hidden world of waiting</p>
+        <p class="hero-tagline">From the book <em>Operations Engineering and Management</em> by Seyed Iravani</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="btn-start-story">Start the story</button>
+          <button class="btn btn-secondary" id="btn-skip-sandbox">Skip to sandbox</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-queue-teaser" id="hero-queue-teaser">
+          <img src="assets/teaser/queue.png" alt="Queue Teaser">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== SECTION 2: LEVEL 0 — MEET THE QUEUE ===== -->
+  <section id="level-0" class="level">
+    <div class="level-header">
+      <span class="level-badge">Chapter 1</span>
+      <h2 class="level-title">Meet the queue</h2>
+    </div>
+
+    <div class="narrative-panel">
+      <div class="narrative-speaker">
+        <img class="sprite" id="sprite-quentin-l0" src="assets/sprites/quentin-confident.png" alt="Quentin Lineworth">
+        <span class="speaker-name">Quentin</span>
+      </div>
+      <div class="speech-bubble">
+        <p>My name is Quentin Lineworth, but most people just call me the <strong>Queue Whisperer</strong>. I've spent my whole life studying why we wait, why it drives us crazy, and how to make it better.</p>
+        <p>Let's start by watching a simple queue in action. Customers arrive, wait their turn, and get served. Simple, right? But watch what happens...</p>
+      </div>
+    </div>
+
+    <div class="queue-stage" id="queue-stage-l0">
+      <canvas id="queue-canvas-l0" width="800" height="200"></canvas>
+      <div class="queue-labels">
+        <span>Arriving</span>
+        <span>Waiting in line</span>
+        <span>Being served</span>
+        <span>Done</span>
+      </div>
+    </div>
+
+    <div class="level-footer">
+      <button class="btn btn-primary" id="btn-next-l0">Next: Meet the first villain</button>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: LEVEL 1 — MEET RANDOMIZER ===== -->
+  <section id="level-1" class="level">
+    <div class="level-header">
+      <span class="level-badge level-badge--villain">Chapter 3, Part 1</span>
+      <h2 class="level-title">Meet Randomizer</h2>
+      <p class="level-intro">The first villain of queues: <strong>variability</strong>. Randomizer creates chaos in when people arrive and how long they take to serve.</p>
+    </div>
+
+    <div class="queue-stage-with-villains">
+      <div class="villain-panel">
+        <img class="sprite sprite-villain" id="sprite-randomizer-l1" src="assets/sprites/randomizer-sleeping.png" alt="Randomizer">
+        <div class="villain-mood" id="randomizer-mood-l1">Sleeping...</div>
+      </div>
+      <div class="queue-stage" id="queue-stage-l1">
+        <canvas id="queue-canvas-l1" width="800" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <h3 class="controls-title">Your controls <span class="controls-badge">Unlocked!</span></h3>
+      <div class="control-row">
+        <label class="control-label" for="cv-arrival-l1">Arrival variability (CV<sub>a</sub>)</label>
+        <input type="range" id="cv-arrival-l1" min="0" max="1.5" step="0.05" value="0.2">
+        <span class="control-value" id="cv-arrival-l1-val">0.20</span>
+      </div>
+      <div class="control-row">
+        <label class="control-label" for="cv-service-l1">Service variability (CV<sub>s</sub>)</label>
+        <input type="range" id="cv-service-l1" min="0" max="1.5" step="0.05" value="0.2">
+        <span class="control-value" id="cv-service-l1-val">0.20</span>
+      </div>
+    </div>
+
+    <div class="stats-bar" id="stats-l1">
+      <div class="stat"><span class="stat-value" id="stat-wq-l1">--</span><span class="stat-label">Avg wait (W<sub>q</sub>)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-lq-l1">--</span><span class="stat-label">Queue length (L<sub>q</sub>)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-rho-l1">--</span><span class="stat-label">Utilization (ρ)</span></div>
+    </div>
+
+    <div class="narrative-panel narrative-panel--inline">
+      <div class="speech-bubble speech-bubble--small">
+        <p><strong>Queue Whisperer's Cue:</strong> When variability is low, the queue is calm. Crank it up, and watch Randomizer come alive — arrivals become unpredictable, service times swing wildly, and the queue explodes.</p>
+      </div>
+    </div>
+
+    <div class="level-footer">
+      <button class="btn btn-primary" id="btn-next-l1">Next: Meet the second villain</button>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 4: LEVEL 2 — MEET CHAIN MASTER ===== -->
+  <section id="level-2" class="level">
+    <div class="level-header">
+      <span class="level-badge level-badge--villain">Chapter 3, Part 2</span>
+      <h2 class="level-title">Meet Chain Master</h2>
+      <p class="level-intro">The second villain: <strong>dependency</strong>. Chain Master links everyone in line — one slow customer means everyone behind them waits.</p>
+    </div>
+
+    <div class="queue-stage-with-villains">
+      <div class="villain-panel villain-panel--duo">
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-randomizer-l2" src="assets/sprites/randomizer-scheming.png" alt="Randomizer">
+        </div>
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-chainmaster-l2" src="assets/sprites/chainmaster-weak.png" alt="Chain Master">
+          <div class="villain-mood" id="chainmaster-mood-l2">Chains broken...</div>
+        </div>
+      </div>
+      <div class="queue-stage" id="queue-stage-l2">
+        <canvas id="queue-canvas-l2" width="800" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <h3 class="controls-title">New control <span class="controls-badge">Unlocked!</span></h3>
+      <div class="control-row">
+        <label class="control-label" for="rho-l2">Utilization (ρ)</label>
+        <input type="range" id="rho-l2" min="0.1" max="0.99" step="0.01" value="0.5">
+        <span class="control-value" id="rho-l2-val">0.50</span>
+      </div>
+      <div class="control-row">
+        <label class="control-label" for="cv-arrival-l2">Arrival CV</label>
+        <input type="range" id="cv-arrival-l2" min="0" max="1.5" step="0.05" value="0.5">
+        <span class="control-value" id="cv-arrival-l2-val">0.50</span>
+      </div>
+      <div class="control-row">
+        <label class="control-label" for="cv-service-l2">Service CV</label>
+        <input type="range" id="cv-service-l2" min="0" max="1.5" step="0.05" value="0.5">
+        <span class="control-value" id="cv-service-l2-val">0.50</span>
+      </div>
+    </div>
+
+    <div class="stats-bar" id="stats-l2">
+      <div class="stat"><span class="stat-value" id="stat-wq-l2">--</span><span class="stat-label">W<sub>q</sub></span></div>
+      <div class="stat"><span class="stat-value" id="stat-lq-l2">--</span><span class="stat-label">L<sub>q</sub></span></div>
+      <div class="stat"><span class="stat-value" id="stat-w-l2">--</span><span class="stat-label">W</span></div>
+      <div class="stat"><span class="stat-value" id="stat-rho-l2">--</span><span class="stat-label">ρ</span></div>
+    </div>
+
+    <div class="narrative-panel narrative-panel--inline">
+      <div class="speech-bubble speech-bubble--small">
+        <p><strong>Queue Whisperer's Cue:</strong> Your wait time isn't just <em>your</em> wait time. It's everyone ahead of you, stacked together like dominoes. Chain Master doesn't slow you down — he slows down the person in front of you and lets the ripple do the rest.</p>
+      </div>
+    </div>
+
+    <div class="level-footer">
+      <button class="btn btn-primary" id="btn-next-l2">Next: The final showdown</button>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 5: LEVEL 3 — LAW OF TWO VILLAINS ===== -->
+  <section id="level-3" class="level level--boss">
+    <div class="level-header">
+      <span class="level-badge level-badge--boss">Boss Fight</span>
+      <h2 class="level-title">The Law of Two Villains</h2>
+      <p class="level-intro">The queue is in crisis. Both villains are at full power. Your mission: weaken <strong>just one</strong> to bring the queue under control.</p>
+    </div>
+
+    <div class="boss-challenge" id="boss-challenge">
+      <div class="challenge-target">
+        <span class="challenge-label">Target: bring avg wait below</span>
+        <span class="challenge-value" id="challenge-target-val">--</span>
+      </div>
+      <div class="challenge-current">
+        <span class="challenge-label">Current avg wait</span>
+        <span class="challenge-value challenge-value--danger" id="challenge-current-val">--</span>
+      </div>
+    </div>
+
+    <div class="queue-stage-with-villains">
+      <div class="villain-panel villain-panel--duo">
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-randomizer-l3" src="assets/sprites/randomizer-cackling.png" alt="Randomizer">
+          <div class="villain-mood" id="randomizer-mood-l3">At full power!</div>
+        </div>
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-chainmaster-l3" src="assets/sprites/chainmaster-dominant.png" alt="Chain Master">
+          <div class="villain-mood" id="chainmaster-mood-l3">Chains everywhere!</div>
+        </div>
+      </div>
+      <div class="queue-stage" id="queue-stage-l3">
+        <canvas id="queue-canvas-l3" width="800" height="200"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-panel">
+      <h3 class="controls-title">All controls</h3>
+      <div class="control-row">
+        <label class="control-label" for="rho-l3">Utilization (ρ)</label>
+        <input type="range" id="rho-l3" min="0.1" max="0.99" step="0.01" value="0.92">
+        <span class="control-value" id="rho-l3-val">0.92</span>
+      </div>
+      <div class="control-row">
+        <label class="control-label" for="cv-arrival-l3">Arrival CV</label>
+        <input type="range" id="cv-arrival-l3" min="0" max="1.5" step="0.05" value="1.0">
+        <span class="control-value" id="cv-arrival-l3-val">1.00</span>
+      </div>
+      <div class="control-row">
+        <label class="control-label" for="cv-service-l3">Service CV</label>
+        <input type="range" id="cv-service-l3" min="0" max="1.5" step="0.05" value="1.0">
+        <span class="control-value" id="cv-service-l3-val">1.00</span>
+      </div>
+    </div>
+
+    <div class="stats-bar" id="stats-l3">
+      <div class="stat"><span class="stat-value" id="stat-wq-l3">--</span><span class="stat-label">W<sub>q</sub></span></div>
+      <div class="stat"><span class="stat-value" id="stat-lq-l3">--</span><span class="stat-label">L<sub>q</sub></span></div>
+      <div class="stat"><span class="stat-value" id="stat-w-l3">--</span><span class="stat-label">W</span></div>
+      <div class="stat"><span class="stat-value" id="stat-rho-l3">--</span><span class="stat-label">ρ</span></div>
+    </div>
+
+    <div class="victory-overlay" id="victory-overlay" hidden>
+      <div class="victory-content">
+        <img class="sprite" id="sprite-quentin-victory" src="assets/sprites/quentin-celebrating.png" alt="Quentin celebrating">
+        <h3>The Law of Two Villains</h3>
+        <p>A queue needs <strong>both</strong> variability and dependency. Weaken or remove one, and the queue shrinks or disappears.</p>
+        <button class="btn btn-primary" id="btn-to-sandbox">Enter the Sandbox</button>
+      </div>
+    </div>
+
+    <div class="level-footer">
+      <button class="btn btn-secondary" id="btn-skip-to-sandbox">Skip to sandbox</button>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 6: SANDBOX ===== -->
+  <section id="sandbox" class="level level--sandbox">
+    <div class="level-header">
+      <span class="level-badge level-badge--sandbox">Sandbox</span>
+      <h2 class="level-title">Queue Whisperer Sandbox</h2>
+      <p class="level-intro">Full G/G/1 playground. Adjust every parameter and watch the queue respond in real-time.</p>
+    </div>
+
+    <div class="sandbox-layout">
+      <div class="sandbox-villains" id="sandbox-villains">
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-randomizer-sandbox" src="assets/sprites/randomizer-scheming.png" alt="Randomizer">
+          <div class="villain-mood" id="randomizer-mood-sandbox">Scheming...</div>
+        </div>
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-chainmaster-sandbox" src="assets/sprites/chainmaster-rising.png" alt="Chain Master">
+          <div class="villain-mood" id="chainmaster-mood-sandbox">Rising...</div>
+        </div>
+        <div class="villain-slot">
+          <img class="sprite sprite-villain" id="sprite-quentin-sandbox" src="assets/sprites/quentin-confident.png" alt="Quentin">
+          <div class="villain-mood" id="quentin-mood-sandbox">Looking good!</div>
+        </div>
+      </div>
+
+      <div class="queue-stage queue-stage--sandbox" id="queue-stage-sandbox">
+        <canvas id="queue-canvas-sandbox" width="800" height="240"></canvas>
+      </div>
+    </div>
+
+    <div class="controls-panel controls-panel--sandbox">
+      <div class="controls-grid">
+        <div class="control-group">
+          <h4 class="control-group-title">Arrival process</h4>
+          <div class="control-row">
+            <label class="control-label" for="arrival-rate-sandbox">Arrival rate (λ)</label>
+            <input type="range" id="arrival-rate-sandbox" min="0.5" max="5" step="0.1" value="2.5">
+            <span class="control-value" id="arrival-rate-sandbox-val">2.50</span>
+          </div>
+          <div class="control-row">
+            <label class="control-label" for="cv-arrival-sandbox">Arrival CV</label>
+            <input type="range" id="cv-arrival-sandbox" min="0" max="2.0" step="0.05" value="1.0">
+            <span class="control-value" id="cv-arrival-sandbox-val">1.00</span>
+          </div>
+        </div>
+        <div class="control-group">
+          <h4 class="control-group-title">Service process</h4>
+          <div class="control-row">
+            <label class="control-label" for="service-rate-sandbox">Service rate (μ)</label>
+            <input type="range" id="service-rate-sandbox" min="0.5" max="5" step="0.1" value="3.0">
+            <span class="control-value" id="service-rate-sandbox-val">3.00</span>
+          </div>
+          <div class="control-row">
+            <label class="control-label" for="cv-service-sandbox">Service CV</label>
+            <input type="range" id="cv-service-sandbox" min="0" max="2.0" step="0.05" value="0.5">
+            <span class="control-value" id="cv-service-sandbox-val">0.50</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-bar stats-bar--sandbox" id="stats-sandbox">
+      <div class="stat"><span class="stat-value" id="stat-rho-sandbox">--</span><span class="stat-label">Utilization (ρ)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-lq-sandbox">--</span><span class="stat-label">Queue length (L<sub>q</sub>)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-wq-sandbox">--</span><span class="stat-label">Avg wait (W<sub>q</sub>)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-w-sandbox">--</span><span class="stat-label">Time in system (W)</span></div>
+      <div class="stat"><span class="stat-value" id="stat-l-sandbox">--</span><span class="stat-label">Number in system (L)</span></div>
+    </div>
+
+    <div class="narrative-trigger" id="narrative-trigger" hidden>
+      <div class="speech-bubble speech-bubble--small">
+        <p id="narrative-trigger-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 7: FOOTER ===== -->
+  <footer id="footer" class="footer">
+    <div class="footer-content">
+      <div class="footer-left">
+        <span>&copy; 2025 Northwestern University</span>
+        <span>From <em>Operations Engineering and Management</em> by Seyed Iravani</span>
+      </div>
+      <div class="footer-right">
+        <a href="https://queueing.vercel.app" target="_blank" rel="noopener">Full Queueing Calculator</a>
+        <span>Created by <a href="https://www.linkedin.com/in/dawson-ren/" target="_blank" rel="noopener">Dawson Ren</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
