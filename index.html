@@ -1,340 +1,668 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Queue Whisperer | Interactive G/G/1 Queue</title>
-  <meta name="description" content="Learn queueing theory through an interactive story featuring Randomizer, Chain Master, and the Queue Whisperer.">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Queue Whisperer</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #FDF6EC; font-family: 'Libre Baskerville', Georgia, serif; -webkit-font-smoothing: antialiased; color: #3D2B1F; }
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+.banner { background: linear-gradient(135deg, #B85C38 0%, #8B3A2A 100%); border-bottom: 4px solid #5C4033; }
+.banner-inner { max-width: 900px; margin: 0 auto; padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.banner h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 700; color: #FDF6EC; }
+.banner p { font-size: 15px; color: #F5E6D3; font-style: italic; margin-top: 4px; }
+.banner-model-info { display: flex; align-items: center; gap: 12px; }
+.banner-model-info .icon { font-size: 28px; }
+.banner-model-info h1 { font-size: 24px; }
+.banner-model-info p { font-size: 14px; margin-top: 2px; }
+.back-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #FDF6EC; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 13px; font-family: inherit; }
+.back-btn:hover { background: rgba(255,255,255,0.25); }
+.content { max-width: 900px; margin: 0 auto; padding: 24px 24px 48px; }
+
+/* Quentin box */
+.quentin-box { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 32px; margin-top: 8px; }
+.quentin-avatar { flex-shrink: 0; width: 64px; height: 64px; }
+.speech-bubble { background: #FFF; border: 2px solid #D4A574; border-radius: 12px 12px 12px 0; padding: 16px 20px; box-shadow: 0 2px 8px rgba(92,64,51,0.08); }
+.speech-bubble strong { font-size: 17px; color: #3D2B1F; display: block; }
+.speech-bubble p { margin-top: 8px; font-size: 15px; color: #5C4033; line-height: 1.5; }
+
+/* Section title */
+.section-title { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: #3D2B1F; margin-bottom: 16px; }
+
+/* Model cards */
+.model-grid { display: flex; flex-direction: column; gap: 12px; }
+.model-card { display: flex; align-items: center; gap: 16px; background: #FFF; border: 2px solid #E8D5C4; border-radius: 10px; padding: 16px 20px; cursor: pointer; text-align: left; font-family: inherit; width: 100%; transition: all 0.15s; }
+.model-card:hover { border-color: #B85C38; box-shadow: 0 4px 16px rgba(184,92,56,0.15); transform: translateY(-1px); }
+.model-card .icon { font-size: 32px; flex-shrink: 0; }
+.model-card .friendly { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 700; color: #B85C38; }
+.model-card .technical { font-size: 13px; color: #8B7355; margin-top: 2px; }
+.model-card .desc { font-size: 13px; color: #5C4033; margin-top: 6px; line-height: 1.5; }
+.model-card .arrow { font-size: 24px; color: #B85C38; flex-shrink: 0; font-weight: 300; margin-left: auto; }
+
+/* Disclaimer */
+.disclaimer { margin-top: 32px; padding: 14px 18px; background: #F5E6D3; border: 1px solid #D4A574; border-radius: 8px; font-size: 13px; color: #5C4033; line-height: 1.5; }
+
+/* Use-this-if box */
+.use-this-if { background: #FFF; border: 2px solid #E8D5C4; border-radius: 10px; padding: 16px 20px; margin-bottom: 16px; }
+.use-this-if h3 { font-size: 16px; color: #3D2B1F; margin-bottom: 8px; }
+.use-this-if ul { padding-left: 20px; }
+.use-this-if li { font-size: 14px; color: #5C4033; margin-bottom: 4px; line-height: 1.4; }
+
+/* Quentin tip */
+.quentin-tip { display: flex; align-items: flex-start; background: #FFF8F0; border: 1px solid #E8D5C4; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 14px; color: #5C4033; font-style: italic; }
+.quentin-tip .tip-icon { font-size: 20px; margin-right: 8px; flex-shrink: 0; font-style: normal; }
+
+/* Step box */
+.step-box { background: #FFF; border: 2px solid #E8D5C4; border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+.step-label { display: inline-block; background: #B85C38; color: #FDF6EC; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; letter-spacing: 0.5px; text-transform: uppercase; }
+.step-title { font-family: 'Playfair Display', Georgia, serif; font-size: 17px; font-weight: 700; color: #3D2B1F; margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: #8B7355; margin-bottom: 12px; }
+
+/* Time unit buttons */
+.time-unit-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.time-unit-btn { padding: 8px 20px; border: 2px solid #E8D5C4; border-radius: 6px; background: #FFF; cursor: pointer; font-size: 14px; font-family: inherit; color: #5C4033; transition: all 0.15s; }
+.time-unit-btn.active { border-color: #B85C38; background: #B85C38; color: #FDF6EC; }
+
+/* Input fields */
+.input-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.input-group label { display: block; font-size: 14px; font-weight: 700; color: #3D2B1F; margin-bottom: 4px; }
+.input-group .help { font-size: 12px; color: #8B7355; font-style: italic; margin-bottom: 4px; }
+.input-group input { width: 100%; padding: 10px 14px; border: 2px solid #E8D5C4; border-radius: 6px; font-size: 15px; font-family: inherit; background: #FDF6EC; color: #3D2B1F; outline: none; transition: border-color 0.15s; }
+.input-group input:focus { border-color: #B85C38; }
+
+/* Error */
+.error-box { background: #FFEBEE; border: 1px solid #EF5350; border-radius: 8px; padding: 12px 16px; color: #C62828; font-size: 14px; margin-bottom: 16px; display: none; }
+
+/* Compute button */
+.compute-btn { display: inline-block; background: #B85C38; color: #FDF6EC; border: none; border-radius: 8px; padding: 14px 32px; font-size: 16px; font-weight: 700; font-family: 'Playfair Display', Georgia, serif; cursor: pointer; transition: background 0.15s; }
+.compute-btn:hover { background: #A04E30; }
+
+/* Stability badge */
+.stability-badge { display: flex; align-items: center; padding: 14px 20px; border-radius: 10px; border: 2px solid; margin-bottom: 20px; }
+.stability-dot { width: 12px; height: 12px; border-radius: 50%; margin-right: 10px; flex-shrink: 0; }
+.stability-badge .label { font-weight: 700; }
+.stability-badge .note { margin-left: 8px; font-size: 13px; color: #666; }
+
+/* Results grid */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.result-card { background: #FFF; border: 2px solid #E8D5C4; border-radius: 10px; padding: 16px 20px; }
+.result-card .rlabel { font-size: 14px; font-weight: 700; color: #3D2B1F; margin-bottom: 4px; }
+.result-card .rdesc { font-size: 12px; color: #8B7355; margin-bottom: 8px; }
+.result-card .rvalue { font-family: 'Playfair Display', Georgia, serif; font-size: 26px; font-weight: 700; color: #B85C38; }
+
+/* Result sections (M/M/1 organized layout) */
+.result-section { margin-bottom: 24px; }
+.result-section-title { font-family: 'Playfair Display', Georgia, serif; font-size: 18px; font-weight: 700; color: #3D2B1F; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #E8D5C4; }
+.result-section .results-grid { margin-bottom: 0; }
+.inline-query { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 12px 16px; background: #FFF8F0; border: 1px dashed #D4A574; border-radius: 8px; margin-top: 8px; font-size: 14px; color: #5C4033; }
+.inline-query input { width: 80px; padding: 6px 10px; border: 2px solid #E8D5C4; border-radius: 6px; font-size: 14px; font-family: inherit; background: #FDF6EC; color: #3D2B1F; outline: none; }
+.inline-query input:focus { border-color: #B85C38; }
+.inline-query .iq-result { font-weight: 700; color: #B85C38; font-family: 'Playfair Display', Georgia, serif; font-size: 18px; }
+
+.btn-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.btn-dark { background: #5C4033; }
+.btn-dark:hover { background: #4A3429; }
+
+@media (max-width: 600px) {
+  .banner-inner { flex-direction: column; align-items: flex-start; }
+  .results-grid { grid-template-columns: 1fr; }
+  .banner h1 { font-size: 22px; }
+}
+</style>
 </head>
 <body>
 
-  <!-- ===== SECTION 1: HERO ===== -->
-  <header id="hero" class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="hero-title">The Queue Whisperer Academy</h1>
-        <p class="hero-subtitle">An interactive journey through the hidden world of waiting</p>
-        <p class="hero-tagline">From the book <em>Operations Engineering and Management</em> by Seyed Iravani</p>
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="btn-start-story">Start the story</button>
-          <button class="btn btn-secondary" id="btn-skip-sandbox">Skip to sandbox</button>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-queue-teaser" id="hero-queue-teaser">
-          <img src="assets/teaser/queue.png" alt="Queue Teaser">
-        </div>
+<!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
+<div id="page-select" class="page active">
+  <div class="banner">
+    <div class="banner-inner">
+      <div>
+        <h1>Queue Whisperer</h1>
+        <p>Your queue, decoded. No math degree required.</p>
       </div>
     </div>
-  </header>
-
-  <!-- ===== SECTION 2: LEVEL 0 — MEET THE QUEUE ===== -->
-  <section id="level-0" class="level">
-    <div class="level-header">
-      <span class="level-badge">Chapter 1</span>
-      <h2 class="level-title">Meet the queue</h2>
-    </div>
-
-    <div class="narrative-panel">
-      <div class="narrative-speaker">
-        <img class="sprite" id="sprite-quentin-l0" src="assets/sprites/quentin-confident.png" alt="Quentin Lineworth">
-        <span class="speaker-name">Quentin</span>
+  </div>
+  <div class="content">
+    <div class="quentin-box">
+      <div class="quentin-avatar">
+        <svg width="64" height="64" viewBox="0 0 64 64">
+          <circle cx="32" cy="22" r="14" fill="#5C4033"/>
+          <circle cx="32" cy="22" r="12" fill="#F5E6D3"/>
+          <circle cx="28" cy="20" r="1.5" fill="#5C4033"/>
+          <circle cx="36" cy="20" r="1.5" fill="#5C4033"/>
+          <path d="M29 26 Q32 29 35 26" stroke="#5C4033" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="26" y="34" width="12" height="18" rx="4" fill="#B85C38"/>
+          <rect x="22" y="36" width="6" height="3" rx="1.5" fill="#B85C38"/>
+          <rect x="36" y="36" width="6" height="3" rx="1.5" fill="#B85C38"/>
+          <rect x="27" y="52" width="4" height="8" rx="2" fill="#5C4033"/>
+          <rect x="33" y="52" width="4" height="8" rx="2" fill="#5C4033"/>
+          <path d="M20 10 Q32 4 44 10" stroke="#5C4033" fill="none" stroke-width="2"/>
+        </svg>
       </div>
       <div class="speech-bubble">
-        <p>My name is Quentin Lineworth, but most people just call me the <strong>Queue Whisperer</strong>. I've spent my whole life studying why we wait, why it drives us crazy, and how to make it better.</p>
-        <p>Let's start by watching a simple queue in action. Customers arrive, wait their turn, and get served. Simple, right? But watch what happens...</p>
+        <strong>Howdy! I'm Quentin Lineworth — the Queue Whisperer.</strong>
+        <p>Pick a model below that matches your situation. Not sure? Start with <strong>"The Classic"</strong> — it covers most queues you'll encounter. Each model is a different lens for looking at your line.</p>
       </div>
     </div>
 
-    <div class="queue-stage" id="queue-stage-l0">
-      <canvas id="queue-canvas-l0" width="800" height="200"></canvas>
-      <div class="queue-labels">
-        <span>Arriving</span>
-        <span>Waiting in line</span>
-        <span>Being served</span>
-        <span>Done</span>
-      </div>
-    </div>
+    <h2 class="section-title">Choose Your Model</h2>
+    <div id="model-grid" class="model-grid"></div>
 
-    <div class="level-footer">
-      <button class="btn btn-primary" id="btn-next-l0">Next: Meet the first villain</button>
+    <div class="disclaimer">
+      <strong>Disclaimer:</strong> These models are approximations based on queueing theory. Real-world queues are messier — use these results as directional guidance, not gospel. Based on the textbook <em>Operations Engineering and Management</em> by Seyed Iravani.
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ===== SECTION 3: LEVEL 1 — MEET RANDOMIZER ===== -->
-  <section id="level-1" class="level">
-    <div class="level-header">
-      <span class="level-badge level-badge--villain">Chapter 3, Part 1</span>
-      <h2 class="level-title">Meet Randomizer</h2>
-      <p class="level-intro">The first villain of queues: <strong>variability</strong>. Randomizer creates chaos in when people arrive and how long they take to serve.</p>
-    </div>
-
-    <div class="queue-stage-with-villains">
-      <div class="villain-panel">
-        <img class="sprite sprite-villain" id="sprite-randomizer-l1" src="assets/sprites/randomizer-sleeping.png" alt="Randomizer">
-        <div class="villain-mood" id="randomizer-mood-l1">Sleeping...</div>
-      </div>
-      <div class="queue-stage" id="queue-stage-l1">
-        <canvas id="queue-canvas-l1" width="800" height="200"></canvas>
-      </div>
-    </div>
-
-    <div class="controls-panel">
-      <h3 class="controls-title">Your controls <span class="controls-badge">Unlocked!</span></h3>
-      <div class="control-row">
-        <label class="control-label" for="cv-arrival-l1">Arrival variability (CV<sub>a</sub>)</label>
-        <input type="range" id="cv-arrival-l1" min="0" max="1.5" step="0.05" value="0.2">
-        <span class="control-value" id="cv-arrival-l1-val">0.20</span>
-      </div>
-      <div class="control-row">
-        <label class="control-label" for="cv-service-l1">Service variability (CV<sub>s</sub>)</label>
-        <input type="range" id="cv-service-l1" min="0" max="1.5" step="0.05" value="0.2">
-        <span class="control-value" id="cv-service-l1-val">0.20</span>
-      </div>
-    </div>
-
-    <div class="stats-bar" id="stats-l1">
-      <div class="stat"><span class="stat-value" id="stat-wq-l1">--</span><span class="stat-label">Avg wait (W<sub>q</sub>)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-lq-l1">--</span><span class="stat-label">Queue length (L<sub>q</sub>)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-rho-l1">--</span><span class="stat-label">Utilization (ρ)</span></div>
-    </div>
-
-    <div class="narrative-panel narrative-panel--inline">
-      <div class="speech-bubble speech-bubble--small">
-        <p><strong>Queue Whisperer's Cue:</strong> When variability is low, the queue is calm. Crank it up, and watch Randomizer come alive — arrivals become unpredictable, service times swing wildly, and the queue explodes.</p>
-      </div>
-    </div>
-
-    <div class="level-footer">
-      <button class="btn btn-primary" id="btn-next-l1">Next: Meet the second villain</button>
-    </div>
-  </section>
-
-  <!-- ===== SECTION 4: LEVEL 2 — MEET CHAIN MASTER ===== -->
-  <section id="level-2" class="level">
-    <div class="level-header">
-      <span class="level-badge level-badge--villain">Chapter 3, Part 2</span>
-      <h2 class="level-title">Meet Chain Master</h2>
-      <p class="level-intro">The second villain: <strong>dependency</strong>. Chain Master links everyone in line — one slow customer means everyone behind them waits.</p>
-    </div>
-
-    <div class="queue-stage-with-villains">
-      <div class="villain-panel villain-panel--duo">
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-randomizer-l2" src="assets/sprites/randomizer-scheming.png" alt="Randomizer">
-        </div>
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-chainmaster-l2" src="assets/sprites/chainmaster-weak.png" alt="Chain Master">
-          <div class="villain-mood" id="chainmaster-mood-l2">Chains broken...</div>
+<!-- ═══════════════════ PAGE 2: INPUT ═══════════════════ -->
+<div id="page-input" class="page">
+  <div class="banner">
+    <div class="banner-inner">
+      <div class="banner-model-info">
+        <span class="icon" id="input-banner-icon"></span>
+        <div>
+          <h1 id="input-banner-title"></h1>
+          <p id="input-banner-sub"></p>
         </div>
       </div>
-      <div class="queue-stage" id="queue-stage-l2">
-        <canvas id="queue-canvas-l2" width="800" height="200"></canvas>
-      </div>
+      <button class="back-btn" onclick="showPage('select')">← All Models</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="use-this-if">
+      <h3>Use this model if:</h3>
+      <ul id="use-this-if-list"></ul>
     </div>
 
-    <div class="controls-panel">
-      <h3 class="controls-title">New control <span class="controls-badge">Unlocked!</span></h3>
-      <div class="control-row">
-        <label class="control-label" for="rho-l2">Utilization (ρ)</label>
-        <input type="range" id="rho-l2" min="0.1" max="0.99" step="0.01" value="0.5">
-        <span class="control-value" id="rho-l2-val">0.50</span>
-      </div>
-      <div class="control-row">
-        <label class="control-label" for="cv-arrival-l2">Arrival CV</label>
-        <input type="range" id="cv-arrival-l2" min="0" max="1.5" step="0.05" value="0.5">
-        <span class="control-value" id="cv-arrival-l2-val">0.50</span>
-      </div>
-      <div class="control-row">
-        <label class="control-label" for="cv-service-l2">Service CV</label>
-        <input type="range" id="cv-service-l2" min="0" max="1.5" step="0.05" value="0.5">
-        <span class="control-value" id="cv-service-l2-val">0.50</span>
-      </div>
+    <div class="quentin-tip">
+      <span class="tip-icon">💬</span>
+      <span><strong>Quentin says:</strong> <span id="quentin-tip-text"></span></span>
     </div>
 
-    <div class="stats-bar" id="stats-l2">
-      <div class="stat"><span class="stat-value" id="stat-wq-l2">--</span><span class="stat-label">W<sub>q</sub></span></div>
-      <div class="stat"><span class="stat-value" id="stat-lq-l2">--</span><span class="stat-label">L<sub>q</sub></span></div>
-      <div class="stat"><span class="stat-value" id="stat-w-l2">--</span><span class="stat-label">W</span></div>
-      <div class="stat"><span class="stat-value" id="stat-rho-l2">--</span><span class="stat-label">ρ</span></div>
+    <!-- Step 1: Time Unit -->
+    <div class="step-box">
+      <div class="step-label">Step 1</div>
+      <div class="step-title">Pick your time unit</div>
+      <p class="step-desc">All rates and times will be in this unit.</p>
+      <div class="time-unit-row" id="time-unit-row"></div>
     </div>
 
-    <div class="narrative-panel narrative-panel--inline">
-      <div class="speech-bubble speech-bubble--small">
-        <p><strong>Queue Whisperer's Cue:</strong> Your wait time isn't just <em>your</em> wait time. It's everyone ahead of you, stacked together like dominoes. Chain Master doesn't slow you down — he slows down the person in front of you and lets the ripple do the rest.</p>
-      </div>
+    <!-- Step 2: Inputs -->
+    <div class="step-box">
+      <div class="step-label">Step 2</div>
+      <div class="step-title">Enter your numbers</div>
+      <div class="input-grid" id="input-fields"></div>
     </div>
 
-    <div class="level-footer">
-      <button class="btn btn-primary" id="btn-next-l2">Next: The final showdown</button>
-    </div>
-  </section>
+    <div class="error-box" id="error-box"></div>
+    <button class="compute-btn" onclick="compute()">Compute Results →</button>
+  </div>
+</div>
 
-  <!-- ===== SECTION 5: LEVEL 3 — LAW OF TWO VILLAINS ===== -->
-  <section id="level-3" class="level level--boss">
-    <div class="level-header">
-      <span class="level-badge level-badge--boss">Boss Fight</span>
-      <h2 class="level-title">The Law of Two Villains</h2>
-      <p class="level-intro">The queue is in crisis. Both villains are at full power. Your mission: weaken <strong>just one</strong> to bring the queue under control.</p>
-    </div>
-
-    <div class="boss-challenge" id="boss-challenge">
-      <div class="challenge-target">
-        <span class="challenge-label">Target: bring avg wait below</span>
-        <span class="challenge-value" id="challenge-target-val">--</span>
-      </div>
-      <div class="challenge-current">
-        <span class="challenge-label">Current avg wait</span>
-        <span class="challenge-value challenge-value--danger" id="challenge-current-val">--</span>
-      </div>
-    </div>
-
-    <div class="queue-stage-with-villains">
-      <div class="villain-panel villain-panel--duo">
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-randomizer-l3" src="assets/sprites/randomizer-cackling.png" alt="Randomizer">
-          <div class="villain-mood" id="randomizer-mood-l3">At full power!</div>
-        </div>
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-chainmaster-l3" src="assets/sprites/chainmaster-dominant.png" alt="Chain Master">
-          <div class="villain-mood" id="chainmaster-mood-l3">Chains everywhere!</div>
+<!-- ═══════════════════ PAGE 3: RESULTS ═══════════════════ -->
+<div id="page-results" class="page">
+  <div class="banner">
+    <div class="banner-inner">
+      <div class="banner-model-info">
+        <span class="icon" id="results-banner-icon"></span>
+        <div>
+          <h1 id="results-banner-title"></h1>
+          <p id="results-banner-sub"></p>
         </div>
       </div>
-      <div class="queue-stage" id="queue-stage-l3">
-        <canvas id="queue-canvas-l3" width="800" height="200"></canvas>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="back-btn" onclick="showPage('input')">← Edit Inputs</button>
+        <button class="back-btn" onclick="showPage('select')">← All Models</button>
       </div>
     </div>
-
-    <div class="controls-panel">
-      <h3 class="controls-title">All controls</h3>
-      <div class="control-row">
-        <label class="control-label" for="rho-l3">Utilization (ρ)</label>
-        <input type="range" id="rho-l3" min="0.1" max="0.99" step="0.01" value="0.92">
-        <span class="control-value" id="rho-l3-val">0.92</span>
-      </div>
-      <div class="control-row">
-        <label class="control-label" for="cv-arrival-l3">Arrival CV</label>
-        <input type="range" id="cv-arrival-l3" min="0" max="1.5" step="0.05" value="1.0">
-        <span class="control-value" id="cv-arrival-l3-val">1.00</span>
-      </div>
-      <div class="control-row">
-        <label class="control-label" for="cv-service-l3">Service CV</label>
-        <input type="range" id="cv-service-l3" min="0" max="1.5" step="0.05" value="1.0">
-        <span class="control-value" id="cv-service-l3-val">1.00</span>
-      </div>
+  </div>
+  <div class="content">
+    <div class="stability-badge" id="stability-badge">
+      <div class="stability-dot" id="stability-dot"></div>
+      <span class="label" id="stability-label"></span>
+      <span class="note" id="stability-note"></span>
     </div>
-
-    <div class="stats-bar" id="stats-l3">
-      <div class="stat"><span class="stat-value" id="stat-wq-l3">--</span><span class="stat-label">W<sub>q</sub></span></div>
-      <div class="stat"><span class="stat-value" id="stat-lq-l3">--</span><span class="stat-label">L<sub>q</sub></span></div>
-      <div class="stat"><span class="stat-value" id="stat-w-l3">--</span><span class="stat-label">W</span></div>
-      <div class="stat"><span class="stat-value" id="stat-rho-l3">--</span><span class="stat-label">ρ</span></div>
+    <div class="quentin-tip" id="results-tip" style="display:none;">
+      <span class="tip-icon" id="results-tip-icon">💬</span>
+      <span><strong>Quentin says:</strong> <span id="results-tip-text"></span></span>
     </div>
-
-    <div class="victory-overlay" id="victory-overlay" hidden>
-      <div class="victory-content">
-        <img class="sprite" id="sprite-quentin-victory" src="assets/sprites/quentin-celebrating.png" alt="Quentin celebrating">
-        <h3>The Law of Two Villains</h3>
-        <p>A queue needs <strong>both</strong> variability and dependency. Weaken or remove one, and the queue shrinks or disappears.</p>
-        <button class="btn btn-primary" id="btn-to-sandbox">Enter the Sandbox</button>
-      </div>
+    <div class="results-grid" id="results-grid"></div>
+    <div class="btn-row">
+      <button class="compute-btn" onclick="showPage('input')">← Adjust Inputs</button>
+      <button class="compute-btn btn-dark" onclick="showPage('select')">← Pick a Different Model</button>
     </div>
+  </div>
+</div>
 
-    <div class="level-footer">
-      <button class="btn btn-secondary" id="btn-skip-to-sandbox">Skip to sandbox</button>
-    </div>
-  </section>
+<script>
+/* ═══════════════════════════════════════════
+   CALCULATIONS — ported from dawsonren/Queueing
+   ═══════════════════════════════════════════ */
+function factorial(n){var r=1;for(var i=2;i<=n;i++)r*=i;return r}
+function stdNormPDF(x){return Math.exp(-(x**2)/2)/Math.sqrt(2*Math.PI)}
+function cumStdNorm(x){var a1=.254829592,a2=-.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=.3275911,s=x<0?-1:1;x=Math.abs(x)/Math.sqrt(2);var t=1/(1+p*x),y=1-(((((a5*t+a4)*t)+a3)*t+a2)*t+a1)*t*Math.exp(-x*x);return .5*(1+s*y)}
 
-  <!-- ===== SECTION 6: SANDBOX ===== -->
-  <section id="sandbox" class="level level--sandbox">
-    <div class="level-header">
-      <span class="level-badge level-badge--sandbox">Sandbox</span>
-      <h2 class="level-title">Queue Whisperer Sandbox</h2>
-      <p class="level-intro">Full G/G/1 playground. Adjust every parameter and watch the queue respond in real-time.</p>
-    </div>
+var CALC={};
 
-    <div class="sandbox-layout">
-      <div class="sandbox-villains" id="sandbox-villains">
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-randomizer-sandbox" src="assets/sprites/randomizer-scheming.png" alt="Randomizer">
-          <div class="villain-mood" id="randomizer-mood-sandbox">Scheming...</div>
-        </div>
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-chainmaster-sandbox" src="assets/sprites/chainmaster-rising.png" alt="Chain Master">
-          <div class="villain-mood" id="chainmaster-mood-sandbox">Rising...</div>
-        </div>
-        <div class="villain-slot">
-          <img class="sprite sprite-villain" id="sprite-quentin-sandbox" src="assets/sprites/quentin-confident.png" alt="Quentin">
-          <div class="villain-mood" id="quentin-mood-sandbox">Looking good!</div>
-        </div>
-      </div>
+/*
+ * M/M/1 — Single server, Poisson arrivals, Exponential service
+ *
+ * Formulas & justifications:
+ *   rho = lambda / mu                                (traffic intensity / utilization)
+ *   P0  = 1 - rho                                    (probability system is empty)
+ *   P(N=n) = (1-rho) * rho^n                          (geometric distribution of # in system)
+ *   P(N >= k) = rho^k                                 (CCDF of geometric)
+ *
+ *   Lq = rho^2 / (1-rho)                              (avg # in queue; from summing n*P(Nq=n))
+ *   Ls = rho / (1-rho)                                 (avg # in system; geometric mean)
+ *   Ws = 1 / (mu - lambda)                             (avg time in system; from Ls = lambda * Ws, Little's Law)
+ *   Wq = Ws - 1/mu = rho / (mu - lambda)              (avg wait in queue; total time minus service)
+ *
+ *   P(Nq >= n) = P(N >= n+1) = rho^(n+1)              (# in queue is N-1 when N>=1)
+ *   P(Wq > t) = rho * exp(-(mu - lambda) * t)         (CCDF of wait in queue; mixed: P0 mass at 0 + exponential)
+ *   P(W > t)  = exp(-(mu - lambda) * t)                (CCDF of time in system; exponential with rate mu-lambda)
+ *
+ *   Idle servers = 1 - rho = P0                        (only 1 server, so avg idle = 1-rho)
+ */
+CALC.MM1 = function(I) {
+  var lam = I["arrival-rate"], mu = I["service-rate"];
+  var rho = lam / mu;
+  var Lq = rho * rho / (1 - rho);
+  var Ls = rho / (1 - rho);
+  var Ws = 1 / (mu - lam);
+  var Wq = rho / (mu - lam);
+  return {
+    "utilization": rho,
+    "mean-num-in-queue": Lq,
+    "mean-num-in-sys": Ls,
+    "mean-time-in-queue": Wq,
+    "mean-time-in-sys": Ws,
+    "idle-servers": 1 - rho,
+    "stability": rho < 1,
+    /* Store lambda/mu/rho for dynamic probability queries on results page */
+    "_lambda": lam, "_mu": mu, "_rho": rho
+  };
+};
 
-      <div class="queue-stage queue-stage--sandbox" id="queue-stage-sandbox">
-        <canvas id="queue-canvas-sandbox" width="800" height="240"></canvas>
-      </div>
-    </div>
+/* Dynamic probability helpers for M/M/1 results page */
+function mm1ProbNqGte(rho, n) {
+  /* P(Nq >= n) = P(N >= n+1) = rho^(n+1)  for n >= 1; trivially 1 for n=0 */
+  if (n <= 0) return 1;
+  return Math.pow(rho, n + 1);
+}
+function mm1ProbNsGte(rho, n) {
+  /* P(N >= n) = rho^n */
+  if (n <= 0) return 1;
+  return Math.pow(rho, n);
+}
+function mm1ProbWqGte(rho, mu, lam, t) {
+  /* P(Wq > t) = rho * exp(-(mu-lambda)*t) */
+  if (t <= 0) return rho; /* P(Wq > 0) = rho = probability of having to wait at all */
+  return rho * Math.exp(-(mu - lam) * t);
+}
+function mm1ProbWsGte(mu, lam, t) {
+  /* P(W > t) = exp(-(mu-lambda)*t) */
+  if (t <= 0) return 1;
+  return Math.exp(-(mu - lam) * t);
+}
 
-    <div class="controls-panel controls-panel--sandbox">
-      <div class="controls-grid">
-        <div class="control-group">
-          <h4 class="control-group-title">Arrival process</h4>
-          <div class="control-row">
-            <label class="control-label" for="arrival-rate-sandbox">Arrival rate (λ)</label>
-            <input type="range" id="arrival-rate-sandbox" min="0.5" max="5" step="0.1" value="2.5">
-            <span class="control-value" id="arrival-rate-sandbox-val">2.50</span>
-          </div>
-          <div class="control-row">
-            <label class="control-label" for="cv-arrival-sandbox">Arrival CV</label>
-            <input type="range" id="cv-arrival-sandbox" min="0" max="2.0" step="0.05" value="1.0">
-            <span class="control-value" id="cv-arrival-sandbox-val">1.00</span>
-          </div>
-        </div>
-        <div class="control-group">
-          <h4 class="control-group-title">Service process</h4>
-          <div class="control-row">
-            <label class="control-label" for="service-rate-sandbox">Service rate (μ)</label>
-            <input type="range" id="service-rate-sandbox" min="0.5" max="5" step="0.1" value="3.0">
-            <span class="control-value" id="service-rate-sandbox-val">3.00</span>
-          </div>
-          <div class="control-row">
-            <label class="control-label" for="cv-service-sandbox">Service CV</label>
-            <input type="range" id="cv-service-sandbox" min="0" max="2.0" step="0.05" value="0.5">
-            <span class="control-value" id="cv-service-sandbox-val">0.50</span>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="stats-bar stats-bar--sandbox" id="stats-sandbox">
-      <div class="stat"><span class="stat-value" id="stat-rho-sandbox">--</span><span class="stat-label">Utilization (ρ)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-lq-sandbox">--</span><span class="stat-label">Queue length (L<sub>q</sub>)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-wq-sandbox">--</span><span class="stat-label">Avg wait (W<sub>q</sub>)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-w-sandbox">--</span><span class="stat-label">Time in system (W)</span></div>
-      <div class="stat"><span class="stat-value" id="stat-l-sandbox">--</span><span class="stat-label">Number in system (L)</span></div>
-    </div>
+CALC.MMs=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],f=1,inv=1;for(var i=1;i<=I["servers"]-1;i++){f*=a/i;inv+=f}inv+=f*a/(I["servers"]*(1-u));var p0=1/inv,sf=factorial(I["servers"]),Ls=a+(a**(I["servers"]+1)*p0)/(I["servers"]*sf*(1-u)**2),Ws=Ls/I["arrival-rate"],Wq=Ws-1/I["service-rate"],Lq=Wq*I["arrival-rate"],pw=a**I["servers"]*p0*(I["servers"]*I["service-rate"]/(I["servers"]*I["service-rate"]-I["arrival-rate"]))/sf,pwt=pw*Math.exp((I["arrival-rate"]-I["service-rate"]*I["servers"])*I["waiting-more-than-t"]);return{"utilization":u,"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"prob-cust-waits":pw,"prob-cust-waits-more-than-t":pwt,"stability":u<1}};
 
-    <div class="narrative-trigger" id="narrative-trigger" hidden>
-      <div class="speech-bubble speech-bubble--small">
-        <p id="narrative-trigger-text"></p>
-      </div>
-    </div>
-  </section>
+CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]===I["capacity"]){var inv=1;for(var i=0;i<=I["capacity"];i++)inv+=a**i/factorial(i);p0=1/inv;pf=p0*(a**I["capacity"]/factorial(I["capacity"]));ea=I["arrival-rate"]*(1-pf);Lq=0;Wq=0;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=1;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
 
-  <!-- ===== SECTION 7: FOOTER ===== -->
-  <footer id="footer" class="footer">
-    <div class="footer-content">
-      <div class="footer-left">
-        <span>&copy; 2025 Northwestern University</span>
-        <span>From <em>Operations Engineering and Management</em> by Seyed Iravani</span>
-      </div>
-      <div class="footer-right">
-        <a href="https://queueing.vercel.app" target="_blank" rel="noopener">Full Queueing Calculator</a>
-        <span>Created by <a href="https://www.linkedin.com/in/dawson-ren/" target="_blank" rel="noopener">Dawson Ren</a></span>
-      </div>
-    </div>
-  </footer>
+CALC.MMsNN=function(I){var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=0;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
 
-  <script type="module" src="js/main.js"></script>
+CALC.MG1=function(I){var u=I["arrival-rate"]/I["service-rate"],p0=1-u,Ls=u+(u**2*(1+I["variance"]*I["service-rate"]**2))/(2*(1-u)),Ws=Ls/I["arrival-rate"],Wq=Ws-1/I["service-rate"],Lq=Wq*I["arrival-rate"];return{"utilization":u,"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"stability":u<1}};
+
+CALC.MGs=function(I){var CV2=I["variance"]*I["service-rate"]**2,u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],f=1,inv=1;for(var i=1;i<=I["servers"]-1;i++){f*=a/i;inv+=f}inv+=f*a/(I["servers"]*(1-u));var p0=1/inv,sf=factorial(I["servers"]),Lq=(a**(I["servers"]+1)*p0)/(I["servers"]*sf*(1-u)**2)*(1+CV2)/2,Wq=Lq/I["arrival-rate"],Ws=Wq+1/I["service-rate"],Ls=Ws*I["arrival-rate"];return{"utilization":u,"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"stability":u<1}};
+
+CALC.GGc=function(I){var ca=1/I["mean-interarrival"],sa=I["breakdown"]/(I["breakdown"]+I["fix"]),cv2p=I["standard-deviation-processing"]**2/I["mean-processing"]**2,Te=I["mean-processing"]/sa,cv2o=I["fix"]===0?0:I["standard-deviation-fix"]**2/I["fix"]**2,cv2e=cv2p+(1+cv2o)*sa*(1-sa)*(I["fix"]/I["mean-processing"]),cv2a=I["standard-deviation-interarrival"]**2*ca**2,cu=ca*Te/I["servers"],V=(cv2e+cv2a)/2,U=(1/(I["servers"]*(1-cu)))*(cu**((2*(I["servers"]+1))**.5-1)),T=Te,Wq=V*U*T,Lq=Wq*ca,Ws=Wq+T,Ls=Ws*ca,cv2d=1+(1-cu**2)*(cv2a-1)+(cu**2/(I["servers"]**.5))*(cv2e-1),md=1/ca,sd=md*cv2d**.5;return{"utilization":cu,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"mean-interdeparture":md,"standard-deviation-interdeparture":sd,"stability":cu<1}};
+
+CALC.callCenters=function(I){var R=I["arrival-rate"]/I["service-rate"],beta=(I["servers"]-R)/R**.5,theta=1/I["average-waiting-before-abandonment"],bsmt=beta*(I["service-rate"]/theta)**.5,h1=stdNormPDF(bsmt)/cumStdNorm(-bsmt),smt=(I["service-rate"]/theta)**.5,h2=smt*stdNormPDF(-beta)/cumStdNorm(beta),stm=(theta/(I["service-rate"]*I["servers"]))**.5,h3=stdNormPDF(bsmt+stm)/cumStdNorm(-bsmt-stm),ssmt=I["waiting-more-than-t"]*(I["service-rate"]*I["servers"]*theta)**.5,h4=stdNormPDF(bsmt)/(1-cumStdNorm(bsmt+ssmt)),fdc=1/(1+h1/h2),pwt=(h1/h4)*fdc*Math.exp(-theta*I["waiting-more-than-t"]),asa=(1/theta)*(1-h1/h3)*fdc,pa=asa*theta,eb=R-R*(1-h1/h3)*fdc,occ=eb/I["servers"],ebl=eb+I["arrival-rate"]*asa,pad=pa/fdc;return{"fraction-delayed-customers":fdc,"prob-cust-waits-more-than-t":pwt,"mean-time-in-queue":asa,"prob-abandonment":pa,"expected-busy-agents":eb,"occupancy":occ,"expected-busy-lines":ebl,"prob-abandonment-given-delayed":pad,"stability":isFinite(I["average-waiting-before-abandonment"])||occ<1}};
+
+CALC.MG1Priority=function(I){var r1=I["arrival-rate-type-1"]*I["mean-processing-type-1"],r2=I["arrival-rate-type-2"]*I["mean-processing-type-2"],r3=I["arrival-rate-type-3"]*I["mean-processing-type-3"],p1=r1/(r1+r2+r3),p2=r2/(r1+r2+r3),p3=r3/(r1+r2+r3),a0=0,a1=r1,a2=r1+r2,a3=r1+r2+r3,v1=I["arrival-rate-type-1"]*(I["mean-processing-type-1"]**2+I["standard-deviation-processing-type-1"]**2),v2=I["arrival-rate-type-2"]*(I["mean-processing-type-2"]**2+I["standard-deviation-processing-type-2"]**2),v3=I["arrival-rate-type-3"]*(I["mean-processing-type-3"]**2+I["standard-deviation-processing-type-3"]**2),sv=v1+v2+v3,wq1=sv/(2*(1-a0)*(1-a1)),ws1=wq1+I["mean-processing-type-1"],nq1=I["arrival-rate-type-1"]*wq1,ns1=I["arrival-rate-type-1"]*ws1,wq2=sv/(2*(1-a1)*(1-a2)),ws2=wq2+I["mean-processing-type-2"],nq2=I["arrival-rate-type-2"]*wq2,ns2=I["arrival-rate-type-2"]*ws2,wq3=I["arrival-rate-type-1"]===0?0:sv/(2*(1-a2)*(1-a3)),ws3=wq3+I["mean-processing-type-3"],nq3=I["arrival-rate-type-3"]*wq3,ns3=I["arrival-rate-type-3"]*ws3;return{"average-waiting-in-queue-type-1":wq1,"average-waiting-in-queue-type-2":wq2,"average-waiting-in-queue-type-3":wq3,"average-waiting-in-system-type-1":ws1,"average-waiting-in-system-type-2":ws2,"average-waiting-in-system-type-3":ws3,"average-number-in-queue-type-1":nq1,"average-number-in-queue-type-2":nq2,"average-number-in-queue-type-3":nq3,"average-number-in-system-type-1":ns1,"average-number-in-system-type-2":ns2,"average-number-in-system-type-3":ns3,"mean-time-in-queue":wq1*p1+wq2*p2+wq3*p3,"mean-time-in-sys":ws1*p1+ws2*p2+ws3*p3,"mean-num-in-queue":nq1+nq2+nq3,"mean-num-in-sys":ns1+ns2+ns3,"stability":a3<1}};
+
+/* ═══════════════════════════════════════════
+   MODEL DEFINITIONS
+   ═══════════════════════════════════════════ */
+var MODELS=[
+{id:"MM1",title:"Single Server Queue (M/M/1)",friendly:"The Starter",icon:"☝️",desc:"The simplest and most fundamental queue: one server, random arrivals, random service times. The foundation of queueing theory — if you're new, start here.",useIf:["You have exactly one server","Arrivals are random","Service times are random (exponential)","No limit on queue length"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 8"},{k:"service-rate",label:"How many can the server handle per",type:"rate",ph:"e.g. 10"}],
+/* Sectioned outputs — rendered differently from flat outputs */
+sections:[
+{title:"Queue Information",outputs:[
+{k:"mean-num-in-queue",l:"Avg. number waiting in line",f:"num"},
+{k:"mean-num-in-sys",l:"Avg. number in the system (waiting + being served)",f:"num"}
+],queries:[
+{id:"nq",prefix:"Chance of having",suffix:"or more waiting in line",calc:"nqGte",f:"pct",ph:"e.g. 5"},
+{id:"ns",prefix:"Chance of having",suffix:"or more in the system",calc:"nsGte",f:"pct",ph:"e.g. 5"}
+]},
+{title:"Wait Information",outputs:[
+{k:"mean-time-in-queue",l:"Avg. wait time in line",f:"time"},
+{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"}
+],queries:[
+{id:"wq",prefix:"Chance of waiting",suffix:"or more in line",calc:"wqGte",f:"pct",ph:"e.g. 2",unit:"time"},
+{id:"ws",prefix:"Chance of spending",suffix:"or more in the system",calc:"wsGte",f:"pct",ph:"e.g. 3",unit:"time"}
+]},
+{title:"Server Information",outputs:[
+{k:"utilization",l:"Server utilization",d:"How busy is your server on average?",f:"pct"},
+{k:"idle-servers",l:"Avg. number of idle servers",d:"On average, how often is the server free?",f:"num"}
+]}
+],tip:"The simplest queue there is — one line, one server. Master this and everything else is a variation on the theme."},
+{id:"MMs",title:"Basic Multi-Server Queue",friendly:"The Classic",icon:"🏪",desc:"The most common queue: customers arrive randomly, get served in order, and each server takes roughly the same time. Think of a bank with multiple tellers or a fast-food counter.",useIf:["Arrivals are random and unpredictable","Service times are fairly consistent","You have one or more identical servers","Your line has no maximum capacity"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 10"},{k:"service-rate",label:"How many customers can one server handle per",type:"rate",ph:"e.g. 4"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 3"},{k:"waiting-more-than-t",label:"Check: probability of waiting longer than this many",type:"time",ph:"e.g. 5"}],outputs:[{k:"utilization",l:"Server utilization",d:"How busy are your servers on average?",f:"pct"},{k:"prob-empty-sys",l:"Chance the system is empty",d:"Probability a customer walks in and finds nobody",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"},{k:"prob-cust-waits",l:"Chance a customer has to wait",f:"pct"},{k:"prob-cust-waits-more-than-t",l:"Chance of waiting longer than specified time",f:"pct"}],tip:"This is your bread-and-butter queue model. If you're not sure which to pick, start here!"},
+{id:"MMsc",title:"Multi-Server with Limited Space",friendly:"The Bouncer",icon:"🚪",desc:"Like the classic queue, but there's a maximum number of people allowed. When it's full, new arrivals are turned away. Think of a waiting room with limited seats.",useIf:["You have a hard limit on how many people can be in the system","Customers who find a full system leave","Arrivals are random","Service times are fairly consistent"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 10"},{k:"service-rate",label:"How many customers can one server handle per",type:"rate",ph:"e.g. 4"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 3"},{k:"capacity",label:"Maximum people allowed in the system?",type:"num",ph:"e.g. 10"}],outputs:[{k:"utilization",l:"Server utilization",f:"pct"},{k:"prob-empty-sys",l:"Chance the system is empty",f:"pct"},{k:"prob-full-sys",l:"Chance the system is full (turning people away)",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"},{k:"effective-arrival-rate",l:"Effective arrival rate",d:"Actual arrivals after turned-away customers",f:"rate"}],tip:"Got a waiting room with limited chairs? A parking lot that fills up? This one's for you."},
+{id:"MMsNN",title:"Small Population Queue",friendly:"The Inner Circle",icon:"👥",desc:"When your customer pool is small and fixed — like machines that break down and need repair, or nurses sharing workstations.",useIf:["Your potential customers are a known, small group","As people enter the queue, fewer are left to arrive","Think: machine repair, shared equipment, small teams"],inputs:[{k:"arrival-rate",label:"How often does each individual need service (per",type:"rate",ph:"e.g. 0.5"},{k:"service-rate",label:"How many can one server handle per",type:"rate",ph:"e.g. 2"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 2"},{k:"calling-population",label:"How many total people/machines in the group?",type:"num",ph:"e.g. 8"}],outputs:[{k:"utilization",l:"Server utilization",f:"pct"},{k:"prob-empty-sys",l:"Chance the system is empty",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"},{k:"effective-arrival-rate",l:"Effective arrival rate",f:"rate"}],tip:"When your customer pool is small — like machines on a floor or nurses sharing stations — this captures how arrivals slow down as more folks enter service."},
+{id:"MG1",title:"Single Server, Variable Service",friendly:"The Wildcard",icon:"🎲",desc:"One server whose service time is unpredictable — some customers take 2 minutes, others take 20. Think of a help desk or a doctor's office.",useIf:["You have exactly one server","Service times vary a lot","You know the average service time and its spread","Arrivals are random"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 8"},{k:"service-rate",label:"How many can the server handle per",type:"rate",ph:"e.g. 10"},{k:"variance",label:"How much does service time vary? (variance)",type:"plain",ph:"e.g. 0.01",help:"Higher = more unpredictable. 0 means every customer takes exactly the same time."}],outputs:[{k:"utilization",l:"Server utilization",f:"pct"},{k:"prob-empty-sys",l:"Chance the system is empty",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"}],tip:"One server, unpredictable service times. The variance input is the secret weapon — it tells you how much unpredictability costs you."},
+{id:"MGs",title:"Multi-Server, Variable Service",friendly:"The Team Wildcard",icon:"🎯",desc:"Multiple servers with variable service times. Like the Wildcard, but with a team. Think of a call center where agents take different times per call.",useIf:["You have multiple servers","Service times vary","Arrivals are random","No limit on queue length"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 20"},{k:"service-rate",label:"How many can one server handle per",type:"rate",ph:"e.g. 8"},{k:"variance",label:"How much does service time vary? (variance)",type:"plain",ph:"e.g. 0.01"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 3"}],outputs:[{k:"utilization",l:"Server utilization",f:"pct"},{k:"prob-empty-sys",l:"Chance the system is empty",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"}],tip:"Same idea as the Wildcard, but now you've got a team. More servers smooth things out, but variability still bites."},
+{id:"GGc",title:"General Multi-Server (with breakdowns)",friendly:"The Real World",icon:"🏭",desc:"The most realistic model: arrivals aren't perfectly random, service varies, and servers can break down. Perfect for manufacturing or IT systems.",useIf:["Arrival patterns aren't perfectly random","Service times aren't perfectly random","Servers can break down and need repair","You want the most realistic estimate"],inputs:[{k:"mean-interarrival",label:"Avg. time between arrivals",type:"time",ph:"e.g. 5"},{k:"standard-deviation-interarrival",label:"How much does time between arrivals vary? (std. dev.)",type:"time",ph:"e.g. 3"},{k:"mean-processing",label:"Avg. time to serve one customer",type:"time",ph:"e.g. 12"},{k:"standard-deviation-processing",label:"How much does service time vary? (std. dev.)",type:"time",ph:"e.g. 4"},{k:"breakdown",label:"Avg. time before a server breaks down",type:"time",ph:"e.g. 500"},{k:"fix",label:"Avg. time to fix a broken server",type:"time",ph:"e.g. 10"},{k:"standard-deviation-fix",label:"How much does fix time vary? (std. dev.)",type:"time",ph:"e.g. 5"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 3"}],outputs:[{k:"utilization",l:"Server utilization",f:"pct"},{k:"mean-num-in-sys",l:"Avg. people in the system",f:"num"},{k:"mean-num-in-queue",l:"Avg. people waiting in line",f:"num"},{k:"mean-time-in-sys",l:"Avg. total time in system",f:"time"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"},{k:"mean-interdeparture",l:"Avg. time between completed customers",f:"time"},{k:"standard-deviation-interdeparture",l:"Variation in time between completions",f:"time"}],tip:"The 'real world' model. Nothing is perfectly random, and things break. If you want honesty, pick this one."},
+{id:"callCenters",title:"Queue with Abandonment",friendly:"The Impatient Crowd",icon:"📞",desc:"Customers get impatient and leave if they wait too long. Common in call centers, ER waiting rooms, or drive-throughs.",useIf:["Customers will give up and leave after waiting","You want to know what fraction you're losing","Think: call centers, drive-throughs, online checkout"],inputs:[{k:"arrival-rate",label:"How many customers arrive per",type:"rate",ph:"e.g. 100"},{k:"service-rate",label:"How many can one server handle per",type:"rate",ph:"e.g. 12"},{k:"average-waiting-before-abandonment",label:"How long will a customer wait before giving up?",type:"time",ph:"e.g. 3",help:"Average patience — some leave sooner, some later"},{k:"servers",label:"How many servers do you have?",type:"num",ph:"e.g. 10"},{k:"waiting-more-than-t",label:"Check: probability of waiting longer than this many",type:"time",ph:"e.g. 2"}],outputs:[{k:"fraction-delayed-customers",l:"Fraction of customers who have to wait",f:"pct"},{k:"prob-cust-waits-more-than-t",l:"Chance of waiting longer than specified time",f:"pct"},{k:"mean-time-in-queue",l:"Avg. wait time before service",f:"time"},{k:"prob-abandonment",l:"Chance a customer gives up and leaves",f:"pct"},{k:"expected-busy-agents",l:"Avg. number of busy servers",f:"num"},{k:"occupancy",l:"Server occupancy",f:"pct"},{k:"expected-busy-lines",l:"Avg. busy lines (serving + waiting)",f:"num"},{k:"prob-abandonment-given-delayed",l:"Chance of leaving, given they had to wait",f:"pct"}],tip:"If your customers hang up or walk away, ignoring that gives you fairy-tale numbers. This model tells the truth."},
+{id:"MG1Priority",title:"Priority Queue (3 levels)",friendly:"The VIP Lane",icon:"⭐",desc:"One server handles three priority levels. Type 1 always goes first. Think of ER triage, airline boarding classes, or help desk severity levels.",useIf:["You have different priority levels","Higher-priority customers skip ahead","You have exactly one server","Up to 3 priority tiers"],inputs:[{k:"arrival-rate-type-1",label:"Priority 1 (highest): arrivals per",type:"rate",ph:"e.g. 2"},{k:"mean-processing-type-1",label:"Priority 1: avg. service time",type:"time",ph:"e.g. 0.1"},{k:"standard-deviation-processing-type-1",label:"Priority 1: service time variation (std. dev.)",type:"time",ph:"e.g. 0.05"},{k:"arrival-rate-type-2",label:"Priority 2 (medium): arrivals per",type:"rate",ph:"e.g. 5"},{k:"mean-processing-type-2",label:"Priority 2: avg. service time",type:"time",ph:"e.g. 0.08"},{k:"standard-deviation-processing-type-2",label:"Priority 2: service time variation (std. dev.)",type:"time",ph:"e.g. 0.03"},{k:"arrival-rate-type-3",label:"Priority 3 (lowest): arrivals per",type:"rate",ph:"e.g. 8"},{k:"mean-processing-type-3",label:"Priority 3: avg. service time",type:"time",ph:"e.g. 0.06"},{k:"standard-deviation-processing-type-3",label:"Priority 3: service time variation (std. dev.)",type:"time",ph:"e.g. 0.02"}],outputs:[{k:"average-waiting-in-queue-type-1",l:"Priority 1: avg. wait in line",f:"time"},{k:"average-waiting-in-system-type-1",l:"Priority 1: avg. total time",f:"time"},{k:"average-number-in-queue-type-1",l:"Priority 1: avg. waiting in line",f:"num"},{k:"average-number-in-system-type-1",l:"Priority 1: avg. in system",f:"num"},{k:"average-waiting-in-queue-type-2",l:"Priority 2: avg. wait in line",f:"time"},{k:"average-waiting-in-system-type-2",l:"Priority 2: avg. total time",f:"time"},{k:"average-number-in-queue-type-2",l:"Priority 2: avg. waiting in line",f:"num"},{k:"average-number-in-system-type-2",l:"Priority 2: avg. in system",f:"num"},{k:"average-waiting-in-queue-type-3",l:"Priority 3: avg. wait in line",f:"time"},{k:"average-waiting-in-system-type-3",l:"Priority 3: avg. total time",f:"time"},{k:"average-number-in-queue-type-3",l:"Priority 3: avg. waiting in line",f:"num"},{k:"average-number-in-system-type-3",l:"Priority 3: avg. in system",f:"num"},{k:"mean-time-in-queue",l:"Overall avg. wait in line",f:"time"},{k:"mean-time-in-sys",l:"Overall avg. total time",f:"time"},{k:"mean-num-in-queue",l:"Overall avg. waiting in line",f:"num"},{k:"mean-num-in-sys",l:"Overall avg. in system",f:"num"}],tip:"Some customers matter more — or at least, they're served first. This shows you exactly what that priority structure costs the folks at the back."}
+];
+
+/* ═══════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════ */
+var currentModel = null;
+var currentTimeUnit = "minute";
+var currentResults = null;
+
+/* ═══════════════════════════════════════════
+   PAGE NAVIGATION
+   ═══════════════════════════════════════════ */
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  document.getElementById('page-' + id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 1: RENDER MODEL CARDS
+   ═══════════════════════════════════════════ */
+function renderModelGrid() {
+  var grid = document.getElementById('model-grid');
+  grid.innerHTML = '';
+  MODELS.forEach(function(m) {
+    var btn = document.createElement('button');
+    btn.className = 'model-card';
+    btn.innerHTML = '<div class="icon">' + m.icon + '</div><div style="flex:1"><div class="friendly">' + m.friendly + '</div><div class="technical">' + m.title + '</div><p class="desc">' + m.desc + '</p></div><div class="arrow">→</div>';
+    btn.onclick = function() { selectModel(m); };
+    grid.appendChild(btn);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 2: SELECT MODEL → RENDER INPUTS
+   ═══════════════════════════════════════════ */
+function selectModel(m) {
+  currentModel = m;
+  currentTimeUnit = "minute";
+
+  // Banner
+  document.getElementById('input-banner-icon').textContent = m.icon;
+  document.getElementById('input-banner-title').textContent = m.friendly;
+  document.getElementById('input-banner-sub').textContent = m.title;
+
+  // Use this if
+  var ul = document.getElementById('use-this-if-list');
+  ul.innerHTML = '';
+  m.useIf.forEach(function(item) {
+    var li = document.createElement('li');
+    li.textContent = item;
+    ul.appendChild(li);
+  });
+
+  // Quentin tip
+  document.getElementById('quentin-tip-text').textContent = m.tip;
+
+  // Time unit buttons
+  renderTimeUnits();
+
+  // Input fields
+  renderInputFields();
+
+  // Clear error
+  var eb = document.getElementById('error-box');
+  eb.style.display = 'none';
+  eb.textContent = '';
+
+  showPage('input');
+}
+
+function renderTimeUnits() {
+  var row = document.getElementById('time-unit-row');
+  row.innerHTML = '';
+  ["second","minute","hour","day"].forEach(function(u) {
+    var btn = document.createElement('button');
+    btn.className = 'time-unit-btn' + (u === currentTimeUnit ? ' active' : '');
+    btn.textContent = u.charAt(0).toUpperCase() + u.slice(1) + 's';
+    btn.onclick = function() {
+      currentTimeUnit = u;
+      renderTimeUnits();
+      renderInputFields();
+    };
+    row.appendChild(btn);
+  });
+}
+
+function renderInputFields() {
+  var grid = document.getElementById('input-fields');
+  // Preserve existing values
+  var oldVals = {};
+  grid.querySelectorAll('input').forEach(function(inp) { oldVals[inp.dataset.key] = inp.value; });
+
+  grid.innerHTML = '';
+  currentModel.inputs.forEach(function(inp) {
+    var div = document.createElement('div');
+    div.className = 'input-group';
+    var lbl = inp.label;
+    if (inp.type === 'rate') lbl += ' ' + currentTimeUnit + '?';
+    else if (inp.type === 'time') lbl += ' (' + currentTimeUnit + 's)?';
+    else lbl += '';
+
+    var html = '<label>' + lbl + '</label>';
+    if (inp.help) html += '<div class="help">' + inp.help + '</div>';
+    html += '<input type="number" data-key="' + inp.k + '" placeholder="' + inp.ph + '" value="' + (oldVals[inp.k] || '') + '">';
+    div.innerHTML = html;
+    grid.appendChild(div);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   COMPUTE
+   ═══════════════════════════════════════════ */
+function compute() {
+  var eb = document.getElementById('error-box');
+  eb.style.display = 'none';
+
+  var inputs = {};
+  var fields = document.getElementById('input-fields').querySelectorAll('input');
+  for (var i = 0; i < fields.length; i++) {
+    var f = fields[i];
+    var key = f.dataset.key;
+    var v = f.value;
+    if (v === '' || isNaN(Number(v))) {
+      eb.textContent = 'Please fill in all fields with valid numbers.';
+      eb.style.display = 'block';
+      return;
+    }
+    if (Number(v) < 0) {
+      eb.textContent = 'Values can\'t be negative.';
+      eb.style.display = 'block';
+      return;
+    }
+    inputs[key] = Number(v);
+  }
+
+  // Integer check
+  ["servers","capacity","calling-population"].forEach(function(k) {
+    if (inputs[k] !== undefined && !Number.isInteger(inputs[k])) {
+      eb.textContent = 'Servers, capacity, and population must be whole numbers.';
+      eb.style.display = 'block';
+    }
+  });
+  if (eb.style.display === 'block') return;
+
+  try {
+    currentResults = CALC[currentModel.id](inputs);
+    renderResults();
+    showPage('results');
+  } catch (e) {
+    eb.textContent = 'Calculation error — check your inputs. ' + e.message;
+    eb.style.display = 'block';
+  }
+}
+
+/* ═══════════════════════════════════════════
+   PAGE 3: RENDER RESULTS
+   ═══════════════════════════════════════════ */
+function fmtVal(v, f) {
+  if (v === undefined || v === null || isNaN(v) || !isFinite(v)) return "—";
+  if (f === 'pct') return (v * 100).toFixed(1) + '%';
+  if (f === 'time') return v.toFixed(3) + ' ' + currentTimeUnit + (v !== 1 ? 's' : '');
+  if (f === 'rate') return v.toFixed(3) + ' / ' + currentTimeUnit;
+  return v.toFixed(3);
+}
+
+function renderResults() {
+  var m = currentModel, r = currentResults;
+
+  // Banner
+  document.getElementById('results-banner-icon').textContent = m.icon;
+  document.getElementById('results-banner-title').textContent = m.friendly;
+  document.getElementById('results-banner-sub').textContent = 'Results · time unit: ' + currentTimeUnit + 's';
+
+  // Stability
+  var badge = document.getElementById('stability-badge');
+  var dot = document.getElementById('stability-dot');
+  var lbl = document.getElementById('stability-label');
+  var note = document.getElementById('stability-note');
+  if (r.stability) {
+    badge.style.backgroundColor = '#E8F5E9';
+    badge.style.borderColor = '#66BB6A';
+    dot.style.backgroundColor = '#66BB6A';
+    lbl.style.color = '#2E7D32';
+    lbl.textContent = 'System is Stable';
+    note.textContent = '— your queue can handle this load';
+  } else {
+    badge.style.backgroundColor = '#FFEBEE';
+    badge.style.borderColor = '#EF5350';
+    dot.style.backgroundColor = '#EF5350';
+    lbl.style.color = '#C62828';
+    lbl.textContent = 'System is Unstable';
+    note.textContent = '— the queue will grow without limit! Reduce arrivals or add servers.';
+  }
+
+  // Tip
+  var tip = document.getElementById('results-tip');
+  var tipText = document.getElementById('results-tip-text');
+  var tipIcon = document.getElementById('results-tip-icon');
+  if (!r.stability) {
+    tip.style.display = 'flex';
+    tipIcon.textContent = '⚠️';
+    tipText.textContent = 'An unstable system means customers pile up forever. You need to either reduce demand or increase capacity.';
+  } else {
+    tip.style.display = 'flex';
+    tipIcon.textContent = '💬';
+    tipText.textContent = getInterpretation(r);
+  }
+
+  // Results grid
+  var grid = document.getElementById('results-grid');
+  grid.innerHTML = '';
+  if (r.stability) {
+    if (m.sections) {
+      renderSectionedResults(m, r, grid);
+    } else {
+      m.outputs.forEach(function(out) {
+        var card = document.createElement('div');
+        card.className = 'result-card';
+        var html = '<div class="rlabel">' + out.l + '</div>';
+        if (out.d) html += '<div class="rdesc">' + out.d + '</div>';
+        html += '<div class="rvalue">' + fmtVal(r[out.k], out.f) + '</div>';
+        card.innerHTML = html;
+        grid.appendChild(card);
+      });
+    }
+  }
+}
+
+function renderSectionedResults(m, r, container) {
+  m.sections.forEach(function(sec) {
+    var section = document.createElement('div');
+    section.className = 'result-section';
+    section.innerHTML = '<div class="result-section-title">' + sec.title + '</div>';
+
+    var g = document.createElement('div');
+    g.className = 'results-grid';
+    sec.outputs.forEach(function(out) {
+      var card = document.createElement('div');
+      card.className = 'result-card';
+      var html = '<div class="rlabel">' + out.l + '</div>';
+      if (out.d) html += '<div class="rdesc">' + out.d + '</div>';
+      html += '<div class="rvalue">' + fmtVal(r[out.k], out.f) + '</div>';
+      card.innerHTML = html;
+      g.appendChild(card);
+    });
+    section.appendChild(g);
+
+    // Inline adjustable queries
+    if (sec.queries) {
+      sec.queries.forEach(function(q) {
+        var row = document.createElement('div');
+        row.className = 'inline-query';
+        var unitLabel = q.unit === 'time' ? (' ' + currentTimeUnit + 's') : '';
+        row.innerHTML = '<span>' + q.prefix + '</span>' +
+          '<input type="number" id="iq-' + q.id + '" placeholder="' + q.ph + '" min="0" step="any">' +
+          '<span>' + unitLabel + ' ' + q.suffix + ':</span>' +
+          '<span class="iq-result" id="iq-result-' + q.id + '">—</span>';
+        section.appendChild(row);
+
+        // Live update on input
+        setTimeout(function() {
+          var inp = document.getElementById('iq-' + q.id);
+          if (inp) inp.addEventListener('input', function() {
+            var val = Number(this.value);
+            var result = '—';
+            if (this.value !== '' && !isNaN(val) && val >= 0 && r.stability) {
+              var rho = r._rho, mu = r._mu, lam = r._lambda;
+              if (q.calc === 'nqGte') result = fmtVal(mm1ProbNqGte(rho, val), 'pct');
+              else if (q.calc === 'nsGte') result = fmtVal(mm1ProbNsGte(rho, val), 'pct');
+              else if (q.calc === 'wqGte') result = fmtVal(mm1ProbWqGte(rho, mu, lam, val), 'pct');
+              else if (q.calc === 'wsGte') result = fmtVal(mm1ProbWsGte(mu, lam, val), 'pct');
+            }
+            document.getElementById('iq-result-' + q.id).textContent = result;
+          });
+        }, 0);
+      });
+    }
+
+    container.appendChild(section);
+  });
+}
+
+function getInterpretation(r) {
+  var u = r["utilization"], wq = r["mean-time-in-queue"];
+  if (u !== undefined && wq !== undefined) {
+    if (u > 0.9) return 'Your servers are running at ' + (u*100).toFixed(0) + '% — that\'s dangerously hot. Even small spikes will cause big backups. Consider adding capacity.';
+    if (u > 0.75) return 'At ' + (u*100).toFixed(0) + '% utilization, things are busy but manageable. Keep an eye on peak times.';
+    if (u > 0.5) return (u*100).toFixed(0) + '% utilization is a comfortable zone. You\'ve got headroom for demand spikes.';
+    return 'At ' + (u*100).toFixed(0) + '% utilization, your servers have plenty of spare capacity. You might be able to reduce servers.';
+  }
+  if (r["prob-abandonment"] !== undefined) {
+    var pa = r["prob-abandonment"];
+    if (pa > 0.1) return 'You\'re losing about ' + (pa*100).toFixed(0) + '% of customers to impatience. That\'s worth fixing.';
+    return 'Only ' + (pa*100).toFixed(1) + '% of customers give up — your staffing looks reasonable.';
+  }
+  return 'Small changes in utilization can have big effects on wait times — especially above 80%.';
+}
+
+/* ═══════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════ */
+renderModelGrid();
+</script>
 </body>
 </html>
