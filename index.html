@@ -69,14 +69,6 @@ body {
   flex-shrink: 0;
 }
 .banner-brand .banner-text h1 { font-size: 26px; line-height: 1.05; }
-.banner-brand .banner-text .subkendall {
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  color: #FFF1A8;
-  letter-spacing: 1px;
-  margin-top: 2px;
-}
 .banner-model-strip {
   display: flex; align-items: center; gap: 10px;
   background: rgba(0,0,0,0.18);
@@ -94,7 +86,7 @@ body {
   font-weight: 400;
   color: #FFF;
   letter-spacing: 1px;
-  text-shadow: 3px 3px 0 var(--ink);
+  /* text-shadow: 3px 3px 0 var(--ink); */
   line-height: 1.1;
 }
 .banner p {
@@ -184,16 +176,8 @@ body {
   font-size: 48px;
   line-height: 1;
   color: var(--ink);
-  text-shadow: 3px 3px 0 var(--accent-4);
+  /* text-shadow: 3px 3px 0 var(--accent-4); */
   letter-spacing: 0.5px;
-}
-.hero-logo .text .kendall {
-  font-family: 'Courier New', monospace;
-  font-size: 15px;
-  font-weight: 700;
-  margin-top: 8px;
-  color: var(--accent-2);
-  letter-spacing: 1px;
 }
 .hero-tag {
   font-family: var(--hand-font);
@@ -232,7 +216,7 @@ body {
   font-weight: 400;
   color: var(--ink);
   margin-bottom: 16px;
-  text-shadow: 2px 2px 0 var(--accent-4);
+  /* text-shadow: 2px 2px 0 var(--accent-4); */
   letter-spacing: 0.5px;
 }
 
@@ -285,6 +269,50 @@ body {
 }
 .model-card .desc { font-size: 14px; color: var(--ink); margin-top: 6px; line-height: 1.5; }
 .model-card .arrow { font-size: 28px; color: var(--accent); flex-shrink: 0; font-weight: 700; margin-left: auto; }
+
+/* ─── Calculator header card (page-select) ─── */
+.calculator-header-card {
+  display: flex; align-items: center; gap: 18px;
+  background: var(--accent); color: #FFF;
+  border: 3px solid var(--ink); border-radius: 14px;
+  padding: 20px 26px; margin-bottom: 22px;
+  box-shadow: var(--shadow);
+}
+.chc-icon { font-size: 38px; flex-shrink: 0; }
+.chc-title { font-family: var(--fun-font); font-size: 22px; letter-spacing: 0.3px; margin-bottom: 4px; }
+.chc-desc { font-family: var(--hand-font); font-size: 16px; opacity: 0.92; line-height: 1.4; }
+
+/* ─── Mascot card (landing page) ─── */
+.mascot-card {
+  display: grid; grid-template-columns: 1fr 220px; gap: 24px;
+  align-items: center;
+  background: var(--paper); border: 3px solid var(--ink);
+  border-radius: 16px; padding: 28px 32px;
+  margin-bottom: 28px; box-shadow: var(--shadow);
+}
+.mascot-hero-img { width: 60%; height: auto; display: block; }
+
+/* ─── Banner brand as button ─── */
+.banner-brand-btn {
+  display: flex; align-items: center; gap: 14px;
+  background: none; border: none; cursor: pointer; padding: 0;
+  text-align: left;
+}
+.banner-brand-btn:hover { opacity: 0.85; }
+
+/* ─── Status row (results page) ─── */
+.status-row { display: flex; gap: 14px; align-items: stretch; margin-bottom: 20px; }
+.status-row .stability-badge { flex: 0 0 auto; margin-bottom: 0; position: relative; overflow: visible; }
+.status-row .quentin-tip { flex: 1; margin-bottom: 0; }
+.stability-horse {
+  position: absolute;
+  bottom: 100%;
+  right: 16px;
+  height: 75px;
+  width: auto;
+  pointer-events: none;
+}
+.quentin-img { width: 64px; height: 64px; object-fit: contain; }
 
 /* ─── Disclaimer ─── */
 .disclaimer {
@@ -536,7 +564,7 @@ body {
   font-weight: 400;
   color: var(--ink);
   margin-bottom: 6px;
-  text-shadow: 2px 2px 0 var(--accent-4);
+  /* text-shadow: 2px 2px 0 var(--accent-4); */
   letter-spacing: 0.5px;
 }
 .result-subsection-title {
@@ -553,12 +581,12 @@ body {
 /* Results grid */
 .results-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 12px;
 }
 /* Full-width section spans both columns by default; we now use 2-col grid */
 .result-section.full-width .results-grid {
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
 }
 .result-card {
   background: var(--paper);
@@ -591,7 +619,6 @@ body {
   font-size: 13px;
   color: var(--ink);
   box-shadow: 2px 2px 0 var(--ink);
-  min-height: 90px;
 }
 .inline-query input {
   width: 64px;
@@ -649,6 +676,30 @@ body {
 
 .btn-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
 
+/* ─── Resource cards (landing page) ─── */
+.resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.resource-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 14px;
+  padding: 28px 30px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--body-font);
+  width: 100%;
+  box-shadow: var(--shadow);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.resource-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+.resource-card:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
+.resource-card .rc-icon { font-size: 40px; }
+.resource-card .rc-title { font-family: var(--fun-font); font-size: 22px; font-weight: 400; color: var(--accent); letter-spacing: 0.3px; }
+.resource-card .rc-desc { font-family: var(--hand-font); font-size: 17px; color: var(--ink); line-height: 1.45; flex: 1; }
+.resource-card .rc-arrow { font-size: 26px; color: var(--accent); font-weight: 700; margin-top: 4px; }
+
 @media (max-width: 720px) {
   .hero { grid-template-columns: 1fr; }
   .book-slot { max-width: 240px; margin: 0 auto; }
@@ -656,23 +707,25 @@ body {
   .results-grid { grid-template-columns: 1fr; }
   .banner h1 { font-size: 22px; }
   .hero-logo .text h1 { font-size: 28px; }
+  .resource-grid { grid-template-columns: 1fr; }
+  .mascot-card { grid-template-columns: 1fr; }
+  .status-row { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
 
-<!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
-<div id="page-select" class="page active">
+<!-- ═══════════════════ PAGE 0: LANDING ═══════════════════ -->
+<div id="page-landing" class="page active">
   <div class="banner">
     <div class="banner-inner">
-      <div class="banner-brand">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
         <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
         <div class="banner-text">
           <h1>Queue Whisperer's Academy</h1>
-          <div class="subkendall">A / B / c · the math and mind of waiting</div>
         </div>
-      </div>
+      </button>
     </div>
   </div>
   <div class="content">
@@ -682,11 +735,10 @@ body {
         <div class="hero-logo">
           <div class="text">
             <h1>Queue Whisperer's<br>Academy</h1>
-            <div class="kendall">A / B / c · ( K / N / D )</div>
           </div>
         </div>
         <p class="hero-tag">
-          Pick a queueing model below. Plug in your numbers. Get answers — no math degree required.
+          A good intuition is powerful. But a good intuition without a number? That's just a confident guess. Welcome to the Academy — your companion for making queues make sense.
         </p>
       </div>
       <div class="book-slot" aria-label="Book cover placeholder">
@@ -695,9 +747,68 @@ body {
       </div>
     </div>
 
+    <div class="mascot-card">
+      <div class="mascot-text">
+        <h2 class="section-title" style="margin-bottom:10px;">The History of the Queue Whisperer's Academy</h2>
+        <p class="hero-tag">
+          [Placeholder: introduce the history of the Academy and its founding mission here.]
+          Meet <strong>[Mascot Name]</strong> — the Academy's trusty guide through every queue, bottleneck, and waiting-room mystery.
+        </p>
+      </div>
+      <div class="mascot-img-wrap">
+        <img src="img/color-horse.png" alt="Queue Whisperer mascot" class="mascot-hero-img">
+      </div>
+    </div>
+
+    <h2 class="section-title">Resources</h2>
+    <div class="resource-grid">
+      <button class="resource-card" onclick="showPage('select')">
+        <span class="rc-icon">🧮</span>
+        <div class="rc-title">Queueing Calculator</div>
+        <div class="rc-desc">Pick a model, plug in your numbers. Think of it as a reality check for your best guesses.</div>
+        <div class="rc-arrow">→</div>
+      </button>
+      <button class="resource-card" onclick="showPage('construction')">
+        <span class="rc-icon">📚</span>
+        <div class="rc-title">Additional Queueing Resources</div>
+        <div class="rc-desc">More tools and references — coming soon.</div>
+        <div class="rc-arrow">→</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
+<div id="page-select" class="page">
+  <div class="banner">
+    <div class="banner-inner">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
+        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
+        <div class="banner-text">
+          <h1>Queue Whisperer's Academy</h1>
+        </div>
+      </button>
+      <button class="back-btn" onclick="showPage('landing')">← Back</button>
+    </div>
+  </div>
+  <div class="content">
     <!-- Asset registry: images referenced in JS — Parcel processes src and rewrites URLs -->
     <div id="card-assets" style="display:none">
       <img id="asset-right-side-hat" src="img/right-side-hat.png" alt="">
+      <img id="asset-horse-front-hat"    src="img/front-hat.png"          alt="">
+      <img id="asset-horse-impatient"   src="img/impatient-horse.png"    alt="">
+      <img id="asset-horse-on-phone"    src="img/on-phone-horse.png"     alt="">
+      <img id="asset-horse-happy"       src="img/happy-horse.png"        alt="">
+      <img id="asset-horse-leaned-back" src="img/leaned-back-horse.png"  alt="">
+      <img id="asset-horse-color"       src="img/color-horse.png"        alt="">
+    </div>
+
+    <div class="calculator-header-card">
+      <div class="chc-icon">🧮</div>
+      <div>
+        <div class="chc-title">Queueing Calculator</div>
+        <div class="chc-desc">Pick a model, plug in your numbers. Think of it as a reality check for your best guesses.</div>
+      </div>
     </div>
 
     <h2 class="section-title">Choose Your Model</h2>
@@ -713,13 +824,12 @@ body {
 <div id="page-input" class="page">
   <div class="banner">
     <div class="banner-inner">
-      <div class="banner-brand">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
         <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
         <div class="banner-text">
           <h1>Queue Whisperer's Academy</h1>
-          <div class="subkendall">A / B / c · the math and mind of waiting</div>
         </div>
-      </div>
+      </button>
       <div class="banner-model-strip">
         <span class="icon" id="input-banner-icon"></span>
         <div>
@@ -754,20 +864,17 @@ body {
     <!-- Steps 2,3,4 — rendered dynamically by groupKind ("arrival" | "service" | "servers") -->
     <div id="step-arrival" class="step-box" style="display:none;">
       <div class="step-label">Step 2</div>
-      <div class="step-title">Arrivals</div>
-      <p class="step-desc">How customers show up.</p>
+      <div class="step-title">Arrival rate</div>
       <div class="input-grid" id="input-fields-arrival"></div>
     </div>
     <div id="step-service" class="step-box" style="display:none;">
       <div class="step-label">Step 3</div>
       <div class="step-title">Service rate</div>
-      <p class="step-desc">How long it takes to serve a customer.</p>
       <div class="input-grid" id="input-fields-service"></div>
     </div>
     <div id="step-servers" class="step-box" style="display:none;">
       <div class="step-label">Step 4</div>
       <div class="step-title">Servers &amp; capacity</div>
-      <p class="step-desc">How many servers and any system limits.</p>
       <div class="input-grid" id="input-fields-servers"></div>
     </div>
 
@@ -775,13 +882,13 @@ body {
     <div id="step-priority-config" class="step-box" style="display:none;">
       <div class="step-label">Step 2</div>
       <div class="step-title">Priority classes</div>
-      <p class="step-desc">How many priority levels are there? (Class 1 always goes first.)</p>
+      <p class="step-desc">How many priority levels? Class 1 always goes first.</p>
       <div class="pclass-row" id="pclass-row"></div>
     </div>
     <div id="step-priority-classes" class="step-box" style="display:none;">
       <div class="step-label">Step 3</div>
       <div class="step-title">Per-class arrivals &amp; service</div>
-      <p class="step-desc">Fill in arrival rate, mean service time, and service-time std. dev. for each class.</p>
+      <p class="step-desc">Each class needs its own numbers — arrivals, mean service time, and variability.</p>
       <div id="priority-classes-container"></div>
     </div>
 
@@ -794,13 +901,12 @@ body {
 <div id="page-results" class="page">
   <div class="banner">
     <div class="banner-inner">
-      <div class="banner-brand">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
         <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
         <div class="banner-text">
           <h1>Queue Whisperer's Academy</h1>
-          <div class="subkendall">A / B / c · the math and mind of waiting</div>
         </div>
-      </div>
+      </button>
       <div class="banner-model-strip">
         <span class="icon" id="results-banner-icon"></span>
         <div>
@@ -816,19 +922,48 @@ body {
   </div>
   <div class="content">
     <h2 class="page-heading">Outputs</h2>
-    <div class="stability-badge" id="stability-badge">
-      <div class="stability-dot" id="stability-dot"></div>
-      <span class="label" id="stability-label"></span>
-      <span class="note" id="stability-note"></span>
-    </div>
-    <div class="quentin-tip" id="results-tip" style="display:none;">
-      <span class="tip-icon" id="results-tip-icon">💬</span>
-      <span><strong>Quentin says:</strong> <span id="results-tip-text"></span></span>
+    <div class="status-row">
+      <div class="stability-badge" id="stability-badge">
+        <img id="stability-horse" class="stability-horse" src="img/color-horse.png" alt="">
+        <div class="stability-dot" id="stability-dot"></div>
+        <span class="label" id="stability-label"></span>
+        <span class="note" id="stability-note"></span>
+      </div>
+      <div class="quentin-tip" id="results-tip" style="display:none;">
+        <img class="tip-icon quentin-img" src="img/front-hat.png" alt="Quentin">
+        <span><strong>Quentin says:</strong> <span id="results-tip-text"></span></span>
+      </div>
     </div>
     <div id="results-container"></div>
     <div class="btn-row">
       <button class="compute-btn" onclick="showPage('input')">← Adjust Inputs</button>
       <button class="compute-btn btn-dark" onclick="showPage('select')">← Pick a Different Model</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PAGE 4: UNDER CONSTRUCTION ═══════════════════ -->
+<div id="page-construction" class="page">
+  <div class="banner">
+    <div class="banner-inner">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
+        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
+        <div class="banner-text">
+          <h1>Queue Whisperer's Academy</h1>
+        </div>
+      </button>
+      <button class="back-btn" onclick="showPage('landing')">← Back</button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="hero" style="display:block;text-align:center;padding:48px 32px;">
+      <div style="font-size:64px;margin-bottom:16px;">🚧</div>
+      <div class="hero-logo" style="justify-content:center;margin-bottom:16px;">
+        <div class="text"><h1>Under Construction</h1></div>
+      </div>
+      <p class="hero-tag" style="max-width:480px;margin:0 auto;">
+        Queueing theorists are a bit… economical. More resources are coming — just not quite yet.
+      </p>
     </div>
   </div>
 </div>
@@ -902,12 +1037,9 @@ function mmsProbNqGte(R, n){
 }
 
 /* M/M/s/K — finite capacity */
-CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]===I["capacity"]){var inv=1;for(var i=0;i<=I["capacity"];i++)inv+=a**i/factorial(i);p0=1/inv;pf=p0*(a**I["capacity"]/factorial(I["capacity"]));ea=I["arrival-rate"]*(1-pf);Lq=0;Wq=0;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=1;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
+CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=0;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
 
 CALC.MMsNN=function(I){var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=0;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
-
-/* M/G/s — multi-server with variable service (no breakdown) */
-CALC.MGs=function(I){var CV2=I["variance"]*I["service-rate"]**2,u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],f=1,inv=1;for(var i=1;i<=I["servers"]-1;i++){f*=a/i;inv+=f}inv+=f*a/(I["servers"]*(1-u));var p0=1/inv,sf=factorial(I["servers"]),Lq=(a**(I["servers"]+1)*p0)/(I["servers"]*sf*(1-u)**2)*(1+CV2)/2,Wq=Lq/I["arrival-rate"],Ws=Wq+1/I["service-rate"],Ls=Ws*I["arrival-rate"];return{"utilization":u,"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"stability":u<1}};
 
 /* G/G/c — general multi-server (no breakdown component anymore) */
 CALC.GGc=function(I){
@@ -929,7 +1061,7 @@ CALC.GGc=function(I){
 };
 
 /* Call centers w/ abandonment */
-CALC.callCenters=function(I){var R=I["arrival-rate"]/I["service-rate"],beta=(I["servers"]-R)/R**.5,theta=1/I["average-waiting-before-abandonment"],bsmt=beta*(I["service-rate"]/theta)**.5,h1=stdNormPDF(bsmt)/cumStdNorm(-bsmt),smt=(I["service-rate"]/theta)**.5,h2=smt*stdNormPDF(-beta)/cumStdNorm(beta),stm=(theta/(I["service-rate"]*I["servers"]))**.5,h3=stdNormPDF(bsmt+stm)/cumStdNorm(-bsmt-stm),ssmt=I["waiting-more-than-t"]*(I["service-rate"]*I["servers"]*theta)**.5,h4=stdNormPDF(bsmt)/(1-cumStdNorm(bsmt+ssmt)),fdc=1/(1+h1/h2),pwt=(h1/h4)*fdc*Math.exp(-theta*I["waiting-more-than-t"]),asa=(1/theta)*(1-h1/h3)*fdc,pa=asa*theta,eb=R-R*(1-h1/h3)*fdc,occ=eb/I["servers"],ebl=eb+I["arrival-rate"]*asa,pad=pa/fdc;return{"fraction-delayed-customers":fdc,"prob-cust-waits-more-than-t":pwt,"mean-time-in-queue":asa,"prob-abandonment":pa,"expected-busy-agents":eb,"occupancy":occ,"expected-busy-lines":ebl,"prob-abandonment-given-delayed":pad,"stability":isFinite(I["average-waiting-before-abandonment"])||occ<1}};
+CALC.callCenters=function(I){var R=I["arrival-rate"]/I["service-rate"],beta=(I["servers"]-R)/R**.5,theta=1/I["average-waiting-before-abandonment"],bsmt=beta*(I["service-rate"]/theta)**.5,h1=stdNormPDF(bsmt)/cumStdNorm(-bsmt),smt=(I["service-rate"]/theta)**.5,h2=smt*stdNormPDF(-beta)/cumStdNorm(beta),stm=(theta/(I["service-rate"]*I["servers"]))**.5,h3=stdNormPDF(bsmt+stm)/cumStdNorm(-bsmt-stm),fdc=1/(1+h1/h2),asa=(1/theta)*(1-h1/h3)*fdc,pa=asa*theta,eb=R-R*(1-h1/h3)*fdc,occ=eb/I["servers"],ebl=eb+I["arrival-rate"]*asa,pad=pa/fdc;return{"fraction-delayed-customers":fdc,"mean-time-in-queue":asa,"prob-abandonment":pa,"expected-busy-agents":eb,"occupancy":occ,"expected-busy-lines":ebl,"prob-abandonment-given-delayed":pad,"stability":isFinite(I["average-waiting-before-abandonment"])||occ<1,"__h1":h1,"__fdc":fdc,"__theta":theta,"__bsmt":bsmt,"__ssmt_coeff":(I["service-rate"]*I["servers"]*theta)**.5}};
 
 /*
  * M/G/1 priority — generalised to N classes (non-preemptive, head-of-line).
@@ -1009,9 +1141,9 @@ var MODELS=[
   desc:"Customers arrive randomly, get served in order, each server takes roughly the same time. A bank with multiple tellers, a fast-food counter.",
   useIf:["Arrivals are random","Service times are roughly exponential","One or more identical servers","No max queue length"],
   inputs:[
-    {k:"arrival-rate",  group:"arrival", label:"How many customers arrive per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate",  group:"service", label:"How many customers can one server handle per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",       group:"servers", label:"How many servers do you have?", type:"num",  ph:"e.g. 3"}
+    {k:"arrival-rate",  group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 10"},
+    {k:"service-rate",  group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 4"},
+    {k:"servers",       group:"servers", label:"Number of servers?", type:"num",  ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1035,6 +1167,7 @@ var MODELS=[
       ]}
     ]},
   ],
+  stepTitles:{ servers:"Servers" },
   tip:"This is your bread-and-butter queue model. If you're not sure which to pick, start here!"
 },
 {
@@ -1043,10 +1176,10 @@ var MODELS=[
   desc:"Like the classic queue, but there's a max number of people allowed. When it's full, new arrivals are turned away.",
   useIf:["Hard cap on people in the system","Customers who find a full system leave","Random arrivals","Service times are roughly exponential"],
   inputs:[
-    {k:"arrival-rate", group:"arrival", label:"How many customers arrive per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate", group:"service", label:"How many can one server handle per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",      group:"servers", label:"How many servers do you have?", type:"num",  ph:"e.g. 3"},
-    {k:"capacity",     group:"servers", label:"Maximum people allowed in the system?", type:"num", ph:"e.g. 10"}
+    {k:"arrival-rate", group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 10"},
+    {k:"service-rate", group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 4"},
+    {k:"servers",      group:"servers", label:"Number of servers?", type:"num",  ph:"e.g. 3"},
+    {k:"capacity",     group:"servers", label:"Hard cap on people in the system?", type:"num", ph:"e.g. 10"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1065,9 +1198,10 @@ var MODELS=[
       ]}
     ]},
     {title:"Server Information", fullWidth:true, outputs:[
-      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"Actual arrivals after turn-aways", f:"rate"}
+      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"Actual throughput after accounting for blocked arrivals", f:"rate"}
     ]}
   ],
+  stepTitles:{ servers:"Servers & capacity" },
   tip:"Got a waiting room with limited chairs? A parking lot that fills up? This one's for you."
 },
 {
@@ -1076,10 +1210,10 @@ var MODELS=[
   desc:"When your customer pool is small and fixed — machines that break down and need repair, nurses sharing workstations.",
   useIf:["Customer pool is a known, small group","As people enter the queue, fewer are left to arrive","Think: machine repair, shared equipment"],
   inputs:[
-    {k:"arrival-rate",       group:"arrival", label:"How often does each individual need service per", type:"rate", ph:"e.g. 0.5"},
-    {k:"service-rate",       group:"service", label:"How many can one server handle per", type:"rate", ph:"e.g. 2"},
-    {k:"servers",            group:"servers", label:"How many servers do you have?", type:"num", ph:"e.g. 2"},
-    {k:"calling-population", group:"servers", label:"How many total people/machines in the group?", type:"num", ph:"e.g. 8"}
+    {k:"arrival-rate",       group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 0.5"},
+    {k:"service-rate",       group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 2"},
+    {k:"servers",            group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 2"},
+    {k:"calling-population", group:"servers", label:"Total people (or machines) in the pool?", type:"num", ph:"e.g. 8"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1096,32 +1230,8 @@ var MODELS=[
       {k:"effective-arrival-rate", l:"Effective arrival rate", f:"rate"}
     ]}
   ],
+  stepTitles:{ arrival:"Arrival rate", servers:"Servers & pool size" },
   tip:"When the customer pool is small — like machines on a floor or nurses sharing stations — this captures how arrivals slow as more enter service."
-},
-{
-  id:"MGs", title:"Multi-Server, Variable Service", kendall:"M/G/c",
-  friendly:"The Variable Server", icon:"🎯",
-  desc:"Multiple servers with variable service times. A call center where agents take different times per call.",
-  useIf:["Multiple servers","Service times vary","Random arrivals","No limit on queue length"],
-  inputs:[
-    {k:"arrival-rate", group:"arrival", label:"How many customers arrive per", type:"rate", ph:"e.g. 20"},
-    {k:"service-rate", group:"service", label:"How many can one server handle per", type:"rate", ph:"e.g. 8"},
-    {k:"variance",     group:"service", label:"How much does service time vary? (variance)", type:"plain", ph:"e.g. 0.01", help:"Higher = more unpredictable. 0 = every customer takes the same time."},
-    {k:"servers",      group:"servers", label:"How many servers do you have?", type:"num", ph:"e.g. 3"}
-  ],
-  sections:[
-    {title:"Average Measures", subsections:[
-      {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. people waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. people <strong>in the system</strong>", f:"num"}
-      ]},
-      {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
-      ]}
-    ]}
-  ],
-  tip:"Same idea as the Wildcard, but now you've got a team. More servers smooth things out, but variability still bites."
 },
 {
   id:"GGc", title:"General Multi-Server Queue", kendall:"G/G/c",
@@ -1129,11 +1239,11 @@ var MODELS=[
   desc:"The most realistic model: arrivals aren't perfectly random and service varies. Perfect for manufacturing or IT systems.",
   useIf:["Arrival patterns aren't perfectly random","Service times aren't perfectly random","You want the most realistic estimate"],
   inputs:[
-    {k:"mean-interarrival",                  group:"arrival", label:"Avg. time between arrivals", type:"time", ph:"e.g. 5"},
-    {k:"standard-deviation-interarrival",    group:"arrival", label:"Variation in time between arrivals (std. dev.)", type:"time", ph:"e.g. 3"},
-    {k:"mean-processing",                    group:"service", label:"Avg. time to serve one customer", type:"time", ph:"e.g. 12"},
-    {k:"standard-deviation-processing",      group:"service", label:"Variation in service time (std. dev.)", type:"time", ph:"e.g. 4"},
-    {k:"servers",                            group:"servers", label:"How many servers do you have?", type:"num", ph:"e.g. 3"}
+    {k:"mean-interarrival",                  group:"arrival", label:"Average gap between arrivals", type:"time", ph:"e.g. 5"},
+    {k:"standard-deviation-interarrival",    group:"arrival", label:"How much that gap varies (std. dev.)", type:"time", ph:"e.g. 3"},
+    {k:"mean-processing",                    group:"service", label:"Average time to serve one customer", type:"time", ph:"e.g. 12"},
+    {k:"standard-deviation-processing",      group:"service", label:"How much service time varies (std. dev.)", type:"time", ph:"e.g. 4"},
+    {k:"servers",                            group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1147,12 +1257,13 @@ var MODELS=[
       ]}
     ]},
     {title:"Service Levels", subsections:[
-      {title:"Departure flow", outputs:[
+      {title:"Completion Timing", outputs:[
         {k:"mean-interdeparture", l:"Avg. time between completed customers", f:"time"},
         {k:"standard-deviation-interdeparture", l:"Variation between completions", f:"time"}
       ]}
     ]},
   ],
+  stepTitles:{ arrival:"Arrival times", service:"Service times", servers:"Servers" },
   tip:"The 'real world' model — nothing is perfectly random. If you want honesty, pick this one."
 },
 {
@@ -1161,11 +1272,10 @@ var MODELS=[
   desc:"Customers get impatient and leave if they wait too long. Call centers, ER waiting rooms, drive-throughs.",
   useIf:["Customers will give up after waiting","You want to know what fraction you lose","Think: call centers, drive-throughs, online checkout"],
   inputs:[
-    {k:"arrival-rate", group:"arrival", label:"How many customers arrive per", type:"rate", ph:"e.g. 100"},
-    {k:"average-waiting-before-abandonment", group:"arrival", label:"How long will a customer wait before giving up?", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."},
-    {k:"service-rate", group:"service", label:"How many can one server handle per", type:"rate", ph:"e.g. 12"},
-    {k:"servers",      group:"servers", label:"How many servers do you have?", type:"num", ph:"e.g. 10"},
-    {k:"waiting-more-than-t", group:"servers", label:"Probability of waiting longer than this many", type:"time", ph:"e.g. 2"}
+    {k:"arrival-rate", group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 100"},
+    {k:"average-waiting-before-abandonment", group:"arrival", label:"How long before they give up", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."},
+    {k:"service-rate", group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 12"},
+    {k:"servers",      group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 10"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1179,16 +1289,17 @@ var MODELS=[
         {k:"prob-abandonment",            l:"Chance a customer gives up and leaves",  f:"pct"},
         {k:"prob-abandonment-given-delayed", l:"Chance of leaving given they had to wait", f:"pct"}
       ]},
-      {title:"Wait Time Service Levels", outputs:[
-        {k:"prob-cust-waits-more-than-t", l:"Chance of waiting longer than the specified time", f:"pct"}
+      {title:"Wait Time Service Levels", queries:[
+        {id:"cc_pwt", prefix:"Chance of waiting longer than", suffix:"", calc:"cc_pwt", f:"pct", ph:"e.g. 2", unit:"time"}
       ]}
     ]},
     {title:"Server Information", fullWidth:true, outputs:[
       {k:"occupancy",            l:"Server occupancy",  f:"pct"},
       {k:"expected-busy-agents", l:"Avg. number of busy servers", f:"num"},
-      {k:"expected-busy-lines",  l:"Avg. busy lines (serving + waiting)", f:"num"}
+      {k:"expected-busy-lines",  l:"Avg. in service or waiting", f:"num"}
     ]}
   ],
+  stepTitles:{ servers:"Servers" },
   tip:"If your customers hang up or walk away, ignoring that gives you fairy-tale numbers. This model tells the truth."
 },
 {
@@ -1301,11 +1412,15 @@ function renderTimeUnits(){
   });
 }
 
+var STEP_TITLE_DEFAULTS = { arrival: 'Arrivals', service: 'Service rate', servers: 'Servers & capacity' };
+
 function renderInputFields(){
   var groups = { arrival:[], service:[], servers:[] };
   currentModel.inputs.forEach(function(inp){ groups[inp.group].push(inp); });
 
   ['arrival','service','servers'].forEach(function(g){
+    var titleEl = document.querySelector('#step-'+g+' .step-title');
+    if (titleEl) titleEl.textContent = (currentModel.stepTitles && currentModel.stepTitles[g]) || STEP_TITLE_DEFAULTS[g];
     var grid = document.getElementById('input-fields-'+g);
     var oldVals = {};
     grid.querySelectorAll('input').forEach(function(inp){ oldVals[inp.dataset.key]=inp.value; });
@@ -1313,7 +1428,7 @@ function renderInputFields(){
     groups[g].forEach(function(inp){
       var div = document.createElement('div'); div.className='input-group';
       var lbl = inp.label;
-      if(inp.type==='rate') lbl += ' '+currentTimeUnit+'?';
+      if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average?';
       else if(inp.type==='time') lbl += ' ('+currentTimeUnit+'s)?';
       var html = '<label>'+lbl+'</label>';
       if(inp.help) html += '<div class="help">'+inp.help+'</div>';
@@ -1431,6 +1546,20 @@ function fmtVal(v, f){
   return v.toFixed(2);
 }
 
+function getQuentinImage(r) {
+  function asset(id) { var el = document.getElementById(id); return el ? el.src : ''; }
+  if (!r.stability) return asset('asset-horse-impatient');
+  var u = r["utilization"];
+  if (u !== undefined) {
+    if (u > 0.9) return asset('asset-horse-impatient');
+    if (u > 0.75) return asset('asset-horse-on-phone');
+    if (u > 0.5)  return asset('asset-horse-happy');
+    return asset('asset-horse-leaned-back');
+  }
+  if (r["prob-abandonment"] !== undefined) return asset('asset-horse-on-phone');
+  return asset('asset-horse-color');
+}
+
 function renderResults(){
   var m = currentModel, r = currentResults;
   document.getElementById('results-banner-icon').textContent = m.icon;
@@ -1459,14 +1588,13 @@ function renderResults(){
 
   var tip = document.getElementById('results-tip');
   var tipText = document.getElementById('results-tip-text');
-  var tipIcon = document.getElementById('results-tip-icon');
+  var stabilityHorse = document.getElementById('stability-horse');
+  stabilityHorse.src = getQuentinImage(r);
   if (!r.stability) {
     tip.style.display='flex';
-    tipIcon.textContent='⚠️';
     tipText.textContent='An unstable system means customers pile up forever. Reduce demand or increase capacity.';
   } else {
     tip.style.display='flex';
-    tipIcon.textContent='💬';
     tipText.textContent=getInterpretation(r);
   }
 
@@ -1534,6 +1662,12 @@ function makeResultCard(out, r){
   return card;
 }
 
+function callCentersProbWt(r, t) {
+  var ssmt = t * r.__ssmt_coeff;
+  var h4 = stdNormPDF(r.__bsmt) / (1 - cumStdNorm(r.__bsmt + ssmt));
+  return (r.__h1 / h4) * r.__fdc * Math.exp(-r.__theta * t);
+}
+
 function makeQueryRow(q, r){
   var row = document.createElement('div');
   row.className = 'inline-query';
@@ -1555,6 +1689,7 @@ function makeQueryRow(q, r){
         else if (q.calc==='mms_ns') result = fmtVal(mmsProbNsGte(r, val), 'pct');
         else if (q.calc==='mms_wq') result = fmtVal(mmsProbWqGte(r, val), 'pct');
         else if (q.calc==='mms_ws') result = fmtVal(mmsProbWsGte(r, val), 'pct');
+        else if (q.calc==='cc_pwt') result = fmtVal(callCentersProbWt(r, val), 'pct');
       }
       document.getElementById('iq-result-'+q.id).textContent = result;
     });
