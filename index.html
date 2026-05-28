@@ -281,7 +281,7 @@ body {
 .status-row { display: flex; gap: 14px; align-items: stretch; margin-bottom: 20px; }
 .status-row .stability-badge { flex: 0 0 auto; margin-bottom: 0; position: relative; overflow: visible; }
 .status-row .quentin-tip { flex: 1; margin-bottom: 0; }
-.stability-icon { height: 36px; width: auto; margin-right: 12px; flex-shrink: 0; }
+.stability-icon { height: 250px; width: auto; margin-right: 12px; flex-shrink: 0; }
 
 /* ─── Disclaimer ─── */
 .disclaimer {
@@ -882,9 +882,8 @@ body {
     <h2 class="page-heading">Outputs</h2>
     <div class="status-row">
       <div class="stability-badge" id="stability-badge">
-        <img id="stability-icon" class="stability-icon" src="img/system-stable.png" alt="">
-        <span class="label" id="stability-label"></span>
-        <span class="note" id="stability-note"></span>
+        <img id="stability-icon-stable" class="stability-icon" src="img/system-stable.png" alt="System is stable">
+        <img id="stability-icon-unstable" class="stability-icon" src="img/system-unstable.png" alt="System is unstable" style="display:none;">
       </div>
     </div>
     <div id="results-container"></div>
@@ -1589,23 +1588,18 @@ function renderResults(){
   document.getElementById('results-banner-sub').textContent = 'Results · time unit: '+currentTimeUnit+'s';
 
   var badge = document.getElementById('stability-badge');
-  var icon  = document.getElementById('stability-icon');
-  var lbl   = document.getElementById('stability-label');
-  var note  = document.getElementById('stability-note');
+  var iconStable   = document.getElementById('stability-icon-stable');
+  var iconUnstable = document.getElementById('stability-icon-unstable');
   if (r.stability) {
     badge.style.backgroundColor = '#DDF5DC';
     badge.style.borderColor = '#1A1A1A';
-    icon.src = 'img/system-stable.png';
-    lbl.style.color = '#1A1A1A';
-    lbl.textContent = 'System is Stable';
-    note.textContent = '— your queue can handle this load';
+    iconStable.style.display = '';
+    iconUnstable.style.display = 'none';
   } else {
     badge.style.backgroundColor = '#FFE0E0';
     badge.style.borderColor = '#1A1A1A';
-    icon.src = 'img/system-unstable.png';
-    lbl.style.color = '#1A1A1A';
-    lbl.textContent = 'System is Unstable';
-    note.textContent = '— the queue grows without limit. Reduce arrivals or add servers.';
+    iconStable.style.display = 'none';
+    iconUnstable.style.display = '';
   }
 
   var container = document.getElementById('results-container');
