@@ -121,7 +121,7 @@ body {
 /* ─── Title-page hero with logo + book ─── */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr 1fr;
   gap: 32px;
   align-items: center;
   background: var(--paper);
@@ -185,29 +185,6 @@ body {
   color: var(--ink);
   line-height: 1.4;
 }
-
-/* Book placeholder */
-.book-slot {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  border: 3px dashed var(--ink);
-  border-radius: 10px;
-  background:
-    repeating-linear-gradient(135deg,
-      rgba(0,0,0,0.04) 0 8px, transparent 8px 16px),
-    var(--bg-soft);
-  display: grid;
-  place-items: center;
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
-  color: var(--ink);
-  text-align: center;
-  padding: 12px;
-  line-height: 1.5;
-  box-shadow: var(--shadow-sm);
-}
-.book-slot span { display: block; }
-.book-slot .book-icon { font-size: 28px; margin-bottom: 6px; }
 
 /* ─── Section title ─── */
 .section-title {
@@ -304,15 +281,7 @@ body {
 .status-row { display: flex; gap: 14px; align-items: stretch; margin-bottom: 20px; }
 .status-row .stability-badge { flex: 0 0 auto; margin-bottom: 0; position: relative; overflow: visible; }
 .status-row .quentin-tip { flex: 1; margin-bottom: 0; }
-.stability-horse {
-  position: absolute;
-  bottom: 100%;
-  right: 16px;
-  height: 75px;
-  width: auto;
-  pointer-events: none;
-}
-.quentin-img { width: 64px; height: 64px; object-fit: contain; }
+.stability-icon { height: 36px; width: auto; margin-right: 12px; flex-shrink: 0; }
 
 /* ─── Disclaimer ─── */
 .disclaimer {
@@ -346,6 +315,9 @@ body {
 }
 .use-this-if ul { padding-left: 20px; }
 .use-this-if li { font-size: 14px; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+.model-desc-row { font-size: 14px; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
+.model-desc-row:last-child { margin-bottom: 0; }
+.model-desc-row strong { color: var(--accent-2); }
 
 /* ─── Quentin tip ─── */
 .quentin-tip {
@@ -487,13 +459,15 @@ body {
   line-height: 20px;
   color: #FFF;
 }
-.priority-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 12px; }
+.priority-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 12px; align-items: stretch; }
 @media (max-width: 700px){ .priority-grid { grid-template-columns: 1fr; } }
+.priority-grid .pin { display: flex; flex-direction: column; height: 100%; }
 .priority-grid .pin label {
   font-size: 12px;
   font-weight: 600;
   display: block;
   margin-bottom: 3px;
+  flex: 1;
 }
 .priority-grid .pin input {
   width: 100%;
@@ -552,7 +526,6 @@ body {
   margin-bottom: 20px;
   box-shadow: var(--shadow-sm);
 }
-.stability-dot { width: 14px; height: 14px; border-radius: 50%; margin-right: 12px; flex-shrink: 0; border: 2px solid var(--ink); }
 .stability-badge .label { font-family: var(--fun-font); font-size: 17px; font-weight: 400; letter-spacing: 0.3px; }
 .stability-badge .note { margin-left: 10px; font-size: 13px; }
 
@@ -702,7 +675,6 @@ body {
 
 @media (max-width: 720px) {
   .hero { grid-template-columns: 1fr; }
-  .book-slot { max-width: 240px; margin: 0 auto; }
   .banner-inner { flex-direction: column; align-items: flex-start; }
   .results-grid { grid-template-columns: 1fr; }
   .banner h1 { font-size: 22px; }
@@ -731,7 +703,7 @@ body {
   <div class="content">
     <div class="hero">
       <div>
-        <img src="img/logo.png" alt="Queue Whisperer's Academy crest" style="width:300px;height:auto;display:block;margin-bottom:14px;">
+        <img src="img/logo.png" alt="Queue Whisperer's Academy crest" style="width:200px;height:auto;display:block;margin-bottom:14px;">
         <div class="hero-logo">
           <div class="text">
             <h1>Queue Whisperer's<br>Academy</h1>
@@ -741,10 +713,7 @@ body {
           A good intuition is powerful. But a good intuition without a number? That's just a confident guess. Welcome to the Academy — your companion for making queues make sense.
         </p>
       </div>
-      <div class="book-slot" aria-label="Book cover placeholder">
-        <span class="book-icon">📕</span>
-        <span>[ 3D BOOK COVER<br>GOES HERE ]</span>
-      </div>
+      <img src="img/book-cover.png" alt="Queue Whisperer's Academy book cover" style="width:100%;height:auto;display:block;">
     </div>
 
     <div class="mascot-card">
@@ -795,12 +764,6 @@ body {
     <!-- Asset registry: images referenced in JS — Parcel processes src and rewrites URLs -->
     <div id="card-assets" style="display:none">
       <img id="asset-right-side-hat" src="img/right-side-hat.png" alt="">
-      <img id="asset-horse-front-hat"    src="img/front-hat.png"          alt="">
-      <img id="asset-horse-impatient"   src="img/impatient-horse.png"    alt="">
-      <img id="asset-horse-on-phone"    src="img/on-phone-horse.png"     alt="">
-      <img id="asset-horse-happy"       src="img/happy-horse.png"        alt="">
-      <img id="asset-horse-leaned-back" src="img/leaned-back-horse.png"  alt="">
-      <img id="asset-horse-color"       src="img/color-horse.png"        alt="">
     </div>
 
     <div class="calculator-header-card">
@@ -843,12 +806,7 @@ body {
   <div class="content">
     <div class="use-this-if">
       <h3>Use this model if:</h3>
-      <ul id="use-this-if-list"></ul>
-    </div>
-
-    <div class="quentin-tip">
-      <span class="tip-icon">💬</span>
-      <span><strong>Quentin says:</strong> <span id="quentin-tip-text"></span></span>
+      <div id="model-description"></div>
     </div>
 
     <h2 class="page-heading">Inputs</h2>
@@ -924,14 +882,9 @@ body {
     <h2 class="page-heading">Outputs</h2>
     <div class="status-row">
       <div class="stability-badge" id="stability-badge">
-        <img id="stability-horse" class="stability-horse" src="img/color-horse.png" alt="">
-        <div class="stability-dot" id="stability-dot"></div>
+        <img id="stability-icon" class="stability-icon" src="img/system-stable.png" alt="">
         <span class="label" id="stability-label"></span>
         <span class="note" id="stability-note"></span>
-      </div>
-      <div class="quentin-tip" id="results-tip" style="display:none;">
-        <img class="tip-icon quentin-img" src="img/front-hat.png" alt="Quentin">
-        <span><strong>Quentin says:</strong> <span id="results-tip-text"></span></span>
       </div>
     </div>
     <div id="results-container"></div>
@@ -1037,7 +990,27 @@ function mmsProbNqGte(R, n){
 }
 
 /* M/M/s/K — finite capacity */
-CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=0;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
+CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=0;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}var _c=I["servers"],_K=I["capacity"],_lam=I["arrival-rate"],_mu=I["service-rate"],_a=_lam/_mu,_sumNW=0;for(var _n=0;_n<_c;_n++)_sumNW+=Math.pow(_a,_n)/factorial(_n)*p0;var probNoWait=(1-pf)>0?_sumNW/(1-pf):1;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"prob-no-wait":probNoWait,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true,"_c":_c,"_K":_K,"_lam":_lam,"_mu":_mu,"_p0":p0,"_a":_a,"_pf":pf}};
+/* P(W_q <= t) for M/M/s/K, conditional on entering */
+function mmscProbWqLte(R, t){
+  if(!R.stability) return NaN;
+  var c=R._c, K=R._K, mu=R._mu, p0=R._p0, a=R._a, pf=R._pf;
+  if((1-pf)<=0) return 1;
+  var cmut = c*mu*t;
+  var tail = 0;
+  for(var n=c; n<=K-1; n++){
+    var Pn = Math.pow(a,n)/(factorial(c)*Math.pow(c,n-c))*p0;
+    var qn = Pn/(1-pf);
+    var term = Math.exp(-cmut);
+    var inner = term;
+    for(var i=1; i<=n-c; i++){
+      term *= cmut/i;
+      inner += term;
+    }
+    tail += qn * inner;
+  }
+  return Math.max(0, Math.min(1, 1-tail));
+}
 
 CALC.MMsNN=function(I){var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=0;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
 
@@ -1133,17 +1106,62 @@ CALC.MG1Priority = function(I) {
 /* ═══════════════════════════════════════════
    MODEL DEFINITIONS — grouped inputs (arrival/service/servers)
    ═══════════════════════════════════════════ */
+var MODEL_DESC = {
+  MMs: {
+    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    systemInformation: "The queueing system has a <em>single line</em> with <em>no limit</em> on how many customers can wait in the line. The system has one or more servers who have the same skill levels and knowledge and speed. Customers are served on a <em>first-come-first-served</em> basis.",
+    customerBehavior: "All arriving customers join the single queue. All customers remain in line until they receive service; they <em>do not abandon</em> the queue."
+  },
+  MMsc: {
+    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    systemInformation: "The queueing system has a <em>single line</em> and a <em>maximum system capacity of K customers</em>, including both customers waiting in line and customers receiving service. The system has <em>s</em> servers who have similar skill levels, knowledge, and service speed. Customers are served on a <em>first-come-first-served</em> basis.",
+    customerBehavior: "Arriving customers decide to join the queue (or are allowed to join the queue) only if the total number of customers in the system is <em>less than K</em>. If the system is full with <em>K</em> customers in the system, newly arriving customers are <em>blocked</em> and cannot enter the queue. Customers who enter the system remain in line until they receive service; they <em>do not abandon</em> the queue."
+  },
+  GGc: {
+    customerPopulation: "A <em>large</em> number of customers use the system and arrive randomly.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times can be any number smaller or larger than one.",
+    serviceProcess: "Service times are random with coefficient of variation of service times smaller or larger than one.",
+    systemInformation: "The queueing system has a single line with <em>no limit</em> on how many customers can wait in the line. The system has <em>s</em> servers who have the same skill levels and knowledge and speed. Customers are served on a <em>first-come-first-served</em> basis.",
+    customerBehavior: "All arriving customers join the single queue. All customers remain in line until they receive service; they <em>do not abandon</em> the queue."
+  },
+  callCenters: {
+    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    systemInformation: "The queueing system has a single line with <em>no limit</em> on how many customers can wait in the line. The system has <em>s</em> servers who have the same skill levels and knowledge and speed. Customers are served on a <em>first-come-first-served</em> basis.",
+    customerBehavior: "All arriving customers join the <em>single queue</em>. Customers <em>may abandon</em> the queue before receiving service if their waiting time becomes too long.",
+    note: "This is an approximation model. The results of the model become more accurate as the number of servers increases (e.g., larger than 15) and the probability of waiting becomes smaller (e.g., smaller than 10%)."
+  },
+  MMsNN: {
+    customerPopulation: "A <em>limited population of N customers</em> uses the system and customers arrive independently of one another. Examples are health clubs with limited number of members, machines in a factory waiting for repair.",
+    arrivalProcess: "Unlike systems with very large number of potential customers, the arrival rate <em>decreases</em> as more customers enter the system because fewer customers remain available to generate new arrivals.",
+    serviceProcess: "Service times are random and highly variable, with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    systemInformation: "The queueing system has a <em>single line</em> with <em>no limit</em> on how many customers can wait in the line. The system has <em>s</em> servers who have similar skill levels, knowledge, and service speed. The maximum number of customers in the system is N. Customers are served on a <em>first-come-first-served</em> basis.",
+    customerBehavior: "All arriving customers wait in the line until they receive service; they <em>do not abandon</em> the queue."
+  },
+  MG1Priority: {
+    customerPopulation: "A <em>large</em> number of customers use the system and belong to <em>B different customer classes</em>. Examples include emergency departments with different triage levels, technical support systems with VIP and regular customers, and manufacturing systems with urgent and routine jobs.",
+    arrivalProcess: "Each customer class may have a <em>different arrival rate</em>. The average arrival rate for each class remains stable over time. The coefficient of variation of interarrival times of each class is equal to 1 (which gives exact queueing results) or close to 1 (which gives approximate results).",
+    serviceProcess: "Each customer class has <em>different service times</em> all performed by the single server.",
+    systemInformation: "The queueing system has a <em>single line</em> with <em>no limit</em> on how many customers can wait in the line. Different classes of customers join the same single queue. The system has a <em>single server</em> who is capable of serving all classes of customers. Higher-priority customers are served before lower-priority customers. The priority rule is <em>non-preemptive</em>, meaning once the server starts serving a customer, the service cannot be interrupted by newly arriving higher-priority customers. Within each priority class, customers are typically served on a first-come-first-served basis.",
+    customerBehavior: "All arriving customers join the single queue and wait until they receive service. They <em>do not abandon</em> the queue."
+  }
+};
+
 var MODELS=[
 {
-  id:"MMs", title:"Basic Multi-Server Queue", kendall:"M/M/c",
+  id:"MMs", title:"The Classic", kendall:"M/M/s",
   friendly:"The Classic", icon:"🏪",
   cardImgId:"asset-right-side-hat",
   desc:"Customers arrive randomly, get served in order, each server takes roughly the same time. A bank with multiple tellers, a fast-food counter.",
-  useIf:["Arrivals are random","Service times are roughly exponential","One or more identical servers","No max queue length"],
   inputs:[
-    {k:"arrival-rate",  group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate",  group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",       group:"servers", label:"Number of servers?", type:"num",  ph:"e.g. 3"}
+    {k:"arrival-rate",  group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 10"},
+    {k:"service-rate",  group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 4"},
+    {k:"servers",       group:"servers", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1171,15 +1189,14 @@ var MODELS=[
   tip:"This is your bread-and-butter queue model. If you're not sure which to pick, start here!"
 },
 {
-  id:"MMsc", title:"Multi-Server with Limited Space", kendall:"M/M/c/K",
-  friendly:"The Bouncer", icon:"🚪",
+  id:"MMsc", title:"The Capacity-Capped Classic", kendall:"M/M/s/K",
+  friendly:"The Capacity-Capped Classic", icon:"🚪",
   desc:"Like the classic queue, but there's a max number of people allowed. When it's full, new arrivals are turned away.",
-  useIf:["Hard cap on people in the system","Customers who find a full system leave","Random arrivals","Service times are roughly exponential"],
   inputs:[
-    {k:"arrival-rate", group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate", group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",      group:"servers", label:"Number of servers?", type:"num",  ph:"e.g. 3"},
-    {k:"capacity",     group:"servers", label:"Hard cap on people in the system?", type:"num", ph:"e.g. 10"}
+    {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 10"},
+    {k:"service-rate", group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 4"},
+    {k:"servers",      group:"servers", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"},
+    {k:"capacity",     group:"servers", label:"Enter the hard cap on people in the system.", type:"num", ph:"e.g. 10"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1195,55 +1212,30 @@ var MODELS=[
     {title:"Service Levels", subsections:[
       {title:"Queue Length Service Levels", outputs:[
         {k:"prob-full-sys",  l:"Chance the system is full (turning people away)", f:"pct"}
+      ]},
+      {title:"Wait Time Service Levels", outputs:[
+        {k:"prob-no-wait", l:"Chance a customer receives service immediately on arrival (no waiting in line)", f:"pct"}
+      ], queries:[
+        {id:"wq_lte", prefix:"Chance of waiting", suffix:"or less <strong>in line</strong>", calc:"mmsc_wq_lte", f:"pct", ph:"e.g. 2", unit:"time"}
       ]}
     ]},
-    {title:"Server Information", fullWidth:true, outputs:[
-      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"Actual throughput after accounting for blocked arrivals", f:"rate"}
+    {title:"System Throughput", fullWidth:true, outputs:[
+      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"The number of arrivals that are not blocked and are served is", f:"rate"}
     ]}
   ],
   stepTitles:{ servers:"Servers & capacity" },
   tip:"Got a waiting room with limited chairs? A parking lot that fills up? This one's for you."
 },
 {
-  id:"MMsNN", title:"Small Population Queue", kendall:"M/M/c/N/N",
-  friendly:"The Fixed Crowd", icon:"👥",
-  desc:"When your customer pool is small and fixed — machines that break down and need repair, nurses sharing workstations.",
-  useIf:["Customer pool is a known, small group","As people enter the queue, fewer are left to arrive","Think: machine repair, shared equipment"],
-  inputs:[
-    {k:"arrival-rate",       group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 0.5"},
-    {k:"service-rate",       group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 2"},
-    {k:"servers",            group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 2"},
-    {k:"calling-population", group:"servers", label:"Total people (or machines) in the pool?", type:"num", ph:"e.g. 8"}
-  ],
-  sections:[
-    {title:"Average Measures", subsections:[
-      {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. people waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. people <strong>in the system</strong>", f:"num"}
-      ]},
-      {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
-      ]}
-    ]},
-    {title:"Server Information", fullWidth:true, outputs:[
-      {k:"effective-arrival-rate", l:"Effective arrival rate", f:"rate"}
-    ]}
-  ],
-  stepTitles:{ arrival:"Arrival rate", servers:"Servers & pool size" },
-  tip:"When the customer pool is small — like machines on a floor or nurses sharing stations — this captures how arrivals slow as more enter service."
-},
-{
-  id:"GGc", title:"General Multi-Server Queue", kendall:"G/G/c",
-  friendly:"The Real World", icon:"🏭",
+  id:"GGc", title:"The General Model", kendall:"G/G/s",
+  friendly:"The General Model", icon:"🏭",
   desc:"The most realistic model: arrivals aren't perfectly random and service varies. Perfect for manufacturing or IT systems.",
-  useIf:["Arrival patterns aren't perfectly random","Service times aren't perfectly random","You want the most realistic estimate"],
   inputs:[
-    {k:"mean-interarrival",                  group:"arrival", label:"Average gap between arrivals", type:"time", ph:"e.g. 5"},
-    {k:"standard-deviation-interarrival",    group:"arrival", label:"How much that gap varies (std. dev.)", type:"time", ph:"e.g. 3"},
-    {k:"mean-processing",                    group:"service", label:"Average time to serve one customer", type:"time", ph:"e.g. 12"},
-    {k:"standard-deviation-processing",      group:"service", label:"How much service time varies (std. dev.)", type:"time", ph:"e.g. 4"},
-    {k:"servers",                            group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 3"}
+    {k:"mean-interarrival",                  group:"arrival", label:"Enter the average gap between arrivals", type:"time", ph:"e.g. 5"},
+    {k:"standard-deviation-interarrival",    group:"arrival", label:"Enter the standard deviation of the gap between arrivals", type:"time", ph:"e.g. 3"},
+    {k:"mean-processing",                    group:"service", label:"Enter the average time to serve one customer", type:"time", ph:"e.g. 12"},
+    {k:"standard-deviation-processing",      group:"service", label:"Enter the standard deviation of the service time", type:"time", ph:"e.g. 4"},
+    {k:"servers",                            group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1267,15 +1259,14 @@ var MODELS=[
   tip:"The 'real world' model — nothing is perfectly random. If you want honesty, pick this one."
 },
 {
-  id:"callCenters", title:"Queue with Abandonment", kendall:"M/M/c+M",
-  friendly:"The Impatient Crowd", icon:"📞",
+  id:"callCenters", title:"The Classic with Impatient Crowd", kendall:"M/M/s + M",
+  friendly:"The Classic with Impatient Crowd", icon:"📞",
   desc:"Customers get impatient and leave if they wait too long. Call centers, ER waiting rooms, drive-throughs.",
-  useIf:["Customers will give up after waiting","You want to know what fraction you lose","Think: call centers, drive-throughs, online checkout"],
   inputs:[
-    {k:"arrival-rate", group:"arrival", label:"Arrivals per", type:"rate", ph:"e.g. 100"},
-    {k:"average-waiting-before-abandonment", group:"arrival", label:"How long before they give up", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."},
-    {k:"service-rate", group:"service", label:"One server's capacity per", type:"rate", ph:"e.g. 12"},
-    {k:"servers",      group:"servers", label:"Number of servers?", type:"num", ph:"e.g. 10"}
+    {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 100"},
+    {k:"average-waiting-before-abandonment", group:"arrival", label:"Enter the average patience before customers give up", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."},
+    {k:"service-rate", group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 12"},
+    {k:"servers",      group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 10"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1303,10 +1294,37 @@ var MODELS=[
   tip:"If your customers hang up or walk away, ignoring that gives you fairy-tale numbers. This model tells the truth."
 },
 {
-  id:"MG1Priority", title:"Priority Queue", kendall:"M/G/1 (priority)",
-  friendly:"The VIP Lane", icon:"⭐",
+  id:"MMsNN", title:"Systems with Limited Crowd", kendall:"M/M/s/N/N",
+  friendly:"Systems with Limited Crowd", icon:"👥",
+  desc:"When your customer pool is small and fixed — machines that break down and need repair, nurses sharing workstations.",
+  inputs:[
+    {k:"arrival-rate",       group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 0.5"},
+    {k:"service-rate",       group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 2"},
+    {k:"servers",            group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 2"},
+    {k:"calling-population", group:"servers", label:"Enter the total number of people (or machines) in the pool.", type:"num", ph:"e.g. 8"}
+  ],
+  sections:[
+    {title:"Average Measures", subsections:[
+      {title:"Queue Length Average Measures", outputs:[
+        {k:"mean-num-in-queue", l:"Avg. people waiting <strong>in line</strong>", f:"num"},
+        {k:"mean-num-in-sys",   l:"Avg. people <strong>in the system</strong>", f:"num"}
+      ]},
+      {title:"Wait Time Average Measures", outputs:[
+        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
+        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
+      ]}
+    ]},
+    {title:"System Throughput", fullWidth:true, outputs:[
+      {k:"effective-arrival-rate", l:"Effective arrival rate", f:"rate"}
+    ]}
+  ],
+  stepTitles:{ arrival:"Arrival rate", servers:"Servers & pool size" },
+  tip:"When the customer pool is small — like machines on a floor or nurses sharing stations — this captures how arrivals slow as more enter service."
+},
+{
+  id:"MG1Priority", title:"The VIP Model", kendall:"M/G/1 with Priority",
+  friendly:"The VIP Model", icon:"⭐",
   desc:"One server handles multiple priority levels. Class 1 always goes first. ER triage, airline boarding classes, help-desk severity.",
-  useIf:["You have multiple priority levels (2–7)","Higher-priority customers skip ahead","Exactly one server"],
   // Inputs are generated dynamically per priority class — see special handling below
   isPriority:true,
   tip:"Class 1 always wins. Watch the lower classes — they pay the price for the VIP lane."
@@ -1363,13 +1381,31 @@ function selectModel(m){
   document.getElementById('input-banner-title').textContent = m.friendly;
   document.getElementById('input-banner-sub').textContent = m.kendall;
 
-  var ul = document.getElementById('use-this-if-list');
-  ul.innerHTML = '';
-  m.useIf.forEach(function(item){
-    var li = document.createElement('li'); li.textContent = item; ul.appendChild(li);
-  });
-  document.getElementById('quentin-tip-text').textContent = m.tip;
-
+  var descBox = document.getElementById('model-description');
+  descBox.innerHTML = '';
+  var d = MODEL_DESC[m.id];
+  if (d) {
+    var rows = [
+      ['Customer Population', d.customerPopulation],
+      ['Arrival Process',     d.arrivalProcess],
+      ['Service Process',     d.serviceProcess],
+      ['System Information',  d.systemInformation],
+      ['Customer Behavior',   d.customerBehavior]
+    ];
+    rows.forEach(function(r){
+      var row = document.createElement('div');
+      row.className = 'model-desc-row';
+      row.innerHTML = '<strong>' + r[0] + ':</strong> ' + r[1];
+      descBox.appendChild(row);
+    });
+    if (d.note) {
+      var noteRow = document.createElement('div');
+      noteRow.className = 'model-desc-row';
+      noteRow.style.color = '#c00';
+      noteRow.innerHTML = '<strong>Note:</strong> ' + d.note;
+      descBox.appendChild(noteRow);
+    }
+  }
   renderTimeUnits();
 
   // Hide all step boxes
@@ -1428,8 +1464,8 @@ function renderInputFields(){
     groups[g].forEach(function(inp){
       var div = document.createElement('div'); div.className='input-group';
       var lbl = inp.label;
-      if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average?';
-      else if(inp.type==='time') lbl += ' ('+currentTimeUnit+'s)?';
+      if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average.';
+      else if(inp.type==='time') lbl += ' (in '+currentTimeUnit+'s).';
       var html = '<label>'+lbl+'</label>';
       if(inp.help) html += '<div class="help">'+inp.help+'</div>';
       html += '<input type="number" data-key="'+inp.k+'" placeholder="'+inp.ph+'" value="'+(oldVals[inp.k]||'')+'">';
@@ -1477,11 +1513,11 @@ function renderPriorityInputs(){
     card.innerHTML =
       '<h4><span class="pchip" style="background:'+color+'">'+k+'</span>'+label+'</h4>' +
       '<div class="priority-grid">' +
-        '<div class="pin"><label>Arrivals per '+currentTimeUnit+'</label>' +
+        '<div class="pin"><label>Enter the average number of arrivals per '+currentTimeUnit+'.</label>' +
           '<input type="number" data-key="arrival-rate-type-'+k+'" placeholder="e.g. 2" value="'+(oldVals['arrival-rate-type-'+k]||'')+'"></div>' +
-        '<div class="pin"><label>Avg. service time ('+currentTimeUnit+'s)</label>' +
+        '<div class="pin"><label>Enter the average service time (in '+currentTimeUnit+'s).</label>' +
           '<input type="number" data-key="mean-processing-type-'+k+'" placeholder="e.g. 0.1" value="'+(oldVals['mean-processing-type-'+k]||'')+'"></div>' +
-        '<div class="pin"><label>Service std. dev. ('+currentTimeUnit+'s)</label>' +
+        '<div class="pin"><label>Enter the service time standard deviation (in '+currentTimeUnit+'s).</label>' +
           '<input type="number" data-key="standard-deviation-processing-type-'+k+'" placeholder="e.g. 0.05" value="'+(oldVals['standard-deviation-processing-type-'+k]||'')+'"></div>' +
       '</div>';
     container.appendChild(card);
@@ -1546,20 +1582,6 @@ function fmtVal(v, f){
   return v.toFixed(2);
 }
 
-function getQuentinImage(r) {
-  function asset(id) { var el = document.getElementById(id); return el ? el.src : ''; }
-  if (!r.stability) return asset('asset-horse-impatient');
-  var u = r["utilization"];
-  if (u !== undefined) {
-    if (u > 0.9) return asset('asset-horse-impatient');
-    if (u > 0.75) return asset('asset-horse-on-phone');
-    if (u > 0.5)  return asset('asset-horse-happy');
-    return asset('asset-horse-leaned-back');
-  }
-  if (r["prob-abandonment"] !== undefined) return asset('asset-horse-on-phone');
-  return asset('asset-horse-color');
-}
-
 function renderResults(){
   var m = currentModel, r = currentResults;
   document.getElementById('results-banner-icon').textContent = m.icon;
@@ -1567,35 +1589,23 @@ function renderResults(){
   document.getElementById('results-banner-sub').textContent = 'Results · time unit: '+currentTimeUnit+'s';
 
   var badge = document.getElementById('stability-badge');
-  var dot   = document.getElementById('stability-dot');
+  var icon  = document.getElementById('stability-icon');
   var lbl   = document.getElementById('stability-label');
   var note  = document.getElementById('stability-note');
   if (r.stability) {
     badge.style.backgroundColor = '#DDF5DC';
     badge.style.borderColor = '#1A1A1A';
-    dot.style.backgroundColor = '#2BB673';
+    icon.src = 'img/system-stable.png';
     lbl.style.color = '#1A1A1A';
     lbl.textContent = 'System is Stable';
     note.textContent = '— your queue can handle this load';
   } else {
     badge.style.backgroundColor = '#FFE0E0';
     badge.style.borderColor = '#1A1A1A';
-    dot.style.backgroundColor = '#E8362F';
+    icon.src = 'img/system-unstable.png';
     lbl.style.color = '#1A1A1A';
     lbl.textContent = 'System is Unstable';
     note.textContent = '— the queue grows without limit. Reduce arrivals or add servers.';
-  }
-
-  var tip = document.getElementById('results-tip');
-  var tipText = document.getElementById('results-tip-text');
-  var stabilityHorse = document.getElementById('stability-horse');
-  stabilityHorse.src = getQuentinImage(r);
-  if (!r.stability) {
-    tip.style.display='flex';
-    tipText.textContent='An unstable system means customers pile up forever. Reduce demand or increase capacity.';
-  } else {
-    tip.style.display='flex';
-    tipText.textContent=getInterpretation(r);
   }
 
   var container = document.getElementById('results-container');
@@ -1689,6 +1699,7 @@ function makeQueryRow(q, r){
         else if (q.calc==='mms_ns') result = fmtVal(mmsProbNsGte(r, val), 'pct');
         else if (q.calc==='mms_wq') result = fmtVal(mmsProbWqGte(r, val), 'pct');
         else if (q.calc==='mms_ws') result = fmtVal(mmsProbWsGte(r, val), 'pct');
+        else if (q.calc==='mmsc_wq_lte') result = fmtVal(mmscProbWqLte(r, val), 'pct');
         else if (q.calc==='cc_pwt') result = fmtVal(callCentersProbWt(r, val), 'pct');
       }
       document.getElementById('iq-result-'+q.id).textContent = result;
@@ -1777,22 +1788,6 @@ function renderPriorityResults(container, r){
   g2.appendChild(makeResultCard({k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}, r));
   avg.appendChild(g2);
   container.appendChild(avg);
-}
-
-function getInterpretation(r){
-  var u = r["utilization"], wq = r["mean-time-in-queue"];
-  if (u !== undefined && wq !== undefined) {
-    if (u > 0.9) return 'Your servers are running at '+(u*100).toFixed(0)+'% — that\'s dangerously hot. Even small spikes will cause big backups. Consider adding capacity.';
-    if (u > 0.75) return 'At '+(u*100).toFixed(0)+'% utilization, things are busy but manageable. Keep an eye on peak times.';
-    if (u > 0.5)  return (u*100).toFixed(0)+'% utilization is a comfortable zone. You\'ve got headroom for demand spikes.';
-    return 'At '+(u*100).toFixed(0)+'% utilization, your servers have plenty of spare capacity. You might be able to reduce servers.';
-  }
-  if (r["prob-abandonment"] !== undefined) {
-    var pa = r["prob-abandonment"];
-    if (pa > 0.1) return 'You\'re losing about '+(pa*100).toFixed(0)+'% of customers to impatience. That\'s worth fixing.';
-    return 'Only '+(pa*100).toFixed(1)+'% of customers give up — your staffing looks reasonable.';
-  }
-  return 'Small changes in utilization can have big effects on wait times — especially above 80%.';
 }
 
 /* INIT */
