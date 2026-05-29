@@ -988,27 +988,106 @@ function mmsProbNqGte(R, n){
   return mmsProbNsGte(R, R._c + n);
 }
 
-/* M/M/s/K — finite capacity */
-CALC.MMsc=function(I){var u=I["arrival-rate"]/(I["service-rate"]*I["servers"]),a=I["arrival-rate"]/I["service-rate"],p0,pf,ea,Lq,Wq,Ws,Ls;if(I["servers"]==1&&I["arrival-rate"]==I["service-rate"]){p0=1/(1+I["capacity"]);pf=1/(1+I["capacity"]);ea=I["arrival-rate"]*(1-pf);Lq=I["capacity"]*(I["capacity"]-1)/(2*I["capacity"]+2);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else if(I["servers"]>1&&I["arrival-rate"]===I["service-rate"]*I["servers"]){var inv=0;for(var i=0;i<=I["servers"]-1;i++)inv+=a**i/factorial(i);inv+=a**I["servers"]*(I["capacity"]-I["servers"]+1)/factorial(I["servers"]);p0=1/inv;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));Lq=0;for(var i=I["servers"]+1;i<=I["capacity"];i++){var Pp=a**i/(factorial(I["servers"])*I["servers"]**(i-I["servers"]))*p0;Lq+=(i-I["servers"])*Pp}ea=I["arrival-rate"]*(1-pf);Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}else{var c=I["servers"],lam=I["arrival-rate"],mu=I["service-rate"],K=I["capacity"],sum=0;for(var k=0;k<=c;k++)sum+=Math.pow(lam/mu,k)/factorial(k);for(var k=c+1;k<=K;k++)sum+=(Math.pow(lam/mu,c)/factorial(c))*Math.pow(lam/mu,k-c)/Math.pow(c,k-c);p0=1/sum;pf=p0*a**I["capacity"]/(factorial(I["servers"])*I["servers"]**(I["capacity"]-I["servers"]));ea=I["arrival-rate"]*(1-pf);Lq=p0*Math.pow(I["servers"]*u,I["servers"])*u;Lq/=factorial(I["servers"])*(1-u)**2;Lq*=(1-Math.pow(u,I["capacity"]-I["servers"]+1)-(I["capacity"]-I["servers"]+1)*Math.pow(u,I["capacity"]-I["servers"])*(1-u));Wq=Lq/ea;Ws=Wq+1/I["service-rate"];Ls=Ws*ea}var _c=I["servers"],_K=I["capacity"],_lam=I["arrival-rate"],_mu=I["service-rate"],_a=_lam/_mu,_sumNW=0;for(var _n=0;_n<_c;_n++)_sumNW+=Math.pow(_a,_n)/factorial(_n)*p0;var probNoWait=(1-pf)>0?_sumNW/(1-pf):1;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"prob-full-sys":pf,"prob-no-wait":probNoWait,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true,"_c":_c,"_K":_K,"_lam":_lam,"_mu":_mu,"_p0":p0,"_a":_a,"_pf":pf}};
+/* M/M/s/K — finite capacity (u-space rewrite, stable for huge K) */
+CALC.MMsc = function(I){
+  var c = I["servers"], K = I["capacity"];
+  var lam = I["arrival-rate"], mu = I["service-rate"];
+  var a = lam/mu, u = a/c;
+  var m = K - c;                    // tail length
+
+  // S1 = sum_{n=0}^{c-1} a^n/n!  ; T = a^c/c!
+  var S1 = 0, term = 1;
+  for (var n = 0; n < c; n++){
+    if (n > 0) term *= a/n;
+    S1 += term;
+  }
+  var T = term * a/c;               // continues factorial: a^c/c!
+
+  // geomSum = sum_{j=0}^{m} u^j  ; jSum = sum_{j=1}^{m} j*u^j
+  var um, um1, geomSum, jSum;
+  if (Math.abs(u - 1) < 1e-12){
+    um = 1; um1 = 1;
+    geomSum = m + 1;
+    jSum = m*(m+1)/2;
+  } else if (u < 1){
+    um = Math.pow(u, m);            // → 0 cleanly for huge m
+    um1 = um * u;
+    geomSum = (1 - um1)/(1 - u);
+    jSum = u*(1 - (m+1)*um + m*um1)/Math.pow(1-u, 2);
+  } else {
+    // u > 1: factor out u^m to avoid overflow
+    var vm = Math.pow(1/u, m);      // u^-m, → 0 for huge m
+    um = Math.pow(u, m);            // may overflow for very large m+u; handled below
+    if (!isFinite(um)){
+      // asymptotic: pf → (u-1)/u, ea → c*mu, Lq → K-c (system effectively saturated)
+      var pfA = (u-1)/u, eaA = c*mu;
+      var LqA = K - c;              // system effectively full, c busy, K-c waiting
+      var WqA = LqA/eaA, WsA = WqA + 1/mu, LsA = WsA*eaA;
+      // p0 ≈ 0; probNoWait ≈ 0
+      return {
+        "utilization": eaA/(mu*c), "prob-empty-sys": 0, "prob-full-sys": pfA,
+        "prob-no-wait": 0, "mean-num-in-sys": LsA, "mean-num-in-queue": LqA,
+        "mean-time-in-sys": WsA, "mean-time-in-queue": WqA,
+        "effective-arrival-rate": eaA, "stability": true,
+        "_c": c, "_K": K, "_lam": lam, "_mu": mu, "_p0": 0, "_a": a, "_u": u, "_T": T, "_pf": pfA
+      };
+    }
+    um1 = um * u;
+    geomSum = (1 - um1)/(1 - u);
+    jSum = u*(1 - (m+1)*um + m*um1)/Math.pow(1-u, 2);
+  }
+
+  var p0 = 1/(S1 + T*geomSum);
+  var pf = p0 * T * um;             // P_K
+  var Lq = p0 * T * jSum;
+  var ea = lam * (1 - pf);
+  var Wq = Lq/ea;
+  var Ws = Wq + 1/mu;
+  var Ls = Ws * ea;
+  var probNoWait = (1 - pf) > 0 ? (p0 * S1)/(1 - pf) : 1;
+
+  return {
+    "utilization": ea/(mu*c),
+    "prob-empty-sys": p0,
+    "prob-full-sys": pf,
+    "prob-no-wait": probNoWait,
+    "mean-num-in-sys": Ls,
+    "mean-num-in-queue": Lq,
+    "mean-time-in-sys": Ws,
+    "mean-time-in-queue": Wq,
+    "effective-arrival-rate": ea,
+    "stability": true,
+    "_c": c, "_K": K, "_lam": lam, "_mu": mu,
+    "_p0": p0, "_a": a, "_u": u, "_T": T, "_pf": pf
+  };
+};
 /* P(W_q <= t) for M/M/s/K, conditional on entering */
 function mmscProbWqLte(R, t){
   if(!R.stability) return NaN;
-  var c=R._c, K=R._K, mu=R._mu, p0=R._p0, a=R._a, pf=R._pf;
+  var c=R._c, K=R._K, mu=R._mu, p0=R._p0, T=R._T, u=R._u, pf=R._pf;
   if((1-pf)<=0) return 1;
   var cmut = c*mu*t;
+  var expNeg = Math.exp(-cmut);
+  // tail = sum_{j=0}^{K-1-c} q_{c+j} * Σ_{i=0}^{j} (cmut)^i/i! * e^{-cmut}
+  // q_{c+j} = p0 * T * u^j / (1 - pf)
   var tail = 0;
-  for(var n=c; n<=K-1; n++){
-    var Pn = Math.pow(a,n)/(factorial(c)*Math.pow(c,n-c))*p0;
-    var qn = Pn/(1-pf);
-    var term = Math.exp(-cmut);
-    var inner = term;
-    for(var i=1; i<=n-c; i++){
-      term *= cmut/i;
-      inner += term;
-    }
-    tail += qn * inner;
+  var qFactor = p0 * T / (1 - pf);
+  var qj = qFactor;                 // q_{c+0}
+  var inner = expNeg;                // i=0 term
+  var poissonTerm = expNeg;          // (cmut)^i/i! * e^{-cmut} for i=0
+  var maxJ = K - 1 - c;
+  for (var j = 0; j <= maxJ; j++){
+    tail += qj * inner;
+    if (j === maxJ) break;
+    // advance inner sum to include i = j+1
+    poissonTerm *= cmut/(j+1);
+    inner += poissonTerm;
+    qj *= u;
+    // early termination: remaining contribution bounded by qj/(1-u) when u<1
+    if (u < 1 && qj < 1e-16) break;
+    if (qj === 0) break;
   }
-  return Math.max(0, Math.min(1, 1-tail));
+  return Math.max(0, Math.min(1, 1 - tail));
 }
 
 CALC.MMsNN=function(I){var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=0;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
