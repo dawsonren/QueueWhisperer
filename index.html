@@ -281,7 +281,7 @@ body {
 .status-row { display: flex; gap: 14px; align-items: stretch; margin-bottom: 20px; }
 .status-row .stability-badge { flex: 0 0 auto; margin-bottom: 0; position: relative; overflow: visible; }
 .status-row .quentin-tip { flex: 1; margin-bottom: 0; }
-.stability-icon { height: 250px; width: auto; margin-right: 12px; flex-shrink: 0; }
+.stability-icon { height: 150px; width: auto; margin-right: 12px; flex-shrink: 0; }
 
 /* ─── Disclaimer ─── */
 .disclaimer {
@@ -1090,7 +1090,7 @@ function mmscProbWqLte(R, t){
   return Math.max(0, Math.min(1, 1 - tail));
 }
 
-CALC.MMsNN=function(I){var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=0;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
+CALC.MMsNN=function(I){I["arrival-rate"]=1/I["interarrival"];var a=I["arrival-rate"]/I["service-rate"],Pi=new Array(I["calling-population"]).fill(0),inv=1;if(I["servers"]>1)for(var i=1;i<=I["servers"]-1;i++){var v=factorial(I["calling-population"])/(factorial(i)*factorial(I["calling-population"]-i))*a**i;Pi[i-1]=v;inv+=v}for(var i=I["servers"];i<=I["calling-population"];i++){var v=factorial(I["calling-population"])/(factorial(I["calling-population"]-i)*factorial(I["servers"])*(I["servers"]**(i-I["servers"])))*a**i;Pi[i-1]=v;inv+=v}var p0=1/inv,Ls=0,Lq=0,ea=I["calling-population"]*I["arrival-rate"]*p0;for(var i=1;i<=I["calling-population"];i++){Pi[i-1]*=p0;Ls+=i*Pi[i-1];Lq+=Math.max(0,i-I["servers"])*Pi[i-1];ea+=I["arrival-rate"]*(I["calling-population"]-i)*Pi[i-1]}var Ws=Ls/ea,Wq=Lq/ea;return{"utilization":ea/(I["service-rate"]*I["servers"]),"prob-empty-sys":p0,"mean-num-in-sys":Ls,"mean-num-in-queue":Lq,"mean-time-in-sys":Ws,"mean-time-in-queue":Wq,"effective-arrival-rate":ea,"stability":true}};
 
 /* G/G/c — general multi-server (no breakdown component anymore) */
 CALC.GGc=function(I){
@@ -1238,8 +1238,8 @@ var MODELS=[
   desc:"Customers arrive randomly, get served in order, each server takes roughly the same time. A bank with multiple tellers, a fast-food counter.",
   inputs:[
     {k:"arrival-rate",  group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate",  group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",       group:"servers", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"}
+    {k:"service-rate",  group:"service", label:"Enter the average number of customers that a server can serve in a {unit}.", type:"rate", ph:"e.g. 4"},
+    {k:"servers",       group:"service", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1263,7 +1263,6 @@ var MODELS=[
       ]}
     ]},
   ],
-  stepTitles:{ servers:"Servers" },
   tip:"This is your bread-and-butter queue model. If you're not sure which to pick, start here!"
 },
 {
@@ -1272,8 +1271,8 @@ var MODELS=[
   desc:"Like the classic queue, but there's a max number of people allowed. When it's full, new arrivals are turned away.",
   inputs:[
     {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 10"},
-    {k:"service-rate", group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 4"},
-    {k:"servers",      group:"servers", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"},
+    {k:"service-rate", group:"service", label:"Enter the average number of customers that a server can serve in a {unit}.", type:"rate", ph:"e.g. 4"},
+    {k:"servers",      group:"service", label:"Enter the number of servers.", type:"num",  ph:"e.g. 3"},
     {k:"capacity",     group:"servers", label:"Enter the hard cap on people in the system.", type:"num", ph:"e.g. 10"}
   ],
   sections:[
@@ -1301,7 +1300,7 @@ var MODELS=[
       {k:"effective-arrival-rate", l:"Effective arrival rate", d:"The number of arrivals that are not blocked and are served is", f:"rate"}
     ]}
   ],
-  stepTitles:{ servers:"Servers & capacity" },
+  stepTitles:{ servers:"Capacity" },
   tip:"Got a waiting room with limited chairs? A parking lot that fills up? This one's for you."
 },
 {
@@ -1313,7 +1312,7 @@ var MODELS=[
     {k:"standard-deviation-interarrival",    group:"arrival", label:"Enter the standard deviation of the gap between arrivals", type:"time", ph:"e.g. 3"},
     {k:"mean-processing",                    group:"service", label:"Enter the average time to serve one customer", type:"time", ph:"e.g. 12"},
     {k:"standard-deviation-processing",      group:"service", label:"Enter the standard deviation of the service time", type:"time", ph:"e.g. 4"},
-    {k:"servers",                            group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 3"}
+    {k:"servers",                            group:"service", label:"Enter the number of servers.", type:"num", ph:"e.g. 3"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1333,7 +1332,7 @@ var MODELS=[
       ]}
     ]},
   ],
-  stepTitles:{ arrival:"Arrival times", service:"Service times", servers:"Servers" },
+  stepTitles:{ arrival:"Arrival times", service:"Service" },
   tip:"The 'real world' model — nothing is perfectly random. If you want honesty, pick this one."
 },
 {
@@ -1342,9 +1341,9 @@ var MODELS=[
   desc:"Customers get impatient and leave if they wait too long. Call centers, ER waiting rooms, drive-throughs.",
   inputs:[
     {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 100"},
-    {k:"average-waiting-before-abandonment", group:"arrival", label:"Enter the average patience before customers give up", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."},
-    {k:"service-rate", group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 12"},
-    {k:"servers",      group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 10"}
+    {k:"service-rate", group:"service", label:"Enter the average number of customers that a server can serve in a {unit}.", type:"rate", ph:"e.g. 12"},
+    {k:"servers",      group:"service", label:"Enter the number of servers.", type:"num", ph:"e.g. 10"},
+    {k:"average-waiting-before-abandonment", group:"servers", label:"Enter the average patience time before customers abandon the queue and leave", type:"time", ph:"e.g. 3", help:"Average patience — some leave sooner, some later."}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1368,7 +1367,7 @@ var MODELS=[
       {k:"expected-busy-lines",  l:"Avg. in service or waiting", f:"num"}
     ]}
   ],
-  stepTitles:{ servers:"Servers" },
+  stepTitles:{ servers:"Patience" },
   tip:"If your customers hang up or walk away, ignoring that gives you fairy-tale numbers. This model tells the truth."
 },
 {
@@ -1376,10 +1375,10 @@ var MODELS=[
   friendly:"Systems with Limited Crowd", icon:"👥",
   desc:"When your customer pool is small and fixed — machines that break down and need repair, nurses sharing workstations.",
   inputs:[
-    {k:"arrival-rate",       group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 0.5"},
-    {k:"service-rate",       group:"service", label:"Enter one server's capacity per", type:"rate", ph:"e.g. 2"},
-    {k:"servers",            group:"servers", label:"Enter the number of servers.", type:"num", ph:"e.g. 2"},
-    {k:"calling-population", group:"servers", label:"Enter the total number of people (or machines) in the pool.", type:"num", ph:"e.g. 8"}
+    {k:"interarrival",       group:"arrival", label:"Enter the average time until a customer who leaves the system returns to use service", type:"time", ph:"e.g. 2"},
+    {k:"calling-population", group:"arrival", label:"Enter the total number of potential customers who use the system.", type:"num", ph:"e.g. 8"},
+    {k:"service-rate",       group:"service", label:"Enter the average number of customers that a server can serve in a {unit}.", type:"rate", ph:"e.g. 2"},
+    {k:"servers",            group:"service", label:"Enter the number of servers.", type:"num", ph:"e.g. 2"}
   ],
   sections:[
     {title:"Average Measures", subsections:[
@@ -1396,7 +1395,7 @@ var MODELS=[
       {k:"effective-arrival-rate", l:"Effective arrival rate", f:"rate"}
     ]}
   ],
-  stepTitles:{ arrival:"Arrival rate", servers:"Servers & pool size" },
+  stepTitles:{ arrival:"Arrivals", service:"Service" },
   tip:"When the customer pool is small — like machines on a floor or nurses sharing stations — this captures how arrivals slow as more enter service."
 },
 {
@@ -1498,9 +1497,6 @@ function selectModel(m){
     document.getElementById('step-priority-classes').style.display = 'block';
   } else {
     renderInputFields();
-    document.getElementById('step-arrival').style.display = 'block';
-    document.getElementById('step-service').style.display = 'block';
-    document.getElementById('step-servers').style.display = 'block';
   }
 
   var eb = document.getElementById('error-box');
@@ -1526,13 +1522,15 @@ function renderTimeUnits(){
   });
 }
 
-var STEP_TITLE_DEFAULTS = { arrival: 'Arrivals', service: 'Service rate', servers: 'Servers & capacity' };
+var STEP_TITLE_DEFAULTS = { arrival: 'Arrivals', service: 'Service', servers: 'Servers & capacity' };
 
 function renderInputFields(){
   var groups = { arrival:[], service:[], servers:[] };
   currentModel.inputs.forEach(function(inp){ groups[inp.group].push(inp); });
 
   ['arrival','service','servers'].forEach(function(g){
+    var box = document.getElementById('step-'+g);
+    if (box) box.style.display = groups[g].length ? 'block' : 'none';
     var titleEl = document.querySelector('#step-'+g+' .step-title');
     if (titleEl) titleEl.textContent = (currentModel.stepTitles && currentModel.stepTitles[g]) || STEP_TITLE_DEFAULTS[g];
     var grid = document.getElementById('input-fields-'+g);
@@ -1542,7 +1540,8 @@ function renderInputFields(){
     groups[g].forEach(function(inp){
       var div = document.createElement('div'); div.className='input-group';
       var lbl = inp.label;
-      if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average.';
+      if(lbl.indexOf('{unit}')!==-1) lbl = lbl.replace('{unit}', currentTimeUnit);
+      else if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average.';
       else if(inp.type==='time') lbl += ' (in '+currentTimeUnit+'s).';
       var html = '<label>'+lbl+'</label>';
       if(inp.help) html += '<div class="help">'+inp.help+'</div>';
