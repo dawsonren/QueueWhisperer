@@ -957,6 +957,10 @@ CALC.MMs=function(I){
 function mmsProbWqGte(R, t){
   return R.stability ? R["prob-cust-waits"] * Math.exp(-(R._mu*R._c - R._lam)*t) : NaN;
 }
+/* P(W_q > t | W_q > 0) for M/M/s — among customers who end up waiting */
+function mmsProbWqGteCond(R, t){
+  return R.stability ? Math.exp(-(R._mu*R._c - R._lam)*t) : NaN;
+}
 /* P(W   > t) for M/M/s — system time CDF */
 function mmsProbWsGte(R, t){
   if(!R.stability) return NaN;
@@ -1258,8 +1262,10 @@ var MODELS=[
         {id:"ns", prefix:"Chance of having", suffix:"or more <strong>in the system</strong>",   calc:"mms_ns", f:"pct", ph:"e.g. 5"}
       ]},
       {title:"Wait Time Service Levels", queries:[
+        {id:"wq0", static:true, prefix:"Chance a customer <strong>has to wait</strong> before being served", k:"prob-cust-waits", f:"pct"},
         {id:"wq", prefix:"Chance of waiting", suffix:"or more <strong>in line</strong>",        calc:"mms_wq", f:"pct", ph:"e.g. 2", unit:"time"},
-        {id:"ws", prefix:"Chance of spending", suffix:"or more <strong>in the system</strong>", calc:"mms_ws", f:"pct", ph:"e.g. 3", unit:"time"}
+        {id:"ws", prefix:"Chance of spending", suffix:"or more <strong>in the system</strong>", calc:"mms_ws", f:"pct", ph:"e.g. 3", unit:"time"},
+        {id:"wq_cond", prefix:"Among customers who wait, chance of waiting", suffix:"or more <strong>in line</strong>", calc:"mms_wq_cond", f:"pct", ph:"e.g. 2", unit:"time"}
       ]}
     ]},
   ],
@@ -1754,6 +1760,12 @@ function makeQueryRow(q, r){
   var row = document.createElement('div');
   row.className = 'inline-query';
   var unitLabel = q.unit==='time' ? (currentTimeUnit+'s') : '';
+  if (q.static) {
+    row.innerHTML =
+      '<span>'+q.prefix+':</span>' +
+      '<span class="iq-result">'+(r.stability ? fmtVal(r[q.k], q.f) : '—')+'</span>';
+    return row;
+  }
   row.innerHTML =
     '<span>'+q.prefix+'</span>' +
     '<input type="number" id="iq-'+q.id+'" placeholder="'+q.ph+'" min="0" step="any">' +
@@ -1771,6 +1783,7 @@ function makeQueryRow(q, r){
         else if (q.calc==='mms_ns') result = fmtVal(mmsProbNsGte(r, val), 'pct');
         else if (q.calc==='mms_wq') result = fmtVal(mmsProbWqGte(r, val), 'pct');
         else if (q.calc==='mms_ws') result = fmtVal(mmsProbWsGte(r, val), 'pct');
+        else if (q.calc==='mms_wq_cond') result = fmtVal(mmsProbWqGteCond(r, val), 'pct');
         else if (q.calc==='mmsc_wq_lte') result = fmtVal(mmscProbWqLte(r, val), 'pct');
         else if (q.calc==='cc_pwt') result = fmtVal(callCentersProbWt(r, val), 'pct');
       }
