@@ -961,14 +961,16 @@ function mmsProbWqGte(R, t){
 function mmsProbWqGteCond(R, t){
   return R.stability ? Math.exp(-(R._mu*R._c - R._lam)*t) : NaN;
 }
-/* P(W   > t) for M/M/s — system time CDF */
+/* P(W > t) for M/M/s — exact system-time tail (Iravani slide) */
 function mmsProbWsGte(R, t){
   if(!R.stability) return NaN;
-  // P(W>t) = e^{-mu t} * (1 + (P(wait) / (1 - rho - P(wait))) * (1 - e^{-(mu(c-1)-lam) t}))? Tricky.
-  // Use safer Erlang-C-based approximation: approximate by P(Wq > t) + e^{-mu t} for service tail.
-  // Simpler: total time W = Wq + S. Use Pr(Wq>t)*1 + (1-Pr(Wq>t))*e^{-mu t}
-  var pwq = mmsProbWqGte(R, t);
-  return pwq + (1 - pwq) * Math.exp(-R._mu * t);
+  var s=R._c, mu=R._mu, lam=R._lam, rho=R._u, Pw=R["prob-cust-waits"];
+  var D = s*(1-rho) - 1;                 // = s(1-ρ)-1
+  if(Math.abs(D) < 1e-9)                 // limiting case s(1-ρ)=1
+    return Math.exp(-mu*t)*(1 + Pw*mu*t);
+  var PrLe = ((D + Pw)/D)*(1 - Math.exp(-mu*t))
+           - (Pw/D)*(1 - Math.exp(-(s*mu - lam)*t));
+  return 1 - PrLe;
 }
 /* P(N >= n) and P(Nq >= n) — using stationary distribution */
 function mmsProbNsGte(R, n){
@@ -1132,12 +1134,6 @@ CALC.callCenters=function(I){var R=I["arrival-rate"]/I["service-rate"],beta=(I["
  *     Ws_k  = Wq_k + E[S_k]
  *     Lq_k  = lambda_k * Wq_k    (Little's Law)
  *     Ls_k  = lambda_k * Ws_k
- *
- *   NOTE FOR REVIEWER: The original 3-class code had a special-case
- *   "Wq3 = 0 if lambda_1 == 0" branch that does not match the textbook
- *   formula and was presumably a bug-guard. I'm using the standard
- *   formula above for all classes; please confirm that's the desired
- *   behavior, or let me know which textbook variant you prefer.
  */
 CALC.MG1Priority = function(I) {
   var n = I["__nClasses"] || 3;
