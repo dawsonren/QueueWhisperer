@@ -3,26 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Queue Whisperer's Academy</title>
+<title>Queue Whisperer's Queue-Analyzer</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Rye&family=Fredoka:wght@400;500;600;700&family=Patrick+Hand&family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --fun-font: 'Rye', 'Bagel Fat One', serif;
-  --body-font: 'Fredoka', system-ui, sans-serif;
-  --hand-font: 'Patrick Hand', cursive;
-  --bg:        #E8C9A0;
-  --bg-soft:   #F4E2C2;
-  --paper:     #FFF8EB;
-  --ink:       #3A2418;
-  --accent:    #A33D2A;
-  --accent-2:  #4A6E5C;
-  --accent-3:  #6E8B3D;
-  --accent-4:  #C8A24B;
-  --shadow:    4px 4px 0 #3A2418;
-  --shadow-sm: 3px 3px 0 #3A2418;
-  --bg-pattern: repeating-linear-gradient(90deg, rgba(58,36,24,0.05) 0 1px, transparent 1px 8px);
+  --fun-font:  'Space Grotesk', system-ui, sans-serif;
+  --body-font: 'Inter', system-ui, sans-serif;
+  --hand-font: 'Inter', system-ui, sans-serif;
+  --bg:        #EAF2FB;
+  --bg-soft:   #F4F8FD;
+  --paper:     #FFFFFF;
+  --ink:       #1B3A5B;
+  --accent:    #2563EB;
+  --accent-2:  #1E40AF;
+  --accent-3:  #0EA5E9;
+  --accent-4:  #60A5FA;
+  --shadow:    3px 3px 0 #1B3A5B;
+  --shadow-sm: 2px 2px 0 #1B3A5B;
+  --bg-pattern: none;
   --bg-pattern-size: auto;
 }
 
@@ -59,13 +59,9 @@ body {
   gap: 14px;
 }
 .banner-brand { display: flex; align-items: center; gap: 14px; }
-.banner-brand img.banner-logo {
-  width: 72px; height: 72px;
-  border-radius: 50%;
-  border: 3px solid var(--ink);
-  background: #FFF;
-  box-shadow: var(--shadow-sm);
-  object-fit: cover;
+.banner-brand img.banner-hat {
+  height: 52px;
+  width: auto;
   flex-shrink: 0;
 }
 .banner-brand .banner-text h1 { font-size: 26px; line-height: 1.05; }
@@ -78,8 +74,8 @@ body {
   color: #FFF;
 }
 .banner-model-strip .icon { font-size: 22px; }
-.banner-model-strip .mtitle { font-family: var(--fun-font); font-size: 16px; letter-spacing: 0.3px; line-height: 1; }
-.banner-model-strip .msub { font-family: 'Courier New', monospace; font-size: 11px; font-weight: 700; color: #FFF1A8; letter-spacing: 0.5px; margin-top: 2px; }
+.banner-model-strip .mtitle { font-family: var(--fun-font); font-weight: 600; font-size: 16px; letter-spacing: 0.3px; line-height: 1; }
+.banner-model-strip .msub { font-family: 'Space Grotesk', monospace; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px; margin-top: 3px; }
 .banner h1 {
   font-family: var(--fun-font);
   font-size: 30px;
@@ -237,11 +233,11 @@ body {
   letter-spacing: 0.3px;
 }
 .model-card .technical {
-  font-family: 'Courier New', monospace;
-  font-size: 12px;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 17px;
   font-weight: 700;
   color: var(--accent-2);
-  margin-top: 2px;
+  margin-top: 4px;
   letter-spacing: 0.5px;
 }
 .model-card .desc { font-size: 14px; color: var(--ink); margin-top: 6px; line-height: 1.5; }
@@ -314,8 +310,8 @@ body {
   letter-spacing: 0.3px;
 }
 .use-this-if ul { padding-left: 20px; }
-.use-this-if li { font-size: 14px; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
-.model-desc-row { font-size: 14px; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
+.use-this-if li { font-size: 17px; color: var(--ink); margin-bottom: 4px; line-height: 1.4; }
+.model-desc-row { font-size: 17px; color: var(--ink); margin-bottom: 8px; line-height: 1.5; }
 .model-desc-row:last-child { margin-bottom: 0; }
 .model-desc-row strong { color: var(--accent-2); }
 
@@ -374,7 +370,7 @@ body {
   margin-bottom: 4px;
   letter-spacing: 0.3px;
 }
-.step-desc { font-size: 13px; color: var(--ink); opacity: 0.75; margin-bottom: 12px; }
+.step-desc { font-size: 17px; color: var(--ink); opacity: 0.8; margin-bottom: 12px; }
 
 /* ─── Time unit buttons ─── */
 .time-unit-row { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -401,12 +397,12 @@ body {
 .input-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .input-group label {
   display: block;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 600;
   color: var(--ink);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
-.input-group .help { font-size: 12px; color: var(--ink); opacity: 0.7; font-style: italic; margin-bottom: 4px; }
+.input-group .help { font-size: 13px; color: var(--ink); opacity: 0.7; font-style: italic; margin-bottom: 4px; }
 .input-group input, .input-group select {
   width: 100%;
   padding: 10px 14px;
@@ -463,7 +459,7 @@ body {
 @media (max-width: 700px){ .priority-grid { grid-template-columns: 1fr; } }
 .priority-grid .pin { display: flex; flex-direction: column; height: 100%; }
 .priority-grid .pin label {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
   display: block;
   margin-bottom: 3px;
@@ -568,7 +564,7 @@ body {
   padding: 14px 18px;
   box-shadow: 2px 2px 0 var(--ink);
 }
-.result-card .rlabel { font-size: 13px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.result-card .rlabel { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
 .result-card .rdesc { font-size: 12px; color: var(--ink); opacity: 0.7; margin-bottom: 8px; }
 .result-card .rvalue {
   font-family: var(--fun-font);
@@ -589,7 +585,7 @@ body {
   border: 2px solid var(--ink);
   border-radius: 10px;
   margin-top: 0;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--ink);
   box-shadow: 2px 2px 0 var(--ink);
 }
@@ -688,76 +684,16 @@ body {
 <body>
 
 
-<!-- ═══════════════════ PAGE 0: LANDING ═══════════════════ -->
-<div id="page-landing" class="page active">
-  <div class="banner">
-    <div class="banner-inner">
-      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
-        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
-        <div class="banner-text">
-          <h1>Queue Whisperer's Academy</h1>
-        </div>
-      </button>
-    </div>
-  </div>
-  <div class="content">
-    <div class="hero">
-      <div>
-        <img src="img/logo.png" alt="Queue Whisperer's Academy crest" style="width:200px;height:auto;display:block;margin-bottom:14px;">
-        <div class="hero-logo">
-          <div class="text">
-            <h1>Queue Whisperer's<br>Academy</h1>
-          </div>
-        </div>
-        <p class="hero-tag">
-          A good intuition is powerful. But a good intuition without a number? That's just a confident guess. Welcome to the Academy — your companion for making queues make sense.
-        </p>
-      </div>
-      <img src="img/book-cover.png" alt="Queue Whisperer's Academy book cover" style="width:100%;height:auto;display:block;">
-    </div>
-
-    <div class="mascot-card">
-      <div class="mascot-text">
-        <h2 class="section-title" style="margin-bottom:10px;">The History of the Queue Whisperer's Academy</h2>
-        <p class="hero-tag">
-          [Placeholder: introduce the history of the Academy and its founding mission here.]
-          Meet <strong>[Mascot Name]</strong> — the Academy's trusty guide through every queue, bottleneck, and waiting-room mystery.
-        </p>
-      </div>
-      <div class="mascot-img-wrap">
-        <img src="img/color-horse.png" alt="Queue Whisperer mascot" class="mascot-hero-img">
-      </div>
-    </div>
-
-    <h2 class="section-title">Resources</h2>
-    <div class="resource-grid">
-      <button class="resource-card" onclick="showPage('select')">
-        <span class="rc-icon">🧮</span>
-        <div class="rc-title">Queueing Calculator</div>
-        <div class="rc-desc">Pick a model, plug in your numbers. Think of it as a reality check for your best guesses.</div>
-        <div class="rc-arrow">→</div>
-      </button>
-      <button class="resource-card" onclick="showPage('construction')">
-        <span class="rc-icon">📚</span>
-        <div class="rc-title">Additional Queueing Resources</div>
-        <div class="rc-desc">More tools and references — coming soon.</div>
-        <div class="rc-arrow">→</div>
-      </button>
-    </div>
-  </div>
-</div>
-
 <!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
-<div id="page-select" class="page">
+<div id="page-select" class="page active">
   <div class="banner">
     <div class="banner-inner">
-      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
-        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
+        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Academy</h1>
+          <h1>Queue Whisperer's Queue-Analyzer</h1>
         </div>
       </button>
-      <button class="back-btn" onclick="showPage('landing')">← Back</button>
     </div>
   </div>
   <div class="content">
@@ -767,7 +703,6 @@ body {
     </div>
 
     <div class="calculator-header-card">
-      <div class="chc-icon">🧮</div>
       <div>
         <div class="chc-title">Queueing Calculator</div>
         <div class="chc-desc">Pick a model, plug in your numbers. Think of it as a reality check for your best guesses.</div>
@@ -787,14 +722,13 @@ body {
 <div id="page-input" class="page">
   <div class="banner">
     <div class="banner-inner">
-      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
-        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
+        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Academy</h1>
+          <h1>Queue Whisperer's Queue-Analyzer</h1>
         </div>
       </button>
       <div class="banner-model-strip">
-        <span class="icon" id="input-banner-icon"></span>
         <div>
           <div class="mtitle" id="input-banner-title"></div>
           <div class="msub" id="input-banner-sub"></div>
@@ -815,7 +749,7 @@ body {
     <div class="step-box">
       <div class="step-label">Step 1</div>
       <div class="step-title">Pick your time unit</div>
-      <p class="step-desc">All rates and times will be in this unit.</p>
+      <p class="step-desc">The inputs must be in this unit, and the outputs will be in this unit.</p>
       <div class="time-unit-row" id="time-unit-row"></div>
     </div>
 
@@ -859,14 +793,13 @@ body {
 <div id="page-results" class="page">
   <div class="banner">
     <div class="banner-inner">
-      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
-        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
+      <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
+        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Academy</h1>
+          <h1>Queue Whisperer's Queue-Analyzer</h1>
         </div>
       </button>
       <div class="banner-model-strip">
-        <span class="icon" id="results-banner-icon"></span>
         <div>
           <div class="mtitle" id="results-banner-title"></div>
           <div class="msub" id="results-banner-sub"></div>
@@ -880,42 +813,19 @@ body {
   </div>
   <div class="content">
     <h2 class="page-heading">Outputs</h2>
-    <div class="status-row">
-      <div class="stability-badge" id="stability-badge">
-        <img id="stability-icon-stable" class="stability-icon" src="img/system-stable.png" alt="System is stable">
-        <img id="stability-icon-unstable" class="stability-icon" src="img/system-unstable.png" alt="System is unstable" style="display:none;">
+    <div class="result-section">
+      <div class="result-section-title">Stability</div>
+      <div class="status-row">
+        <div class="stability-badge" id="stability-badge">
+          <img id="stability-icon-stable" class="stability-icon" src="img/system-stable.png" alt="System is stable">
+          <img id="stability-icon-unstable" class="stability-icon" src="img/system-unstable.png" alt="System is unstable" style="display:none;">
+        </div>
       </div>
     </div>
     <div id="results-container"></div>
     <div class="btn-row">
       <button class="compute-btn" onclick="showPage('input')">← Adjust Inputs</button>
       <button class="compute-btn btn-dark" onclick="showPage('select')">← Pick a Different Model</button>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════ PAGE 4: UNDER CONSTRUCTION ═══════════════════ -->
-<div id="page-construction" class="page">
-  <div class="banner">
-    <div class="banner-inner">
-      <button class="banner-brand banner-brand-btn" onclick="showPage('landing')">
-        <img class="banner-logo" src="img/logo.png" alt="Queue Whisperer's Academy crest">
-        <div class="banner-text">
-          <h1>Queue Whisperer's Academy</h1>
-        </div>
-      </button>
-      <button class="back-btn" onclick="showPage('landing')">← Back</button>
-    </div>
-  </div>
-  <div class="content">
-    <div class="hero" style="display:block;text-align:center;padding:48px 32px;">
-      <div style="font-size:64px;margin-bottom:16px;">🚧</div>
-      <div class="hero-logo" style="justify-content:center;margin-bottom:16px;">
-        <div class="text"><h1>Under Construction</h1></div>
-      </div>
-      <p class="hero-tag" style="max-width:480px;margin:0 auto;">
-        Queueing theorists are a bit… economical. More resources are coming — just not quite yet.
-      </p>
     </div>
   </div>
 </div>
@@ -1233,7 +1143,7 @@ var MODEL_DESC = {
 var MODELS=[
 {
   id:"MMs", title:"The Classic", kendall:"M/M/s",
-  friendly:"The Classic", icon:"🏪",
+  friendly:"The Classic", icon:"",
   cardImgId:"asset-right-side-hat",
   desc:"Customers arrive randomly, get served in order, each server takes roughly the same time. A bank with multiple tellers, a fast-food counter.",
   inputs:[
@@ -1244,12 +1154,12 @@ var MODELS=[
   sections:[
     {title:"Average Measures", subsections:[
       {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. number waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. number <strong>in the system</strong> (waiting + being served)", f:"num"}
+        {k:"mean-num-in-queue", l:"Average number waiting <strong>in line</strong>", f:"num"},
+        {k:"mean-num-in-sys",   l:"Average number <strong>in the system</strong> (waiting + being served)", f:"num"}
       ]},
       {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
+        {k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"},
+        {k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}
       ]}
     ]},
     {title:"Service Levels", subsections:[
@@ -1259,17 +1169,15 @@ var MODELS=[
       ]},
       {title:"Wait Time Service Levels", queries:[
         {id:"wq0", static:true, prefix:"Chance a customer <strong>has to wait</strong> before being served", k:"prob-cust-waits", f:"pct"},
-        {id:"wq", prefix:"Chance of waiting", suffix:"or more <strong>in line</strong>",        calc:"mms_wq", f:"pct", ph:"e.g. 2", unit:"time"},
-        {id:"ws", prefix:"Chance of spending", suffix:"or more <strong>in the system</strong>", calc:"mms_ws", f:"pct", ph:"e.g. 3", unit:"time"},
-        {id:"wq_cond", prefix:"Among customers who wait, chance of waiting", suffix:"or more <strong>in line</strong>", calc:"mms_wq_cond", f:"pct", ph:"e.g. 2", unit:"time"}
+        {id:"wq", prefix:"Chance of waiting", suffix:"or less <strong>in line</strong>", calc:"mms_wq_lte", f:"pct", ph:"e.g. 2", unit:"time"}
       ]}
     ]},
   ],
   tip:"This is your bread-and-butter queue model. If you're not sure which to pick, start here!"
 },
 {
-  id:"MMsc", title:"The Capacity-Capped Classic", kendall:"M/M/s/K",
-  friendly:"The Capacity-Capped Classic", icon:"🚪",
+  id:"MMsc", title:"The Size-Capped Classic", kendall:"M/M/s/K",
+  friendly:"The Size-Capped Classic", icon:"",
   desc:"Like the classic queue, but there's a max number of people allowed. When it's full, new arrivals are turned away.",
   inputs:[
     {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 10"},
@@ -1280,12 +1188,12 @@ var MODELS=[
   sections:[
     {title:"Average Measures", subsections:[
       {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. number waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. number <strong>in the system</strong>", f:"num"}
+        {k:"mean-num-in-queue", l:"Average number waiting <strong>in line</strong>", f:"num"},
+        {k:"mean-num-in-sys",   l:"Average number <strong>in the system</strong>", f:"num"}
       ]},
       {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
+        {k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"},
+        {k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}
       ]}
     ]},
     {title:"Service Levels", subsections:[
@@ -1307,7 +1215,7 @@ var MODELS=[
 },
 {
   id:"GGc", title:"The General Model", kendall:"G/G/s",
-  friendly:"The General Model", icon:"🏭",
+  friendly:"The General Model", icon:"",
   desc:"The most realistic model: arrivals aren't perfectly random and service varies. Perfect for manufacturing or IT systems.",
   inputs:[
     {k:"mean-interarrival",                  group:"arrival", label:"Enter the average gap between arrivals", type:"time", ph:"e.g. 5"},
@@ -1319,17 +1227,17 @@ var MODELS=[
   sections:[
     {title:"Average Measures", subsections:[
       {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. people waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. people <strong>in the system</strong>", f:"num"}
+        {k:"mean-num-in-queue", l:"Average people waiting <strong>in line</strong>", f:"num"},
+        {k:"mean-num-in-sys",   l:"Average people <strong>in the system</strong>", f:"num"}
       ]},
       {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
+        {k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"},
+        {k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}
       ]}
     ]},
     {title:"Service Levels", subsections:[
       {title:"Completion Timing", outputs:[
-        {k:"mean-interdeparture", l:"Avg. time between completed customers", f:"time"},
+        {k:"mean-interdeparture", l:"Average time between completed customers", f:"time"},
         {k:"standard-deviation-interdeparture", l:"Variation between completions", f:"time"}
       ]}
     ]},
@@ -1339,7 +1247,7 @@ var MODELS=[
 },
 {
   id:"callCenters", title:"The Classic with Impatient Crowd", kendall:"M/M/s + M",
-  friendly:"The Classic with Impatient Crowd", icon:"📞",
+  friendly:"The Classic with Impatient Crowd", icon:"",
   desc:"Customers get impatient and leave if they wait too long. Call centers, ER waiting rooms, drive-throughs.",
   inputs:[
     {k:"arrival-rate", group:"arrival", label:"Enter the average number of arrivals per", type:"rate", ph:"e.g. 100"},
@@ -1350,7 +1258,7 @@ var MODELS=[
   sections:[
     {title:"Average Measures", subsections:[
       {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time before service", f:"time"}
+        {k:"mean-time-in-queue", l:"Average wait time before service", f:"time"}
       ]}
     ]},
     {title:"Service Levels", subsections:[
@@ -1365,16 +1273,16 @@ var MODELS=[
     ]},
     {title:"Server Information", fullWidth:true, outputs:[
       {k:"occupancy",            l:"Server occupancy",  f:"pct"},
-      {k:"expected-busy-agents", l:"Avg. number of busy servers", f:"num"},
-      {k:"expected-busy-lines",  l:"Avg. in service or waiting", f:"num"}
+      {k:"expected-busy-agents", l:"Average number of busy servers", f:"num"},
+      {k:"expected-busy-lines",  l:"Average in service or waiting", f:"num"}
     ]}
   ],
   stepTitles:{ servers:"Patience" },
   tip:"If your customers hang up or walk away, ignoring that gives you fairy-tale numbers. This model tells the truth."
 },
 {
-  id:"MMsNN", title:"Systems with Limited Crowd", kendall:"M/M/s/N/N",
-  friendly:"Systems with Limited Crowd", icon:"👥",
+  id:"MMsNN", title:"The Classic with Finite Population", kendall:"M/M/s/N/N",
+  friendly:"The Classic with Finite Population", icon:"",
   desc:"When your customer pool is small and fixed — machines that break down and need repair, nurses sharing workstations.",
   inputs:[
     {k:"interarrival",       group:"arrival", label:"Enter the average time until a customer who leaves the system returns to use service", type:"time", ph:"e.g. 2"},
@@ -1385,12 +1293,12 @@ var MODELS=[
   sections:[
     {title:"Average Measures", subsections:[
       {title:"Queue Length Average Measures", outputs:[
-        {k:"mean-num-in-queue", l:"Avg. people waiting <strong>in line</strong>", f:"num"},
-        {k:"mean-num-in-sys",   l:"Avg. people <strong>in the system</strong>", f:"num"}
+        {k:"mean-num-in-queue", l:"Average people waiting <strong>in line</strong>", f:"num"},
+        {k:"mean-num-in-sys",   l:"Average people <strong>in the system</strong>", f:"num"}
       ]},
       {title:"Wait Time Average Measures", outputs:[
-        {k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"},
-        {k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}
+        {k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"},
+        {k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}
       ]}
     ]},
     {title:"System Throughput", fullWidth:true, outputs:[
@@ -1402,7 +1310,7 @@ var MODELS=[
 },
 {
   id:"MG1Priority", title:"The VIP Model", kendall:"M/G/1 with Priority",
-  friendly:"The VIP Model", icon:"⭐",
+  friendly:"The VIP Model", icon:"",
   desc:"One server handles multiple priority levels. Class 1 always goes first. ER triage, airline boarding classes, help-desk severity.",
   // Inputs are generated dynamically per priority class — see special handling below
   isPriority:true,
@@ -1416,6 +1324,7 @@ var MODELS=[
 var currentModel = null;
 var currentTimeUnit = "minute";
 var currentResults = null;
+var currentInputs = null;
 var currentNClasses = 3;   // priority queue: number of classes (2–7)
 
 /* ═══════════════════════════════════════════
@@ -1437,7 +1346,6 @@ function renderModelGrid() {
     var btn = document.createElement('button');
     btn.className = 'model-card';
     btn.innerHTML =
-      '<div class="icon">'+m.icon+'</div>' +
       '<div style="flex:1">' +
         '<div class="friendly">'+m.friendly+'</div>' +
         '<div class="technical">'+m.kendall+'</div>' +
@@ -1456,7 +1364,6 @@ function selectModel(m){
   currentModel = m;
   currentTimeUnit = "minute";
 
-  document.getElementById('input-banner-icon').textContent = m.icon;
   document.getElementById('input-banner-title').textContent = m.friendly;
   document.getElementById('input-banner-sub').textContent = m.kendall;
 
@@ -1543,7 +1450,7 @@ function renderInputFields(){
       var div = document.createElement('div'); div.className='input-group';
       var lbl = inp.label;
       if(lbl.indexOf('{unit}')!==-1) lbl = lbl.replace('{unit}', currentTimeUnit);
-      else if(inp.type==='rate') lbl += ' '+currentTimeUnit+', on average.';
+      else if(inp.type==='rate') lbl += ' '+currentTimeUnit;
       else if(inp.type==='time') lbl += ' (in '+currentTimeUnit+'s).';
       var html = '<label>'+lbl+'</label>';
       if(inp.help) html += '<div class="help">'+inp.help+'</div>';
@@ -1639,6 +1546,7 @@ function compute(){
   if (eb.style.display==='block') return;
 
   if (currentModel.isPriority) inputs["__nClasses"] = currentNClasses;
+  currentInputs = inputs;
 
   try {
     currentResults = CALC[currentModel.id](inputs);
@@ -1663,7 +1571,6 @@ function fmtVal(v, f){
 
 function renderResults(){
   var m = currentModel, r = currentResults;
-  document.getElementById('results-banner-icon').textContent = m.icon;
   document.getElementById('results-banner-title').textContent = m.friendly;
   document.getElementById('results-banner-sub').textContent = 'Results · time unit: '+currentTimeUnit+'s';
 
@@ -1687,13 +1594,19 @@ function renderResults(){
   if (!r.stability) return;
 
   if (r['utilization'] !== undefined) {
-    var utilSection = document.createElement('div');
-    utilSection.className = 'result-section full-width';
-    var utilGrid = document.createElement('div');
-    utilGrid.className = 'results-grid';
-    utilGrid.appendChild(makeResultCard({k:'utilization', l:'Server utilization', d:'How busy are your servers on average?', f:'pct'}, r));
-    utilSection.appendChild(utilGrid);
-    container.appendChild(utilSection);
+    var srvSection = document.createElement('div');
+    srvSection.className = 'result-section full-width';
+    srvSection.innerHTML = '<div class="result-section-title">Server Information</div>';
+    var srvGrid = document.createElement('div');
+    srvGrid.className = 'results-grid';
+    srvGrid.appendChild(makeResultCard({k:'utilization', l:'Server utilization', d:'How busy are your servers on average?', f:'pct'}, r));
+    var sCount = (currentInputs && currentInputs['servers']) || 1;
+    srvGrid.appendChild(makeResultCard(
+      {k:'__busy-servers', l:'Average number of busy servers', d:'Server utilization × number of servers.', f:'num'},
+      {'__busy-servers': r['utilization'] * sCount}
+    ));
+    srvSection.appendChild(srvGrid);
+    container.appendChild(srvSection);
   }
 
   if (m.isPriority) {
@@ -1778,6 +1691,7 @@ function makeQueryRow(q, r){
         if      (q.calc==='mms_nq') result = fmtVal(mmsProbNqGte(r, val), 'pct');
         else if (q.calc==='mms_ns') result = fmtVal(mmsProbNsGte(r, val), 'pct');
         else if (q.calc==='mms_wq') result = fmtVal(mmsProbWqGte(r, val), 'pct');
+        else if (q.calc==='mms_wq_lte') result = fmtVal(1 - mmsProbWqGte(r, val), 'pct');
         else if (q.calc==='mms_ws') result = fmtVal(mmsProbWsGte(r, val), 'pct');
         else if (q.calc==='mms_wq_cond') result = fmtVal(mmsProbWqGteCond(r, val), 'pct');
         else if (q.calc==='mmsc_wq_lte') result = fmtVal(mmscProbWqLte(r, val), 'pct');
@@ -1792,7 +1706,7 @@ function makeQueryRow(q, r){
 /* ─── Priority results — table form for compactness ─── */
 function renderPriorityResults(container, r){
   var n = r.__nClasses;
-  var tableHead = '<thead><tr><th>Class</th><th>Avg. wait <strong>in line</strong></th><th>Avg. total time</th><th>Avg. # <strong>in line</strong></th><th>Avg. # <strong>in system</strong></th></tr></thead>';
+  var tableHead = '<thead><tr><th>Class</th><th>Average wait <strong>in line</strong></th><th>Average total time</th><th>Average# <strong>in line</strong></th><th>Average# <strong>in system</strong></th></tr></thead>';
 
   // Section 1: Per-class breakdown (priority discipline)
   var perClass = document.createElement('div');
@@ -1858,15 +1772,15 @@ function renderPriorityResults(container, r){
   var sub1 = document.createElement('div'); sub1.className='result-subsection-title'; sub1.textContent='Queue Length Average Measures';
   avg.appendChild(sub1);
   var g1 = document.createElement('div'); g1.className='results-grid';
-  g1.appendChild(makeResultCard({k:"mean-num-in-queue", l:"Avg. number waiting <strong>in line</strong>", f:"num"}, r));
-  g1.appendChild(makeResultCard({k:"mean-num-in-sys",   l:"Avg. number <strong>in the system</strong>", f:"num"}, r));
+  g1.appendChild(makeResultCard({k:"mean-num-in-queue", l:"Average number waiting <strong>in line</strong>", f:"num"}, r));
+  g1.appendChild(makeResultCard({k:"mean-num-in-sys",   l:"Average number <strong>in the system</strong>", f:"num"}, r));
   avg.appendChild(g1);
 
   var sub2 = document.createElement('div'); sub2.className='result-subsection-title'; sub2.textContent='Wait Time Average Measures';
   avg.appendChild(sub2);
   var g2 = document.createElement('div'); g2.className='results-grid';
-  g2.appendChild(makeResultCard({k:"mean-time-in-queue", l:"Avg. wait time <strong>in line</strong>", f:"time"}, r));
-  g2.appendChild(makeResultCard({k:"mean-time-in-sys",   l:"Avg. total time <strong>in system</strong>", f:"time"}, r));
+  g2.appendChild(makeResultCard({k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"}, r));
+  g2.appendChild(makeResultCard({k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}, r));
   avg.appendChild(g2);
   container.appendChild(avg);
 }
