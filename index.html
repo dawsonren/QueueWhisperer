@@ -3,15 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Queue Whisperer's Queue-Analyzer</title>
+<title>Queue Whisperer's Q-Analyzer</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
 
 <style>
 :root {
+  /* ⟵ CHANGE THE PAGE TITLE FONT HERE. This bold display font is used only for
+     the "Queue Whisperer's Q-Analyzer" banner title. To swap it: (1) add the
+     new font to the Google Fonts <link> in <head>, then (2) change --title-font below. */
+  --title-font: 'Archivo Black', system-ui, sans-serif;
   --fun-font:  'Space Grotesk', system-ui, sans-serif;
   --body-font: 'Inter', system-ui, sans-serif;
   --hand-font: 'Inter', system-ui, sans-serif;
+
+  /* === DEFAULT COLOR SCHEME: Cream / Gold (matches the "Winning the Wait" cover) ===
+     Other schemes live in the body.theme-* blocks below and are toggled by the
+     swatch bar (top-right). To change the default, edit the values here. */
+  --bg:        #F1EBDF;
+  --bg-soft:   #FAF6EE;
+  --paper:     #FFFDF8;
+  --ink:       #2B2B33;
+  --accent:    #B8912E;
+  --accent-2:  #3A3A44;
+  --accent-3:  #8A6D1F;
+  --accent-4:  #D8C48A;
+  --shadow:    3px 3px 0 #2B2B33;
+  --shadow-sm: 2px 2px 0 #2B2B33;
+  --bg-pattern: radial-gradient(circle at 1px 1px, rgba(184,145,46,0.16) 1px, transparent 0);
+  --bg-pattern-size: 22px 22px;
+}
+
+/* === THEME: Blue (the original scheme) === */
+body.theme-blue {
   --bg:        #EAF2FB;
   --bg-soft:   #F4F8FD;
   --paper:     #FFFFFF;
@@ -22,7 +46,71 @@
   --accent-4:  #60A5FA;
   --shadow:    3px 3px 0 #1B3A5B;
   --shadow-sm: 2px 2px 0 #1B3A5B;
-  --bg-pattern: none;
+  --bg-pattern: radial-gradient(circle at 1px 1px, rgba(37,99,235,0.14) 1px, transparent 0);
+  --bg-pattern-size: 22px 22px;
+}
+
+/* === THEME: Silver — light === */
+body.theme-silver-light {
+  --bg:        #EDEFF2;
+  --bg-soft:   #F7F8FA;
+  --paper:     #FFFFFF;
+  --ink:       #2E3338;
+  --accent:    #6B7785;
+  --accent-2:  #454C54;
+  --accent-3:  #8A94A0;
+  --accent-4:  #B9C2CC;
+  --shadow:    3px 3px 0 #2E3338;
+  --shadow-sm: 2px 2px 0 #2E3338;
+  --bg-pattern: repeating-linear-gradient(45deg, rgba(46,51,56,0.05) 0 2px, transparent 2px 12px);
+  --bg-pattern-size: auto;
+}
+
+/* === THEME: Silver — dark === */
+body.theme-silver-dark {
+  --bg:        #2B2F36;
+  --bg-soft:   #343A42;
+  --paper:     #3C434D;
+  --ink:       #EAEDF1;
+  --accent:    #AEB8C4;
+  --accent-2:  #C7D0DA;
+  --accent-3:  #8A94A0;
+  --accent-4:  #5A626C;
+  --shadow:    3px 3px 0 #14171C;
+  --shadow-sm: 2px 2px 0 #14171C;
+  --bg-pattern: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 12px);
+  --bg-pattern-size: auto;
+}
+
+/* === THEME: Brown — warm (caramel) === */
+body.theme-brown-warm {
+  --bg:        #EFE3D3;
+  --bg-soft:   #F6EEE1;
+  --paper:     #FFFBF4;
+  --ink:       #4A3524;
+  --accent:    #A9743F;
+  --accent-2:  #6E4A2C;
+  --accent-3:  #8A6D3F;
+  --accent-4:  #C9A874;
+  --shadow:    3px 3px 0 #4A3524;
+  --shadow-sm: 2px 2px 0 #4A3524;
+  --bg-pattern: repeating-linear-gradient(90deg, rgba(74,53,36,0.05) 0 1px, transparent 1px 9px);
+  --bg-pattern-size: auto;
+}
+
+/* === THEME: Brown — deep (espresso) === */
+body.theme-brown-deep {
+  --bg:        #E4D5C3;
+  --bg-soft:   #EFE3D3;
+  --paper:     #FBF4EA;
+  --ink:       #3A2417;
+  --accent:    #7B4A2A;
+  --accent-2:  #4A2E1C;
+  --accent-3:  #9A6B3F;
+  --accent-4:  #B98A5A;
+  --shadow:    3px 3px 0 #3A2417;
+  --shadow-sm: 2px 2px 0 #3A2417;
+  --bg-pattern: repeating-linear-gradient(45deg, rgba(58,36,23,0.06) 0 2px, transparent 2px 14px);
   --bg-pattern-size: auto;
 }
 
@@ -41,6 +129,46 @@ body {
 
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
+
+/* === Color-scheme switcher (fixed, top-right) === */
+.theme-switcher {
+  position: fixed;
+  top: 12px; right: 12px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 24px;
+  padding: 5px 9px;
+  box-shadow: var(--shadow-sm);
+}
+.theme-switcher .label {
+  font-family: var(--fun-font);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-right: 2px;
+}
+.theme-swatch {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s;
+}
+.theme-swatch:hover { transform: scale(1.1); }
+.theme-swatch.active { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink); }
+.theme-swatch[data-theme="cream"]        { background: linear-gradient(135deg,#F1EBDF 50%,#B8912E 50%); }
+.theme-swatch[data-theme="blue"]         { background: linear-gradient(135deg,#EAF2FB 50%,#2563EB 50%); }
+.theme-swatch[data-theme="silver-light"] { background: linear-gradient(135deg,#EDEFF2 50%,#6B7785 50%); }
+.theme-swatch[data-theme="silver-dark"]  { background: linear-gradient(135deg,#5A626C 50%,#2B2F36 50%); }
+.theme-swatch[data-theme="brown-warm"]   { background: linear-gradient(135deg,#EFE3D3 50%,#A9743F 50%); }
+.theme-swatch[data-theme="brown-deep"]   { background: linear-gradient(135deg,#B98A5A 50%,#4A2E1C 50%); }
+@media (max-width: 600px){ .theme-switcher .label { display: none; } }
 
 /* ─── Banner ─── */
 .banner {
@@ -77,11 +205,11 @@ body {
 .banner-model-strip .mtitle { font-family: var(--fun-font); font-weight: 600; font-size: 16px; letter-spacing: 0.3px; line-height: 1; }
 .banner-model-strip .msub { font-family: 'Space Grotesk', monospace; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px; margin-top: 3px; }
 .banner h1 {
-  font-family: var(--fun-font);
-  font-size: 30px;
+  font-family: var(--title-font);
+  font-size: 26px;
   font-weight: 400;
   color: #FFF;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   /* text-shadow: 3px 3px 0 var(--ink); */
   line-height: 1.1;
 }
@@ -181,6 +309,18 @@ body {
   color: var(--ink);
   line-height: 1.4;
 }
+.hero { grid-template-columns: 1fr 240px; }
+.hero-logo .text h1 { font-family: var(--title-font); }
+.hero-book {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  justify-self: end;
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+  transform: rotate(-2deg);
+}
 
 /* ─── Section title ─── */
 .section-title {
@@ -215,12 +355,26 @@ body {
 .card-horse {
   position: absolute;
   right: -50px;
-  bottom: 30px;
+  bottom: 40px;
   height: 88px;
-  width: auto;
+  width: 135px;
+  height: auto;
   pointer-events: none;
   z-index: 5;
   transform: rotate(29deg);
+}
+/* "Hanging hat" that dangles off the top-right corner of a box/card */
+.has-card-hat { position: relative; overflow: visible; }
+.card-hat {
+  position: absolute;
+  top: -50px;
+  right: -45px;
+  height: 58px;
+  width: 135px;
+  height: auto;
+  pointer-events: none;
+  z-index: 6;
+  transform: rotate(24deg);
 }
 .model-card:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
 .model-card:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
@@ -585,7 +739,10 @@ body {
   border: 2px solid var(--ink);
   border-radius: 10px;
   margin-top: 0;
-  font-size: 15px;
+  /* Match the result-card label typography (Average Measures / Server Info boxes) */
+  font-family: var(--body-font);
+  font-size: 16px;
+  font-weight: 600;
   color: var(--ink);
   box-shadow: 2px 2px 0 var(--ink);
 }
@@ -683,15 +840,24 @@ body {
 </head>
 <body>
 
+<!-- Color-scheme switcher -->
+<div class="theme-switcher" role="group" aria-label="Color scheme">
+  <span class="label">Theme</span>
+  <button class="theme-swatch" data-theme="cream"        aria-label="Cream / Gold" title="Cream / Gold"></button>
+  <button class="theme-swatch" data-theme="blue"         aria-label="Blue"         title="Blue"></button>
+  <button class="theme-swatch" data-theme="silver-light" aria-label="Silver light" title="Silver — light"></button>
+  <button class="theme-swatch" data-theme="silver-dark"  aria-label="Silver dark"  title="Silver — dark"></button>
+  <button class="theme-swatch" data-theme="brown-warm"   aria-label="Brown warm"   title="Brown — warm"></button>
+  <button class="theme-swatch" data-theme="brown-deep"   aria-label="Brown deep"   title="Brown — deep"></button>
+</div>
 
 <!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
 <div id="page-select" class="page active">
   <div class="banner">
     <div class="banner-inner">
       <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
-        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Queue-Analyzer</h1>
+          <h1>Queue Whisperer's Q-Analyzer</h1>
         </div>
       </button>
     </div>
@@ -700,6 +866,16 @@ body {
     <!-- Asset registry: images referenced in JS — Parcel processes src and rewrites URLs -->
     <div id="card-assets" style="display:none">
       <img id="asset-right-side-hat" src="img/right-side-hat.png" alt="">
+    </div>
+
+    <div class="hero">
+      <div class="hero-text">
+        <div class="hero-logo">
+          <div class="text"><h1>Q-Analyzer</h1></div>
+        </div>
+        <p class="hero-tag">Plug in your numbers and get a reality check on your queues — the companion calculator to <em>Winning the Wait</em>.</p>
+      </div>
+      <img class="hero-book" src="img/book_front.png" alt="Winning the Wait — book cover">
     </div>
 
     <div class="calculator-header-card">
@@ -723,9 +899,8 @@ body {
   <div class="banner">
     <div class="banner-inner">
       <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
-        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Queue-Analyzer</h1>
+          <h1>Queue Whisperer's Q-Analyzer</h1>
         </div>
       </button>
       <div class="banner-model-strip">
@@ -746,11 +921,12 @@ body {
     <h2 class="page-heading">Inputs</h2>
 
     <!-- Step 1: Time Unit -->
-    <div class="step-box">
+    <div class="step-box has-card-hat">
       <div class="step-label">Step 1</div>
       <div class="step-title">Pick your time unit</div>
       <p class="step-desc">The inputs must be in this unit, and the outputs will be in this unit.</p>
       <div class="time-unit-row" id="time-unit-row"></div>
+      <img class="card-hat" src="img/right-side-hat.png" alt="">
     </div>
 
     <!-- Steps 2,3,4 — rendered dynamically by groupKind ("arrival" | "service" | "servers") -->
@@ -794,9 +970,8 @@ body {
   <div class="banner">
     <div class="banner-inner">
       <button class="banner-brand banner-brand-btn" onclick="showPage('select')">
-        <img class="banner-hat" src="img/front-hat.png" alt="">
         <div class="banner-text">
-          <h1>Queue Whisperer's Queue-Analyzer</h1>
+          <h1>Queue Whisperer's Q-Analyzer</h1>
         </div>
       </button>
       <div class="banner-model-strip">
@@ -902,6 +1077,28 @@ function mmsProbNqGte(R, n){
   // # in queue = max(N-c, 0). P(Nq >= n) = P(N >= c+n) for n>=1, =1 for n<=0
   if(n<=0) return 1;
   return mmsProbNsGte(R, R._c + n);
+}
+
+/* P(N >= n) and P(Nq >= n) for M/M/s/K — finite-capacity stationary distribution */
+function mmscProbNsGte(R, n){
+  if(!R.stability) return NaN;
+  if(n<=0) return 1;
+  var c=R._c, K=R._K, a=R._a, u=R._u, p0=R._p0, T=R._T;
+  if(n>K) return 0;                 // can't have more than K in the system
+  // p_k = a^k/k! * p0 for k<=c ; = T * u^(k-c) * p0 for c<=k<=K
+  var sum=0;
+  for(var k=0;k<n;k++){
+    var pk;
+    if(k<=c) pk = Math.pow(a,k)/factorial(k)*p0;
+    else pk = T*Math.pow(u,k-c)*p0;
+    sum += pk;
+  }
+  return Math.max(0, Math.min(1, 1-sum));
+}
+function mmscProbNqGte(R, n){
+  // # in queue = max(N-c, 0). P(Nq >= n) = P(N >= c+n) for n>=1, =1 for n<=0
+  if(n<=0) return 1;
+  return mmscProbNsGte(R, R._c + n);
 }
 
 /* M/M/s/K — finite capacity (u-space rewrite, stable for huge K) */
@@ -1164,8 +1361,7 @@ var MODELS=[
     ]},
     {title:"Service Levels", subsections:[
       {title:"Queue Length Service Levels", queries:[
-        {id:"nq", prefix:"Chance of having", suffix:"or more waiting <strong>in line</strong>", calc:"mms_nq", f:"pct", ph:"e.g. 5"},
-        {id:"ns", prefix:"Chance of having", suffix:"or more <strong>in the system</strong>",   calc:"mms_ns", f:"pct", ph:"e.g. 5"}
+        {id:"nq", prefix:"Chance of having", suffix:"or more waiting <strong>in line</strong>", calc:"mms_nq", f:"pct", ph:"e.g. 5"}
       ]},
       {title:"Wait Time Service Levels", queries:[
         {id:"wq0", static:true, prefix:"Chance a customer <strong>has to wait</strong> before being served", k:"prob-cust-waits", f:"pct"},
@@ -1199,6 +1395,8 @@ var MODELS=[
     {title:"Service Levels", subsections:[
       {title:"Queue Length Service Levels", outputs:[
         {k:"prob-full-sys",  l:"Chance the system is full (turning people away)", f:"pct"}
+      ], queries:[
+        {id:"mmsc_nq", prefix:"Chance of having", suffix:"or more waiting <strong>in line</strong>", calc:"mmsc_nq", f:"pct", ph:"e.g. 5"}
       ]},
       {title:"Wait Time Service Levels", outputs:[
         {k:"prob-no-wait", l:"Chance a customer receives service immediately on arrival (no waiting in line)", f:"pct"}
@@ -1599,10 +1797,10 @@ function renderResults(){
     srvSection.innerHTML = '<div class="result-section-title">Server Information</div>';
     var srvGrid = document.createElement('div');
     srvGrid.className = 'results-grid';
-    srvGrid.appendChild(makeResultCard({k:'utilization', l:'Server utilization', d:'How busy are your servers on average?', f:'pct'}, r));
+    srvGrid.appendChild(makeResultCard({k:'utilization', l:'Server utilization', f:'pct'}, r));
     var sCount = (currentInputs && currentInputs['servers']) || 1;
     srvGrid.appendChild(makeResultCard(
-      {k:'__busy-servers', l:'Average number of busy servers', d:'Server utilization × number of servers.', f:'num'},
+      {k:'__busy-servers', l:'Average number of busy servers', f:'num', cardHat:true},
       {'__busy-servers': r['utilization'] * sCount}
     ));
     srvSection.appendChild(srvGrid);
@@ -1651,10 +1849,14 @@ function renderSectionedResults(m, r, container){
 
 function makeResultCard(out, r){
   var card = document.createElement('div');
-  card.className = 'result-card';
+  card.className = 'result-card' + (out.cardHat ? ' has-card-hat' : '');
   var html = '<div class="rlabel">'+out.l+'</div>';
   if (out.d) html += '<div class="rdesc">'+out.d+'</div>';
   html += '<div class="rvalue">'+fmtVal(r[out.k], out.f)+'</div>';
+  if (out.cardHat) {
+    var hatEl = document.getElementById('asset-right-side-hat');
+    if (hatEl) html += '<img class="card-hat" src="'+hatEl.src+'" alt="">';
+  }
   card.innerHTML = html;
   return card;
 }
@@ -1694,6 +1896,7 @@ function makeQueryRow(q, r){
         else if (q.calc==='mms_wq_lte') result = fmtVal(1 - mmsProbWqGte(r, val), 'pct');
         else if (q.calc==='mms_ws') result = fmtVal(mmsProbWsGte(r, val), 'pct');
         else if (q.calc==='mms_wq_cond') result = fmtVal(mmsProbWqGteCond(r, val), 'pct');
+        else if (q.calc==='mmsc_nq') result = fmtVal(mmscProbNqGte(r, val), 'pct');
         else if (q.calc==='mmsc_wq_lte') result = fmtVal(mmscProbWqLte(r, val), 'pct');
         else if (q.calc==='cc_pwt') result = fmtVal(callCentersProbWt(r, val), 'pct');
       }
@@ -1784,6 +1987,27 @@ function renderPriorityResults(container, r){
   avg.appendChild(g2);
   container.appendChild(avg);
 }
+
+/* === Color-scheme switcher === */
+(function(){
+  var THEMES = ['cream','blue','silver-light','silver-dark','brown-warm','brown-deep'];
+  var saved = localStorage.getItem('qwa-theme');
+  if (THEMES.indexOf(saved) === -1) saved = 'cream';
+  applyTheme(saved);
+  document.querySelectorAll('.theme-swatch').forEach(function(b){
+    b.addEventListener('click', function(){
+      applyTheme(this.dataset.theme);
+      localStorage.setItem('qwa-theme', this.dataset.theme);
+    });
+  });
+  function applyTheme(t){
+    THEMES.forEach(function(x){ document.body.classList.remove('theme-'+x); });
+    if (t !== 'cream') document.body.classList.add('theme-'+t);  // cream = default :root
+    document.querySelectorAll('.theme-swatch').forEach(function(b){
+      b.classList.toggle('active', b.dataset.theme === t);
+    });
+  }
+})();
 
 /* INIT */
 renderModelGrid();
