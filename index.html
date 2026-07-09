@@ -17,89 +17,7 @@
   --body-font: 'Inter', system-ui, sans-serif;
   --hand-font: 'Inter', system-ui, sans-serif;
 
-  /* === DEFAULT COLOR SCHEME: Cream / Gold (matches the "Winning the Wait" cover) ===
-     Other schemes live in the body.theme-* blocks below and are toggled by the
-     swatch bar (top-right). To change the default, edit the values here. */
-  --bg:        #F1EBDF;
-  --bg-soft:   #FAF6EE;
-  --paper:     #FFFDF8;
-  --ink:       #2B2B33;
-  --accent:    #B8912E;
-  --accent-2:  #3A3A44;
-  --accent-3:  #8A6D1F;
-  --accent-4:  #D8C48A;
-  --shadow:    3px 3px 0 #2B2B33;
-  --shadow-sm: 2px 2px 0 #2B2B33;
-  --bg-pattern: radial-gradient(circle at 1px 1px, rgba(184,145,46,0.16) 1px, transparent 0);
-  --bg-pattern-size: 22px 22px;
-}
-
-/* === THEME: Blue (the original scheme) === */
-body.theme-blue {
-  --bg:        #EAF2FB;
-  --bg-soft:   #F4F8FD;
-  --paper:     #FFFFFF;
-  --ink:       #1B3A5B;
-  --accent:    #2563EB;
-  --accent-2:  #1E40AF;
-  --accent-3:  #0EA5E9;
-  --accent-4:  #60A5FA;
-  --shadow:    3px 3px 0 #1B3A5B;
-  --shadow-sm: 2px 2px 0 #1B3A5B;
-  --bg-pattern: radial-gradient(circle at 1px 1px, rgba(37,99,235,0.14) 1px, transparent 0);
-  --bg-pattern-size: 22px 22px;
-}
-
-/* === THEME: Silver — light === */
-body.theme-silver-light {
-  --bg:        #EDEFF2;
-  --bg-soft:   #F7F8FA;
-  --paper:     #FFFFFF;
-  --ink:       #2E3338;
-  --accent:    #6B7785;
-  --accent-2:  #454C54;
-  --accent-3:  #8A94A0;
-  --accent-4:  #B9C2CC;
-  --shadow:    3px 3px 0 #2E3338;
-  --shadow-sm: 2px 2px 0 #2E3338;
-  --bg-pattern: repeating-linear-gradient(45deg, rgba(46,51,56,0.05) 0 2px, transparent 2px 12px);
-  --bg-pattern-size: auto;
-}
-
-/* === THEME: Silver — dark === */
-body.theme-silver-dark {
-  --bg:        #2B2F36;
-  --bg-soft:   #343A42;
-  --paper:     #3C434D;
-  --ink:       #EAEDF1;
-  --accent:    #AEB8C4;
-  --accent-2:  #C7D0DA;
-  --accent-3:  #8A94A0;
-  --accent-4:  #5A626C;
-  --shadow:    3px 3px 0 #14171C;
-  --shadow-sm: 2px 2px 0 #14171C;
-  --bg-pattern: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 2px, transparent 2px 12px);
-  --bg-pattern-size: auto;
-}
-
-/* === THEME: Brown — warm (caramel) === */
-body.theme-brown-warm {
-  --bg:        #EFE3D3;
-  --bg-soft:   #F6EEE1;
-  --paper:     #FFFBF4;
-  --ink:       #4A3524;
-  --accent:    #A9743F;
-  --accent-2:  #6E4A2C;
-  --accent-3:  #8A6D3F;
-  --accent-4:  #C9A874;
-  --shadow:    3px 3px 0 #4A3524;
-  --shadow-sm: 2px 2px 0 #4A3524;
-  --bg-pattern: repeating-linear-gradient(90deg, rgba(74,53,36,0.05) 0 1px, transparent 1px 9px);
-  --bg-pattern-size: auto;
-}
-
-/* === THEME: Brown — deep (espresso) === */
-body.theme-brown-deep {
+  /* === COLOR SCHEME: Brown — deep (espresso). The single fixed theme. === */
   --bg:        #E4D5C3;
   --bg-soft:   #EFE3D3;
   --paper:     #FBF4EA;
@@ -130,8 +48,8 @@ body {
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
 
-/* === Color-scheme switcher (fixed, top-right) === */
-.theme-switcher {
+/* === Hat-position switcher (fixed, top-right) === */
+.hat-switcher {
   position: fixed;
   top: 12px; right: 12px;
   z-index: 100;
@@ -144,7 +62,7 @@ body {
   padding: 5px 9px;
   box-shadow: var(--shadow-sm);
 }
-.theme-switcher .label {
+.hat-switcher .label {
   font-family: var(--fun-font);
   font-size: 11px;
   letter-spacing: 0.5px;
@@ -152,23 +70,21 @@ body {
   color: var(--ink);
   margin-right: 2px;
 }
-.theme-swatch {
-  width: 24px; height: 24px;
-  border-radius: 50%;
+.hat-btn {
   border: 2px solid var(--ink);
+  border-radius: 16px;
+  background: var(--paper);
+  color: var(--ink);
   cursor: pointer;
-  padding: 0;
+  padding: 4px 12px;
+  font-family: var(--fun-font);
+  font-size: 12px;
+  letter-spacing: 0.3px;
   transition: transform 0.1s;
 }
-.theme-swatch:hover { transform: scale(1.1); }
-.theme-swatch.active { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--ink); }
-.theme-swatch[data-theme="cream"]        { background: linear-gradient(135deg,#F1EBDF 50%,#B8912E 50%); }
-.theme-swatch[data-theme="blue"]         { background: linear-gradient(135deg,#EAF2FB 50%,#2563EB 50%); }
-.theme-swatch[data-theme="silver-light"] { background: linear-gradient(135deg,#EDEFF2 50%,#6B7785 50%); }
-.theme-swatch[data-theme="silver-dark"]  { background: linear-gradient(135deg,#5A626C 50%,#2B2F36 50%); }
-.theme-swatch[data-theme="brown-warm"]   { background: linear-gradient(135deg,#EFE3D3 50%,#A9743F 50%); }
-.theme-swatch[data-theme="brown-deep"]   { background: linear-gradient(135deg,#B98A5A 50%,#4A2E1C 50%); }
-@media (max-width: 600px){ .theme-switcher .label { display: none; } }
+.hat-btn:hover { transform: translateY(-1px); }
+.hat-btn.active { background: var(--accent); color: #FFF; }
+@media (max-width: 600px){ .hat-switcher .label { display: none; } }
 
 /* ─── Banner ─── */
 .banner {
@@ -177,7 +93,7 @@ body {
   box-shadow: 0 6px 0 rgba(0,0,0,0.15);
 }
 .banner-inner {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 14px 24px;
   display: flex;
@@ -198,12 +114,27 @@ body {
   background: rgba(0,0,0,0.18);
   border: 2px solid var(--ink);
   border-radius: 10px;
-  padding: 6px 12px;
+  padding: 15px 16px;   /* 50% taller than the original 6px 12px card */
   color: #FFF;
 }
 .banner-model-strip .icon { font-size: 22px; }
 .banner-model-strip .mtitle { font-family: var(--fun-font); font-weight: 600; font-size: 16px; letter-spacing: 0.3px; line-height: 1; }
-.banner-model-strip .msub { font-family: 'Space Grotesk', monospace; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px; margin-top: 3px; }
+.banner-model-strip .msub { font-family: 'Space Grotesk', monospace; font-size: 17px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px; }
+
+/* Header rows with actions aligned right */
+.uti-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.uti-model-name {
+  font-family: var(--fun-font);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  margin: 6px 0 12px;
+}
+.outputs-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.outputs-header .page-heading { margin: 8px 0 16px; }
+.outputs-header-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.compute-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .banner h1 {
   font-family: var(--title-font);
   font-size: 26px;
@@ -240,7 +171,7 @@ body {
 .back-btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
 .back-btn:active { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--ink); }
 
-.content { max-width: 960px; margin: 0 auto; padding: 24px 24px 64px; }
+.content { max-width: 1200px; margin: 0 auto; padding: 24px 24px 64px; }
 
 /* ─── Title-page hero with logo + book ─── */
 .hero {
@@ -311,6 +242,38 @@ body {
 }
 .hero { grid-template-columns: 1fr 240px; }
 .hero-logo .text h1 { font-family: var(--title-font); }
+
+/* ─── Big "Q" with a cowboy hat (two positions, toggled by body class) ─── */
+.hero-title { display: flex; align-items: baseline; gap: 0; flex-wrap: nowrap; }
+.big-q {
+  position: relative;
+  display: inline-block;
+  line-height: 0.9;
+  font-family: var(--title-font);
+  color: var(--ink);
+}
+.q-hat { position: absolute; pointer-events: none; height: auto; }
+.q-hat-top, .q-hat-side { display: none; }
+
+/* Position 1 — Q very large, hat sitting vertically on top like a hat */
+body.hat-top .big-q { font-size: 132px; }
+body.hat-top .q-hat-top {
+  display: block;
+  width: 1.15em;
+  left: 50%;
+  top: -50px;
+  transform: translateX(-50%) rotate(-4deg);
+}
+
+/* Position 2 — Q somewhat large, hat hanging off the side */
+body.hat-side .big-q { font-size: 88px; margin-right: 0px; }
+body.hat-side .q-hat-side {
+  display: block;
+  width: 1.1em;
+  top: -25px;
+  right: 5px;
+  transform: rotate(-15deg);
+}
 .hero-book {
   width: 100%;
   max-width: 240px;
@@ -613,7 +576,7 @@ body {
 @media (max-width: 700px){ .priority-grid { grid-template-columns: 1fr; } }
 .priority-grid .pin { display: flex; flex-direction: column; height: 100%; }
 .priority-grid .pin label {
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 600;
   display: block;
   margin-bottom: 3px;
@@ -624,7 +587,7 @@ body {
   padding: 7px 10px;
   border: 2px solid var(--ink);
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 17px;
   background: var(--paper);
   font-family: var(--body-font);
   outline: none;
@@ -763,8 +726,8 @@ body {
   font-weight: 400;
   color: var(--accent);
   font-family: var(--fun-font);
-  font-size: 17px;
-  letter-spacing: 0.3px;
+  font-size: 28px;          /* match the .rvalue size used by the other result boxes */
+  letter-spacing: 0.5px;
 }
 
 /* Priority radio chooser */
@@ -784,8 +747,8 @@ body {
 
 /* Priority results table */
 .priority-table-wrap { overflow-x: auto; border: 2px solid var(--ink); border-radius: 10px; box-shadow: 2px 2px 0 var(--ink); background: var(--paper); }
-.priority-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.priority-table th, .priority-table td { padding: 8px 12px; text-align: right; border-bottom: 1px solid #DDD; }
+.priority-table { width: 100%; border-collapse: collapse; font-size: 17px; }
+.priority-table th, .priority-table td { padding: 8px 12px; text-align: right; border-bottom: 1px solid #DDD; white-space: nowrap; }
 .priority-table th:first-child, .priority-table td:first-child { text-align: left; font-weight: 600; }
 .priority-table thead th {
   background: var(--bg-soft);
@@ -796,11 +759,11 @@ body {
 }
 .priority-table tbody td.val {
   font-family: var(--fun-font);
-  font-size: 16px;
+  font-size: 17px;
   color: var(--accent);
 }
 
-.btn-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.btn-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; justify-content: flex-end; }
 
 /* ─── Resource cards (landing page) ─── */
 .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
@@ -832,6 +795,8 @@ body {
   .results-grid { grid-template-columns: 1fr; }
   .banner h1 { font-size: 22px; }
   .hero-logo .text h1 { font-size: 28px; }
+  body.hat-top .big-q { font-size: 84px; }
+  body.hat-side .big-q { font-size: 60px; }
   .resource-grid { grid-template-columns: 1fr; }
   .mascot-card { grid-template-columns: 1fr; }
   .status-row { flex-direction: column; }
@@ -840,15 +805,11 @@ body {
 </head>
 <body>
 
-<!-- Color-scheme switcher -->
-<div class="theme-switcher" role="group" aria-label="Color scheme">
-  <span class="label">Theme</span>
-  <button class="theme-swatch" data-theme="cream"        aria-label="Cream / Gold" title="Cream / Gold"></button>
-  <button class="theme-swatch" data-theme="blue"         aria-label="Blue"         title="Blue"></button>
-  <button class="theme-swatch" data-theme="silver-light" aria-label="Silver light" title="Silver — light"></button>
-  <button class="theme-swatch" data-theme="silver-dark"  aria-label="Silver dark"  title="Silver — dark"></button>
-  <button class="theme-swatch" data-theme="brown-warm"   aria-label="Brown warm"   title="Brown — warm"></button>
-  <button class="theme-swatch" data-theme="brown-deep"   aria-label="Brown deep"   title="Brown — deep"></button>
+<!-- Hat-position switcher -->
+<div class="hat-switcher" role="group" aria-label="Hat position">
+  <span class="label">Hat</span>
+  <button class="hat-btn" data-hat="top"  aria-label="Hat on top"  title="Hat on top">On top</button>
+  <button class="hat-btn" data-hat="side" aria-label="Hat on side" title="Hat on side">On side</button>
 </div>
 
 <!-- ═══════════════════ PAGE 1: MODEL SELECTION ═══════════════════ -->
@@ -871,7 +832,7 @@ body {
     <div class="hero">
       <div class="hero-text">
         <div class="hero-logo">
-          <div class="text"><h1>Q-Analyzer</h1></div>
+          <div class="text"><h1 class="hero-title"><span class="big-q">Q<img class="q-hat q-hat-top" src="img/front-hat.png" alt=""><img class="q-hat q-hat-side" src="img/right-side-hat.png" alt=""></span><span class="q-rest">-Analyzer</span></h1></div>
         </div>
         <p class="hero-tag">Plug in your numbers and get a reality check on your queues — the companion calculator to <em>Winning the Wait</em>.</p>
       </div>
@@ -903,17 +864,14 @@ body {
           <h1>Queue Whisperer's Q-Analyzer</h1>
         </div>
       </button>
-      <div class="banner-model-strip">
-        <div>
-          <div class="mtitle" id="input-banner-title"></div>
-          <div class="msub" id="input-banner-sub"></div>
-        </div>
-      </div>
-      <button class="back-btn" onclick="showPage('select')">← All Models</button>
     </div>
   </div>
   <div class="content">
     <div class="use-this-if">
+      <div class="uti-header">
+        <div class="uti-model-name" id="uti-model-name"></div>
+        <button class="back-btn" onclick="showPage('select')">← Pick a Different Model</button>
+      </div>
       <h3>Use this model if:</h3>
       <div id="model-description"></div>
     </div>
@@ -961,7 +919,10 @@ body {
     </div>
 
     <div class="error-box" id="error-box"></div>
-    <button class="compute-btn" onclick="compute()">Compute Results →</button>
+    <div class="compute-row">
+      <button class="compute-btn" onclick="compute()">Compute Results →</button>
+      <button class="compute-btn btn-dark" onclick="showPage('select')">← Pick a Different Model</button>
+    </div>
   </div>
 </div>
 
@@ -974,20 +935,16 @@ body {
           <h1>Queue Whisperer's Q-Analyzer</h1>
         </div>
       </button>
-      <div class="banner-model-strip">
-        <div>
-          <div class="mtitle" id="results-banner-title"></div>
-          <div class="msub" id="results-banner-sub"></div>
-        </div>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="back-btn" onclick="showPage('input')">← Edit Inputs</button>
-        <button class="back-btn" onclick="showPage('select')">← All Models</button>
-      </div>
     </div>
   </div>
   <div class="content">
-    <h2 class="page-heading">Outputs</h2>
+    <div class="outputs-header">
+      <h2 class="page-heading">Outputs</h2>
+      <div class="outputs-header-btns">
+        <button class="back-btn" onclick="showPage('input')">← Edit Inputs</button>
+        <button class="back-btn" onclick="showPage('select')">← Pick a Different Model</button>
+      </div>
+    </div>
     <div class="result-section">
       <div class="result-section-title">Stability</div>
       <div class="status-row">
@@ -999,7 +956,7 @@ body {
     </div>
     <div id="results-container"></div>
     <div class="btn-row">
-      <button class="compute-btn" onclick="showPage('input')">← Adjust Inputs</button>
+      <button class="compute-btn" onclick="showPage('input')">← Edit Inputs</button>
       <button class="compute-btn btn-dark" onclick="showPage('select')">← Pick a Different Model</button>
     </div>
   </div>
@@ -1139,9 +1096,9 @@ CALC.MMsc = function(I){
       // p0 ≈ 0; probNoWait ≈ 0
       return {
         "utilization": eaA/(mu*c), "prob-empty-sys": 0, "prob-full-sys": pfA,
-        "prob-no-wait": 0, "mean-num-in-sys": LsA, "mean-num-in-queue": LqA,
+        "prob-no-wait": 0, "prob-must-wait": 1, "mean-num-in-sys": LsA, "mean-num-in-queue": LqA,
         "mean-time-in-sys": WsA, "mean-time-in-queue": WqA,
-        "effective-arrival-rate": eaA, "stability": true,
+        "effective-arrival-rate": eaA, "lost-arrival-rate": lam - eaA, "stability": true,
         "_c": c, "_K": K, "_lam": lam, "_mu": mu, "_p0": 0, "_a": a, "_u": u, "_T": T, "_pf": pfA
       };
     }
@@ -1164,11 +1121,13 @@ CALC.MMsc = function(I){
     "prob-empty-sys": p0,
     "prob-full-sys": pf,
     "prob-no-wait": probNoWait,
+    "prob-must-wait": 1 - probNoWait,
     "mean-num-in-sys": Ls,
     "mean-num-in-queue": Lq,
     "mean-time-in-sys": Ws,
     "mean-time-in-queue": Wq,
     "effective-arrival-rate": ea,
+    "lost-arrival-rate": lam - ea,
     "stability": true,
     "_c": c, "_K": K, "_lam": lam, "_mu": mu,
     "_p0": p0, "_a": a, "_u": u, "_T": T, "_pf": pf
@@ -1293,16 +1252,16 @@ CALC.MG1Priority = function(I) {
    ═══════════════════════════════════════════ */
 var MODEL_DESC = {
   MMs: {
-    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
-    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
-    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    customerPopulation: "A <em>large</em> number of potential customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results if interarrival times follow exponential distribution) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results when service times follow exponential distribution) or close to 1 (yielding approximate results).",
     systemInformation: "The queueing system has a <em>single line</em> with <em>no limit</em> on how many customers can wait in the line. The system has one or more servers who have the same skill levels and knowledge and speed. Customers are served on a <em>first-come-first-served</em> basis.",
     customerBehavior: "All arriving customers join the single queue. All customers remain in line until they receive service; they <em>do not abandon</em> the queue."
   },
   MMsc: {
-    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
-    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
-    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    customerPopulation: "A <em>large</em> number of potential customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results if interarrival times follow exponential distribution) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results when service times follow exponential distribution) or close to 1 (yielding approximate results).",
     systemInformation: "The queueing system has a <em>single line</em> and a <em>maximum system capacity of K customers</em>, including both customers waiting in line and customers receiving service. The system has <em>s</em> servers who have similar skill levels, knowledge, and service speed. Customers are served on a <em>first-come-first-served</em> basis.",
     customerBehavior: "Arriving customers decide to join the queue (or are allowed to join the queue) only if the total number of customers in the system is <em>less than K</em>. If the system is full with <em>K</em> customers in the system, newly arriving customers are <em>blocked</em> and cannot enter the queue. Customers who enter the system remain in line until they receive service; they <em>do not abandon</em> the queue."
   },
@@ -1314,9 +1273,9 @@ var MODEL_DESC = {
     customerBehavior: "All arriving customers join the single queue. All customers remain in line until they receive service; they <em>do not abandon</em> the queue."
   },
   callCenters: {
-    customerPopulation: "A <em>large</em> number of customers use the system and arrive independently of one another.",
-    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
-    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    customerPopulation: "A <em>large</em> number of potential customers use the system and arrive independently of one another.",
+    arrivalProcess: "The average arrival rate of the customers remains stable over time. The coefficient of variation of interarrival times is equal to 1 (yielding exact results if interarrival times follow exponential distribution) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results when service times follow exponential distribution) or close to 1 (yielding approximate results).",
     systemInformation: "The queueing system has a single line with <em>no limit</em> on how many customers can wait in the line. The system has <em>s</em> servers who have the same skill levels and knowledge and speed. Customers are served on a <em>first-come-first-served</em> basis.",
     customerBehavior: "All arriving customers join the <em>single queue</em>. Customers <em>may abandon</em> the queue before receiving service if their waiting time becomes too long.",
     note: "This is an approximation model. The results of the model become more accurate as the number of servers increases (e.g., larger than 15) and the probability of waiting becomes smaller (e.g., smaller than 10%)."
@@ -1324,7 +1283,7 @@ var MODEL_DESC = {
   MMsNN: {
     customerPopulation: "A <em>limited population of N customers</em> uses the system and customers arrive independently of one another. Examples are health clubs with limited number of members, machines in a factory waiting for repair.",
     arrivalProcess: "Unlike systems with very large number of potential customers, the arrival rate <em>decreases</em> as more customers enter the system because fewer customers remain available to generate new arrivals.",
-    serviceProcess: "Service times are random and highly variable, with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results) or close to 1 (yielding approximate results).",
+    serviceProcess: "Service times are random and highly variable, with most services taking a shorter time while a smaller number take much longer. The coefficient of variation of service times is equal to 1 (yielding exact results when service times follow exponential distribution) or close to 1 (yielding approximate results).",
     systemInformation: "The queueing system has a <em>single line</em> with <em>no limit</em> on how many customers can wait in the line. The system has <em>s</em> servers who have similar skill levels, knowledge, and service speed. The maximum number of customers in the system is N. Customers are served on a <em>first-come-first-served</em> basis.",
     customerBehavior: "All arriving customers wait in the line until they receive service; they <em>do not abandon</em> the queue."
   },
@@ -1399,16 +1358,17 @@ var MODELS=[
         {id:"mmsc_nq", prefix:"Chance of having", suffix:"or more waiting <strong>in line</strong>", calc:"mmsc_nq", f:"pct", ph:"e.g. 5"}
       ]},
       {title:"Wait Time Service Levels", outputs:[
-        {k:"prob-no-wait", l:"Chance a customer receives service immediately on arrival (no waiting in line)", f:"pct"}
+        {k:"prob-must-wait", l:"Chance a customer entered the system has to wait in line before being served", f:"pct"}
       ], queries:[
         {id:"wq_lte", prefix:"Chance of waiting", suffix:"or less <strong>in line</strong>", calc:"mmsc_wq_lte", f:"pct", ph:"e.g. 2", unit:"time"}
       ]}
     ]},
     {title:"System Throughput", fullWidth:true, outputs:[
-      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"The number of arrivals that are not blocked and are served is", f:"rate"}
+      {k:"effective-arrival-rate", l:"Effective arrival rate", d:"The number of arrivals that are not blocked and are served is", f:"rate"},
+      {k:"lost-arrival-rate", l:"Lost Arrivals Due to Blocking", d:"Arrival rate minus effective arrival rate — arrivals turned away because the system is full (lost sales per unit time)", f:"rate"}
     ]}
   ],
-  stepTitles:{ servers:"Capacity" },
+  stepTitles:{ servers:"Maximum System Size" },
   tip:"Got a waiting room with limited chairs? A parking lot that fills up? This one's for you."
 },
 {
@@ -1416,8 +1376,8 @@ var MODELS=[
   friendly:"The General Model", icon:"",
   desc:"The most realistic model: arrivals aren't perfectly random and service varies. Perfect for manufacturing or IT systems.",
   inputs:[
-    {k:"mean-interarrival",                  group:"arrival", label:"Enter the average gap between arrivals", type:"time", ph:"e.g. 5"},
-    {k:"standard-deviation-interarrival",    group:"arrival", label:"Enter the standard deviation of the gap between arrivals", type:"time", ph:"e.g. 3"},
+    {k:"mean-interarrival",                  group:"arrival", label:"Enter the average time between arrivals", type:"time", ph:"e.g. 5"},
+    {k:"standard-deviation-interarrival",    group:"arrival", label:"Enter the standard deviation of the time between arrivals", type:"time", ph:"e.g. 3"},
     {k:"mean-processing",                    group:"service", label:"Enter the average time to serve one customer", type:"time", ph:"e.g. 12"},
     {k:"standard-deviation-processing",      group:"service", label:"Enter the standard deviation of the service time", type:"time", ph:"e.g. 4"},
     {k:"servers",                            group:"service", label:"Enter the number of servers.", type:"num", ph:"e.g. 3"}
@@ -1431,12 +1391,6 @@ var MODELS=[
       {title:"Wait Time Average Measures", outputs:[
         {k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"},
         {k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}
-      ]}
-    ]},
-    {title:"Service Levels", subsections:[
-      {title:"Completion Timing", outputs:[
-        {k:"mean-interdeparture", l:"Average time between completed customers", f:"time"},
-        {k:"standard-deviation-interdeparture", l:"Variation between completions", f:"time"}
       ]}
     ]},
   ],
@@ -1562,8 +1516,7 @@ function selectModel(m){
   currentModel = m;
   currentTimeUnit = "minute";
 
-  document.getElementById('input-banner-title').textContent = m.friendly;
-  document.getElementById('input-banner-sub').textContent = m.kendall;
+  document.getElementById('uti-model-name').textContent = m.friendly;
 
   var descBox = document.getElementById('model-description');
   descBox.innerHTML = '';
@@ -1762,15 +1715,13 @@ function compute(){
 function fmtVal(v, f){
   if (v===undefined || v===null || isNaN(v) || !isFinite(v)) return "—";
   if (f==='pct') return (v*100).toFixed(2)+'%';
-  if (f==='time') return v.toFixed(2)+' '+currentTimeUnit+(v!==1?'s':'');
+  if (f==='time') return v.toFixed(2);   // unit shown in the label as "(in minutes)", like the inputs
   if (f==='rate') return v.toFixed(2)+' / '+currentTimeUnit;
   return v.toFixed(2);
 }
 
 function renderResults(){
   var m = currentModel, r = currentResults;
-  document.getElementById('results-banner-title').textContent = m.friendly;
-  document.getElementById('results-banner-sub').textContent = 'Results · time unit: '+currentTimeUnit+'s';
 
   var badge = document.getElementById('stability-badge');
   var iconStable   = document.getElementById('stability-icon-stable');
@@ -1850,7 +1801,8 @@ function renderSectionedResults(m, r, container){
 function makeResultCard(out, r){
   var card = document.createElement('div');
   card.className = 'result-card' + (out.cardHat ? ' has-card-hat' : '');
-  var html = '<div class="rlabel">'+out.l+'</div>';
+  var label = out.l + (out.f==='time' ? ' (in '+currentTimeUnit+'s)' : '');
+  var html = '<div class="rlabel">'+label+'</div>';
   if (out.d) html += '<div class="rdesc">'+out.d+'</div>';
   html += '<div class="rvalue">'+fmtVal(r[out.k], out.f)+'</div>';
   if (out.cardHat) {
@@ -1909,7 +1861,8 @@ function makeQueryRow(q, r){
 /* ─── Priority results — table form for compactness ─── */
 function renderPriorityResults(container, r){
   var n = r.__nClasses;
-  var tableHead = '<thead><tr><th>Class</th><th>Average wait <strong>in line</strong></th><th>Average total time</th><th>Average# <strong>in line</strong></th><th>Average# <strong>in system</strong></th></tr></thead>';
+  var tUnit = ' (in '+currentTimeUnit+'s)';
+  var tableHead = '<thead><tr><th>Class</th><th>Average wait <strong>in line</strong>'+tUnit+'</th><th>Average total time'+tUnit+'</th><th>Average# <strong>in line</strong></th><th>Average# <strong>in system</strong></th></tr></thead>';
 
   // Section 1: Per-class breakdown (priority discipline)
   var perClass = document.createElement('div');
@@ -1988,23 +1941,23 @@ function renderPriorityResults(container, r){
   container.appendChild(avg);
 }
 
-/* === Color-scheme switcher === */
+/* === Hat-position switcher === */
 (function(){
-  var THEMES = ['cream','blue','silver-light','silver-dark','brown-warm','brown-deep'];
-  var saved = localStorage.getItem('qwa-theme');
-  if (THEMES.indexOf(saved) === -1) saved = 'cream';
-  applyTheme(saved);
-  document.querySelectorAll('.theme-swatch').forEach(function(b){
+  var POSITIONS = ['top','side'];
+  var saved = localStorage.getItem('qwa-hat');
+  if (POSITIONS.indexOf(saved) === -1) saved = 'top';
+  applyHat(saved);
+  document.querySelectorAll('.hat-btn').forEach(function(b){
     b.addEventListener('click', function(){
-      applyTheme(this.dataset.theme);
-      localStorage.setItem('qwa-theme', this.dataset.theme);
+      applyHat(this.dataset.hat);
+      localStorage.setItem('qwa-hat', this.dataset.hat);
     });
   });
-  function applyTheme(t){
-    THEMES.forEach(function(x){ document.body.classList.remove('theme-'+x); });
-    if (t !== 'cream') document.body.classList.add('theme-'+t);  // cream = default :root
-    document.querySelectorAll('.theme-swatch').forEach(function(b){
-      b.classList.toggle('active', b.dataset.theme === t);
+  function applyHat(p){
+    POSITIONS.forEach(function(x){ document.body.classList.remove('hat-'+x); });
+    document.body.classList.add('hat-'+p);
+    document.querySelectorAll('.hat-btn').forEach(function(b){
+      b.classList.toggle('active', b.dataset.hat === p);
     });
   }
 })();
