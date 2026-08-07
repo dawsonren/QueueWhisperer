@@ -45,7 +45,9 @@ body {
 }
 
 
-.page { display: none; min-height: 100vh; }
+/* 65px ≈ the site footer's height, so a short page still fills the viewport
+   without pushing the footer below the fold. */
+.page { display: none; min-height: calc(100vh - 65px); }
 .page.active { display: block; }
 
 /* ─── Banner ─── */
@@ -656,6 +658,14 @@ body {
   color: var(--ink);
   outline: none;
   flex-shrink: 0;
+  /* Hide the number spinner — the box is only 64px wide, so the arrows eat the digits. */
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.inline-query input::-webkit-outer-spin-button,
+.inline-query input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .inline-query input:focus { border-color: var(--accent-3); }
 .inline-query .iq-result {
@@ -692,14 +702,45 @@ body {
   font-weight: 400;
   color: var(--ink);
   letter-spacing: 0.5px;
+  /* Headers wrap onto multiple lines so the table fits without sideways scroll;
+     the value cells stay nowrap so numbers never break mid-figure. */
+  white-space: normal;
+  vertical-align: bottom;
+  line-height: 1.25;
 }
 .priority-table tbody td.val {
   font-family: var(--fun-font);
   font-size: 17px;
   color: var(--accent);
 }
+/* Closing "Average over all classes" row — tinted so it reads apart from the classes. */
+.priority-table tbody tr.total-row td {
+  background: var(--accent-4);
+  border-top: 2px solid var(--ink);
+  border-bottom: none;
+  font-weight: 700;
+}
+.priority-table tbody tr.total-row td.val { color: var(--accent-2); }
 
 .btn-row { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* ─── Site footer (static, sits below whichever page is active) ─── */
+.site-footer {
+  background: var(--accent);
+  border-top: 4px solid var(--ink);
+  color: #FFF;
+}
+.site-footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: flex-end;
+  font-family: var(--fun-font);
+  font-size: 15px;
+}
+.site-footer a { color: #FFF; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.site-footer a:hover { color: var(--bg-soft); }
 
 /* ─── Resource cards (landing page) ─── */
 .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
@@ -888,6 +929,12 @@ body {
     </div>
   </div>
 </div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span>Created by <a href="https://www.linkedin.com/in/dawson-ren/" target="_blank" rel="noopener noreferrer">Dawson Ren</a></span>
+  </div>
+</footer>
 
 <script>
 /* ═══════════════════════════════════════════
@@ -1379,8 +1426,8 @@ var MODELS=[
       ]}
     ]},
     {title:"System Throughput", fullWidth:true, outputs:[
-      {k:"prob-abandonment", l:"Fraction of arriving customers who abandon while waiting", f:"pct"},
-      {k:"abandon-rate",     l:"Average number of customers who abandon while waiting", f:"rate"},
+      {k:"prob-abandonment", l:"Fraction of arriving customers who abandon", f:"pct"},
+      {k:"abandon-rate",     l:"Average number of customers who abandon", f:"rate"},
       {k:"throughput",       l:"Average number of customers leaving after being served", f:"rate"}
     ]}
   ],
@@ -1830,9 +1877,27 @@ function makeQueryRow(q, r){
 }
 
 /* ─── Priority results — table form for compactness ─── */
+
+/* First-column cell for a priority class: colored chip + label. */
+function classCell(k){
+  var color = PRIO_COLORS[(k-1) % PRIO_COLORS.length];
+  return '<td><span class="pchip" style="background:'+color+';display:inline-block;margin-right:6px;width:22px;height:22px;border:2px solid #1A1A1A;border-radius:50%;text-align:center;font-family:var(--fun-font);font-size:12px;line-height:18px;color:#FFF;">'+k+'</span>Class '+k+'</td>';
+}
+
+/* Closing row of a per-class table, rolling every class into one line. */
+function totalRow(Wq, Ws, Lq, Ls){
+  return '<tr class="total-row">' +
+    '<td>Average over all classes</td>' +
+    '<td class="val">'+fmtVal(Wq,"time")+'</td>' +
+    '<td class="val">'+fmtVal(Ws,"time")+'</td>' +
+    '<td class="val">'+fmtVal(Lq,"num")+'</td>' +
+    '<td class="val">'+fmtVal(Ls,"num")+'</td>' +
+    '</tr>';
+}
+
 function renderPriorityResults(container, r){
   var n = r.__nClasses;
-  var tUnit = ' (in '+currentTimeUnit+'s)';
+  var tUnit = '<br>(in '+currentTimeUnit+'s)';
   var tableHead = '<thead><tr><th>Class</th><th>Average wait <strong>in line</strong>'+tUnit+'</th><th>Average total time'+tUnit+'</th><th>Average# <strong>in line</strong></th><th>Average# <strong>in system</strong></th></tr></thead>';
 
   // Section 1: Per-class breakdown (priority discipline)
@@ -1845,15 +1910,17 @@ function renderPriorityResults(container, r){
   var tbl1 = document.createElement('table'); tbl1.className='priority-table';
   var body1 = '<tbody>';
   for (var k=1; k<=n; k++){
-    var color = PRIO_COLORS[(k-1) % PRIO_COLORS.length];
     body1 += '<tr>';
-    body1 += '<td><span class="pchip" style="background:'+color+';display:inline-block;margin-right:6px;width:22px;height:22px;border:2px solid #1A1A1A;border-radius:50%;text-align:center;font-family:var(--fun-font);font-size:12px;line-height:18px;color:#FFF;">'+k+'</span>Class '+k+'</td>';
+    body1 += classCell(k);
     body1 += '<td class="val">'+fmtVal(r["average-waiting-in-queue-type-"+k],"time")+'</td>';
     body1 += '<td class="val">'+fmtVal(r["average-waiting-in-system-type-"+k],"time")+'</td>';
     body1 += '<td class="val">'+fmtVal(r["average-number-in-queue-type-"+k],"num")+'</td>';
     body1 += '<td class="val">'+fmtVal(r["average-number-in-system-type-"+k],"num")+'</td>';
     body1 += '</tr>';
   }
+  // Overall row: arrival-rate-weighted wait times, and total counts across classes.
+  body1 += totalRow(r["mean-time-in-queue"], r["mean-time-in-sys"],
+                    r["mean-num-in-queue"], r["mean-num-in-sys"]);
   body1 += '</tbody>';
   tbl1.innerHTML = tableHead + body1;
   wrap1.appendChild(tbl1);
@@ -1873,46 +1940,27 @@ function renderPriorityResults(container, r){
 
   var wrap2 = document.createElement('div'); wrap2.className='priority-table-wrap';
   var tbl2 = document.createElement('table'); tbl2.className='priority-table';
+  var Ws_fcfs = Wq_fcfs + 1 / mu;
   var body2 = '<tbody>';
   for (var k=1; k<=n; k++){
-    var color = PRIO_COLORS[(k-1) % PRIO_COLORS.length];
     var lk = r["__lam_" + k];
-    var fcfsWs = Wq_fcfs + 1 / mu;
-    var fcfsLq = lk * Wq_fcfs;
-    var fcfsLs = lk * fcfsWs;
     body2 += '<tr>';
-    body2 += '<td><span class="pchip" style="background:'+color+';display:inline-block;margin-right:6px;width:22px;height:22px;border:2px solid #1A1A1A;border-radius:50%;text-align:center;font-family:var(--fun-font);font-size:12px;line-height:18px;color:#FFF;">'+k+'</span>Class '+k+'</td>';
+    body2 += classCell(k);
     body2 += '<td class="val">'+fmtVal(Wq_fcfs,"time")+'</td>';
-    body2 += '<td class="val">'+fmtVal(fcfsWs,"time")+'</td>';
-    body2 += '<td class="val">'+fmtVal(fcfsLq,"num")+'</td>';
-    body2 += '<td class="val">'+fmtVal(fcfsLs,"num")+'</td>';
+    body2 += '<td class="val">'+fmtVal(Ws_fcfs,"time")+'</td>';
+    body2 += '<td class="val">'+fmtVal(lk * Wq_fcfs,"num")+'</td>';
+    body2 += '<td class="val">'+fmtVal(lk * Ws_fcfs,"num")+'</td>';
     body2 += '</tr>';
   }
+  // Under FCFS every class waits the same, so the overall waits are just that
+  // common value; the counts add up over all classes (Little's Law on total lambda).
+  var totalLambda = r["__lambda"];
+  body2 += totalRow(Wq_fcfs, Ws_fcfs, totalLambda * Wq_fcfs, totalLambda * Ws_fcfs);
   body2 += '</tbody>';
   tbl2.innerHTML = tableHead + body2;
   wrap2.appendChild(tbl2);
   fcfsSection.appendChild(wrap2);
   container.appendChild(fcfsSection);
-
-  // Section 3: Overall averages
-  var avg = document.createElement('div');
-  avg.className = 'result-section';
-  avg.innerHTML = '<div class="result-section-title">Average Service Levels</div>';
-
-  var sub1 = document.createElement('div'); sub1.className='result-subsection-title'; sub1.textContent='Queue Length Average Measures';
-  avg.appendChild(sub1);
-  var g1 = document.createElement('div'); g1.className='results-grid';
-  g1.appendChild(makeResultCard({k:"mean-num-in-queue", l:"Average number waiting <strong>in line</strong>", f:"num"}, r));
-  g1.appendChild(makeResultCard({k:"mean-num-in-sys",   l:"Average number <strong>in the system</strong>", f:"num"}, r));
-  avg.appendChild(g1);
-
-  var sub2 = document.createElement('div'); sub2.className='result-subsection-title'; sub2.textContent='Wait Time Average Measures';
-  avg.appendChild(sub2);
-  var g2 = document.createElement('div'); g2.className='results-grid';
-  g2.appendChild(makeResultCard({k:"mean-time-in-queue", l:"Average wait time <strong>in line</strong>", f:"time"}, r));
-  g2.appendChild(makeResultCard({k:"mean-time-in-sys",   l:"Average total time <strong>in system</strong>", f:"time"}, r));
-  avg.appendChild(g2);
-  container.appendChild(avg);
 }
 
 /* INIT */
